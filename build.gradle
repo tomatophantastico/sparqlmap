@@ -1,0 +1,159 @@
+apply from: "./libraries.gradle"
+apply plugin: 'maven'
+apply plugin: 'distribution'
+
+
+
+// configuration of the licence plugin
+buildscript {
+
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.7.0'
+	}
+}
+
+apply plugin: 'license'
+
+downloadLicenses {
+	includeProjectDependencies = true
+}
+
+allprojects  {
+ 
+	group = 'org.aksw.sparqlmap'
+	version = '0.6.3-SNAPSHOT'
+	buildDir =  "target"
+
+	license {
+		header rootProject.file('quality/licences/HEADER')
+		strictCheck true
+		ignoreFailures true
+		}
+}
+
+ext{
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+}
+
+subprojects { subproject ->
+
+	apply plugin: 'checkstyle'
+	
+	checkstyle {
+		configFile = new File(rootDir, "quality/checkstyle/checkstyle.xml")
+		reportsDir   rootProject.file("target/report/${project.name}/")
+	}
+
+    
+
+
+  if( subproject.name == 'sparqlmap-webfrontend')
+	return;
+	
+	
+	
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'maven'
+
+
+  apply plugin: 'maven-publish'
+publishing{
+  publications {
+      maven(MavenPublication) {
+          from components.java
+      }
+  }
+}
+  	
+	
+  
+  repositories {
+  
+    mavenLocal()
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url "http://download.java.net/maven/2/" }
+    maven { url "https://repository.apache.org/content/repositories/releases/" }
+    maven { url "http://maven.aksw.org/archiva/repository/internal" }
+    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
+  }
+	configurations{
+		provided {
+			description = "Libraries that are expected to be there"
+		}
+		
+		web{
+			description = "Libs for the webservices"
+		}
+		
+		jetty{
+			description = "Libs that make a jetty run"
+		}
+		
+		dbs{
+			
+		}
+	}
+  
+  	dependencies {
+    		testCompile libraries.junit 
+	}
+
+
+}
+
+distributions {
+	main {
+		baseName = 'sparqlmap-release'
+		contents {
+			from project.file('README.md')
+			into ("bin") { 
+				from  "./sparqlmap-shared/src/main/resources/scripts/sparqlmap-web" 
+				filter{	String line -> 
+					line.replaceAll("@@@sparqlmapwar@@@", "${project('sparqlmap-web' ).war.archiveName}").replaceAll("@@@jettyrunner@@@",project( 'sparqlmap-web' ).configurations.jetty.files.iterator().next().name)	
+				}
+				
+			}
+			into("bin") {from  "./sparqlmap-shared/src/main/resources/scripts/sparqlmap"}
+			into("samples/mappings/") {from "./sparqlmap-shared/src/main/resources/mappings/"}
+			
+			into("samples/configs/") {from "./sparqlmap-shared/src/main/resources/samples/"}
+			
+			
+			into("lib/deps") { from project( 'sparqlmap-cli' ).configurations.runtime{dep -> !dep.name.startsWith("sparqlmap")}}
+			into("lib/deps") { from project( 'sparqlmap-web' ).configurations.runtime{dep -> !dep.name.startsWith("sparqlmap")}}
+			into("lib/sparqlmap") {from project('sparqlmap-cli').configurations.archives.allArtifacts.files}
+			into("lib/sparqlmap") {from project('sparqlmap-core').configurations.archives.allArtifacts.files}
+
+			
+			into("lib/war") {    from project( 'sparqlmap-web' ).configurations.archives.allArtifacts.files }
+			
+			into("lib/jetty") { from project( 'sparqlmap-web' ).configurations.jetty }
+			into("lib/db")  { from project( 'sparqlmap-core' ).configurations.dbs}
+			
+		}
+		
+	}
+}
+
+
+
+   
+
+
+
+
+task printpath << {
+	println "------------"
+//	println project( 'sparqlmap-web' ).configurations.jetty.metaClass.methods*.name.sort().unique()  
+	println project( 'sparqlmap-web' ).configurations.jetty.files.iterator().next().name
+//	println project( 'sparqlmap-web' ).configurations.jetty.artifacts.dump()
+
+	println "------------"
+}
+
+

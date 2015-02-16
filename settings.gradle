@@ -1,0 +1,12 @@
+rootProject.name = 'sparqlmap-master'
+include ':sparqlmap-cli'
+include ':sparqlmap-core'
+include ':sparqlmap-web'
+include ':sparqlmap-r2rmltests'
+include ':sparqlmap-shared'
+
+project(':sparqlmap-cli').projectDir = "$rootDir/sparqlmap-cli" as File
+project(':sparqlmap-core').projectDir = "$rootDir/sparqlmap-core" as File
+project(':sparqlmap-web').projectDir = "$rootDir/sparqlmap-web" as File
+project(':sparqlmap-r2rmltests').projectDir = "$rootDir/sparqlmap-r2rmltests" as File
+project(':sparqlmap-shared').projectDir = "$rootDir/sparqlmap-shared" as File

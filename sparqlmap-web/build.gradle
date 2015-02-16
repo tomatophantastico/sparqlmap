@@ -1,0 +1,24 @@
+
+
+
+apply plugin: "war"
+
+description = 'SparqlMap Web Services'
+dependencies {
+  
+  compile project(':sparqlmap-core')
+  compile libraries.springwebmvc
+  
+  providedCompile libraries.servletapis
+  
+  jetty libraries.jetty
+
+}
+
+
+task runJetty(type: JavaExec) {
+	println "Starting jetty with ${[war.archivePath]}"
+	main = "org.eclipse.jetty.runner.Runner"
+	args = [war.archivePath]
+	classpath configurations.jetty
+}
