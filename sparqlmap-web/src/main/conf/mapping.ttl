@@ -1,0 +1,154 @@
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix data:    <http://ckan.org/data/> .
+@prefix mapping:  <http://ckan.org/mapping/> .
+@prefix vocab:   <http://ckan.org/vocab/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+
+<http://ckan.org/mapping/Package>
+      rr:logicalTable
+              [ rr:tableName "\"package\""
+              ] ;
+      rr:subjectMap
+              [ rr:class <http://ckan.org/vocab/Package> ;
+                rr:template "http://ckan.org/dataset/{\"name\"}"
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"state\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/hasstate>
+              ] ;
+     
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"maintainer_email\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/maintainermail>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"name\""
+                        ] ;
+                rr:predicate rdfs:label
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"author\""
+                        ] ;
+                rr:predicate dc:creator
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"author_email\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/authormail>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"maintainer\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/maintainer>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"version\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/version>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"id\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/id>
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"title\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/title>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"title\""
+                        ] ;
+                rr:predicate rdfs:label
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"notes\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/package#notes>
+              ] ;
+     rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"notes\""
+                        ] ;
+                rr:predicate rdfs:comment
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"license_id\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/license>
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"revision_id\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/revision_id>
+              ] ;
+
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"url\"";
+			  				rr:termType rr:IRI
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/package#url>
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"type\""
+                        ] ;
+                rr:predicate <http://ckan.org/vocab/package#type>
+              ] .
+<http://ckan.org/mapping/Package_Extra>
+      rr:logicalTable
+              [ rr:sqlQuery """ select * from package p join package_extra pe on (pe.package_id = p.id)"""
+              ] ;
+ 	rr:subjectMap
+              [ 
+                rr:template "http://ckan.org/dataset/{\"name\"}"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"value\""
+                        ] ;
+                rr:predicateMap [
+			rr:template "http://ckan.org/vocab/package#{key}"
+              ]
+             ] .
+<http://ckan.org/mapping/Package_Tag>
+      rr:logicalTable
+              [ rr:sqlQuery """ select p.name as p_name, t.name as t_name from package_tag pt join tag t on (pt.tag_id  = t.id) join package p on (p.id = pt.package_id)"""
+              ] ;
+ 	rr:subjectMap
+              [ 
+                rr:template "http://ckan.org/dataset/{\"p_name\"}"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "\"t_name\""
+                        ] ;
+                rr:predicate <http://ns.inria.fr/nicetag/2009/09/25/voc.html#isAbout>
+              ].
+     
+     
