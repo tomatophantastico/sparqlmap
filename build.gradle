@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'maven-publish'
+
+
+// We use Java 7
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+// deal with the changing dependency of sparqlmap
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+
+
+// maven publication
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'org.aksw.sparqlmap'
+            artifactId 'sparqlmap-client'
+            version '0.6.4'
+
+            from components.java 
+        }
+    }
+}
+
+springBoot {
+    mainClass = "org.aksw.sparqlmap.web.spring.SparqlmapWebApplication"
+}
+
+jar {
+    baseName = 'sparqlmap'
+    version =  '0.6.4-SNAPSHOT'
+}
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+    maven { url "http://maven.aksw.org/archiva/repository/internal" }
+    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
+}
+
+dependencies {
+    // tag::jetty[]
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    	exclude module: "spring-boot-starter-logging"
+    	exclude module: "logback-classic"
+
+    }
+    compile("org.springframework:spring-tx")
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    // end::jetty[]
+    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-actuator"){
+    	exclude module: "logback-classic"
+    }
+    // end::actuator[]
+
+   
+    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.6.4-SNAPSHOT", changing: true
+    compile 'commons-cli:commons-cli:1.2'
+
+    testCompile("junit:junit")
+}
