@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1 http://maven.apache.org/xsd/assembly-1.1.1.xsd">
+
+	<formats>
+		<format>dir</format>
+	</formats>
+
+	<dependencySets>
+		<dependencySet>
+			<!-- unpack the webapp as root application -->
+			<scope>runtime</scope>
+			<unpack>true</unpack>
+			<outputDirectory>webapps/root/</outputDirectory>
+			<includes>
+				<include>org.aksw.sparqlmap:servlet:war</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<unpack>false</unpack>
+			<outputDirectory>lib</outputDirectory>
+			<useTransitiveFiltering>true</useTransitiveFiltering>
+			<useStrictFiltering>true</useStrictFiltering>
+			<includes>
+				<include>org.mortbay.jetty:jetty</include>
+				<include>org.mortbay.jetty:jetty-util</include>
+				<include>org.mortbay.jetty:start</include>
+				<include>org.mortbay.jetty:jsp-2.1-jetty</include>
+				<include>commons-logging:commons-logging</include>
+				<include>log4j:log4j</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+
+	<fileSets>
+		<fileSet>
+			<directory>src/jetty/bin</directory>
+			<outputDirectory>bin/</outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>src/jetty/etc</directory>
+			<outputDirectory>etc/</outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/conf</directory>
+			<outputDirectory>map-conf/</outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+	</fileSets>
+
+</assembly>

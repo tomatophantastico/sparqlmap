@@ -1,0 +1,20 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix data:  <http://localhost/baseuri/> .
+@prefix mapping: <http://localhost/baseuri/> .
+@prefix vocab: <http://localhost/baseuri/> .
+
+vocab:csv_import  rr:logicalTable  [ rr:tableName
+                          "\"csv_import\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Department\"" ] ;
+                                 rr:predicate  <http://localhost/baseuri/csv_import#Department>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Name\"" ] ;
+                                 rr:predicate  <http://localhost/baseuri/csv_import#Name>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Id\"" ] ;
+                                 rr:predicate  <http://localhost/baseuri/csv_import#Id>
+                               ] ;
+        rr:subjectMap          [ rr:class     vocab:csv_import ;
+                                 rr:template  "http://localhost/baseuri/Person{\"Id\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .

@@ -1,0 +1,13 @@
+#!/bin/bash 
+
+#get the path the script is located in
+SCRIPT=`readlink -f $0`
+SCRIPTPATH=`dirname $SCRIPT`
+
+cd $SCRIPTPATH
+#go from there to the bin
+
+
+#execute sparqlmap csv
+echo "$SCRIPTPATH/../../../bin/sparqlmap -dump -csvfile ${SCRIPTPATH}/Person.csv -csvhasheaders -csvsepchar \t"
+$SCRIPTPATH/../../../bin/sparqlmap -dump -csvfile ${SCRIPTPATH}/Person.csv -csvhasheaders -csvsepchar "\t" 

@@ -1,0 +1,33 @@
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix data:    <http://omegawiki.org/data/> .
+@prefix mapping:  <http://omegawiki.org/mapping/> .
+@prefix vocab:   <http://omegawiki.org/vocab/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix ctag: <http://commontag.org/ns#>.
+
+mapping:Expression
+	rr:logicalTable [
+	
+	rr:sqlQuery """
+	SELECT l.wikimedia_key as lang,l.language_id, ex.expression_id, ex.spelling FROM uw_expression ex JOIN language l ON (l.language_id = ex.language_id) WHERE ex.remove_transaction_id IS NULL
+	"""
+	];
+	
+	rr:subjectMap [
+		rr:template "http://www.omegawiki.org/index.php?title=Expression:{spelling}&explang={language_id}"
+	];
+	rr:predicateObjectMap[
+		rr:predicate vocab:lang;
+		rr:objectMap [ rr:column "\"lang\"" ] ;
+	];
+	rr:predicateObjectMap[
+		rr:predicate rdfs:label;
+		rr:objectMap [ rr:column "\"spelling\"";
+                               rr:lang [rr:column "\"lang\""]    ] ;
+	].
+	
+mapping:Meaning	
+
