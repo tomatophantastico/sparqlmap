@@ -8,6 +8,11 @@ It can be used in allows both extracting RDF from an relational database and rew
 The SparqlMap Client provides command line and web access to the SparqlMap core.
 
 
+## Overview over the mapping process
+
+![SparqlMap overview](https://raw.github.com/tomatophantastico/sparqlmap/doc/doc/sparqlMap.png)
+
+
 
 ##Convert Relational Database into RDF
 
