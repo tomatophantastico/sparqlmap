@@ -1,16 +1,11 @@
-#SparqlMap
+#SparqlMap - Client
 
 
 SparqlMap - A SPARQL to SQL rewriter based on [R2RML](http://www.w3.org/TR/r2rml/) specification.
 
 It can be used in allows both extracting RDF from an relational database and rewrite SPARQL queries into SQL.
 
-##Current Status
-
-We have refactored SparqlMap in the last few months a lot.
-The current master branch is not yet ready for prime time, thus no binary release are out yet.
-
-If you want to try out SparqlMap, best use a binary distribution from our [old website] (https://code.google.com/p/sparqlmap/downloads/list).
+The SparqlMap Client provides command line and web access to the SparqlMap core.
 
 
 
@@ -41,14 +36,3 @@ This will expose an SPARQL endpoint with a little snorql interface.
 
 SparqlMap conforms fully with the R2RML specification and was tested with PostgreSQL, MySQL and HSQL.
 The test results can be found in the repository.
-
-## Project Structure
-
-This project has the following sub-folders:
-
-- **sparqlmap-core** The rewriting (and the dumping) mechanics can be found here.
-- **sparqlmap-web** The code for exposing webservices resides here.
-- **sparqlmap-webinterface** The yeoman client-side webinterface is here.
-- **sparqlmap-shared** Common resources, like exemplary mappings, local versions of vocabularies and default config files are here.
-- **sparqlmap-cli** The command line wrapper around thecore.
-- **sparqlmap-r2rmltestcases** The SparqlMap R2RML testrunner and the results of these test are here.
