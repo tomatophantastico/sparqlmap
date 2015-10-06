@@ -78,6 +78,20 @@ dependencies {
    
     compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.6.4-SNAPSHOT", changing: true
     compile 'commons-cli:commons-cli:1.2'
-
     testCompile("junit:junit")
 }
+
+
+
+startScripts {
+    classpath = files()
+    mainClassName = 'sparqlmap'
+    applicationName = 'sparqlmap'
+      doLast {
+        def windowsScriptFile = file getWindowsScript()
+        def unixScriptFile  = file getUnixScript()
+        windowsScriptFile.text = windowsScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=%APP_HOME%\\lib\\*')
+        unixScriptFile.text  = unixScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=$APP_HOME/lib/*')
+    }
+}
+
