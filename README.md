@@ -17,27 +17,31 @@ The SparqlMap Client provides command line and web access to the SparqlMap core.
 ##Convert Relational Database into RDF
 
 Most of the time, dump creation will take place on the command line.
-In the binary distributions these can be found in the _bin_ folder.
-The two files of interest are:
+In the binary distributions use the sparqlmap command. 
+Calling sparqlmap without or with a wrong combination of options will present all options available.
+
+Let's have a look at some samples:
 
 ```shell
-./bin/dump.sh             (1)
-./bin/generateMapping.sh  (2)
+bin/sparqlmap -dburi "jdbc:mysql://192.168.59.103:3306/sparqlmaptest?padCharsWithSpace=true&sessionVariables=sql_mode='ANSI_QUOTES'" -dbuser sparqlmap -dbpass sparqlmap -r2rmlfile src/test/resources/hsql-bsbm/mapping.ttl -dump   
 ```
+This sample creates a dump from a mysql database. Take note of the following:
+* The database can be configured by either using the -dburi/-dbusername/-dbpass options or by providing a file with the database connection information, using the -dbfile option.
+* When connecting to MySQL, ANSI_QUOTES and padCharsWithSpace have to be set, as in the above jdbc url.
 
-(1) dump will create an full RDF representation based on a mapping provided.
-(2) will generate that mapping for you, based on the [Direct Mapping](http://www.w3.org/TR/rdb-direct-mapping/) specification. You can use this mapping as a starting point. However, be aware that the full database will be mapped and that the mapping will apear clumsy.
+
+
+
 
 ## Rewrite SPARQL queries into SQL
 
 For rewriting SPARQL queries into SQL SparqlMap can expose a SPARQL endpoint by an embedded tomcat.
 The enpoint is started by 
 ```shell
-java -jar sparqlmap-X.X.X-with-dependencies.jar
+./bin/sparqlmap -web
 ```
 This will expose an SPARQL endpoint with a little snorql interface.
 
 ## R2RML conformance
 
-SparqlMap conforms fully with the R2RML specification and was tested with PostgreSQL, MySQL and HSQL.
-The test results can be found in the repository.
+SparqlMap conforms with the R2RML specification and was tested with PostgreSQL, MySQL and HSQL.
