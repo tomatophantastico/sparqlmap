@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,6 +31,7 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.WebContent;
+import org.apache.metamodel.MetaModelException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.PropertiesPropertySource;
@@ -74,7 +76,7 @@ public class sparqlmap {
 					.addFirst(new PropertiesPropertySource("props " + i, props[i]));
 		}
 
-		ctxt.scan("org.aksw.sparqlmap");
+		ctxt.scan("org.aksw.sparqlmap.core");
 		ctxt.refresh();
 		return ctxt;
 
@@ -204,7 +206,12 @@ public class sparqlmap {
 				
 				
 				
-			} 
+			} else if (cl.hasOption("web")){
+			    error("web application needs to be implemented.");
+			}else{
+			  
+			  error("Either -dump -generateMapping or -web has to be set.");
+			}
 
 			
 		} catch (ParseException e) {
@@ -374,7 +381,7 @@ public class sparqlmap {
 
 	
 	
-	public void generateMapping(String format) throws FileNotFoundException, SQLException{
+	public void generateMapping(String format) throws FileNotFoundException, SQLException, UnsupportedEncodingException, MetaModelException{
 		
 		AutomapperWrapper am = ctxt.getBean(AutomapperWrapper.class);
 		

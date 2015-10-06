@@ -3,15 +3,26 @@
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.apache.commons.cli.ParseException;
 import org.apache.jena.riot.RDFFormat;
+import org.hsqldb.Server;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+import com.google.common.collect.Lists;
 
 /**
  * This test case puts the dump class under test with various invalid mappings
@@ -21,13 +32,44 @@ import org.junit.Test;
  * 
  */
 public class dumpTest {
+  
+  private Server server;
+  
+
+  
+  @Before
+  public void startDatabase() throws SQLException{
+   
+    if(server!=null){
+      server = new Server();
+      server.setSilent(true);
+      server.setDatabaseName(0, "sparqlmap" );
+      server.setDatabasePath(0, "mem:sparqlmaptest");
+      server.start();
+      
+      
+      try(Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:sparqlmap","sa","")){
+      
+        ResourceDatabasePopulator rdp = new ResourceDatabasePopulator();
+        rdp.addScript(new FileSystemResource(new File("./src/test/resources/hsql-bsbm/dataset.sql")));
+        conn.setAutoCommit(true);
+        rdp.populate(conn);
+      }
+    }
+  }
+  
+
+  
+  
+  
+  
 	
 	
 	@Test
 	public void testGenerateMapping() {
 		String[] params = { "-generateMapping","-r2rmlfile",
-				"./src/test/resources/map-conf/mapping.ttl",
-				"-dbfile", "./src/test/resources/map-conf/db.properties" };
+				"./src/test/resources/hsql-bsbm/mapping.ttl",
+				"-dbfile", "./src/test/resources/hsql-bsbm/db.properties" };
 		String output = performCommand(params);
 
 		Assert.assertTrue(output.toString().contains("Not a valid token"));
@@ -36,8 +78,8 @@ public class dumpTest {
 	@Test
 	public void testDump() {
 		String[] params = { "-dump","-r2rmlfile",
-				"./src/test/resources/map-conf/mapping.ttl",
-				"-dbfile", "./src/test/resources/map-conf/db.properties" };
+				"./src/test/resources/hsql-bsbm/mapping.ttl",
+				"-dbfile", "./src/test/resources/hsql-bsbm/db.properties" };
 		String output = performCommand(params);
 
 		Assert.assertTrue(output.toString().contains("Not a valid token"));
