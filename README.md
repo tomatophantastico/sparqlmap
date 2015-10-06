@@ -22,15 +22,25 @@ Calling sparqlmap without or with a wrong combination of options will present al
 
 Let's have a look at some samples:
 
+### RDF Dump
+
 ```shell
-bin/sparqlmap -dburi "jdbc:mysql://192.168.59.103:3306/sparqlmaptest?padCharsWithSpace=true&sessionVariables=sql_mode='ANSI_QUOTES'" -dbuser sparqlmap -dbpass sparqlmap -r2rmlfile src/test/resources/hsql-bsbm/mapping.ttl -dump   
+./bin/sparqlmap -dburi "jdbc:mysql://192.168.59.103:3306/sparqlmaptest?padCharsWithSpace=true&sessionVariables=sql_mode='ANSI_QUOTES'" -dbuser sparqlmap -dbpass sparqlmap -r2rmlfile src/test/resources/hsql-bsbm/mapping.ttl -dump   
 ```
 This sample creates a dump from a mysql database. Take note of the following:
 * The database can be configured by either using the -dburi/-dbusername/-dbpass options or by providing a file with the database connection information, using the -dbfile option.
 * When connecting to MySQL, ANSI_QUOTES and padCharsWithSpace have to be set, as in the above jdbc url.
 
+### Mapping generation
 
+Creating a R2RML representation of a default mapping is as easy as this:
 
+```
+./bin/sparqlmap -dbfile ./src/test/resources/hsql-bsbm/db.properties  -generateMapping
+```
+Here the database connection is provided by a file, e.g.:
+
+[db.properties](https://raw.githubusercontent.com/tomatophantastico/sparqlmap/develop/src/test/resources/hsql-bsbm/db.properties)
 
 
 ## Rewrite SPARQL queries into SQL
