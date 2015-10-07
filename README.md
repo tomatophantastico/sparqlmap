@@ -55,3 +55,8 @@ This will expose an SPARQL endpoint with a little snorql interface.
 ## R2RML conformance
 
 SparqlMap conforms with the R2RML specification and was tested with PostgreSQL, MySQL and HSQL.
+
+
+## Adding additional database drivers
+
+Simply copy them into the lib folder.
