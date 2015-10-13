@@ -57,7 +57,7 @@ public class SparqlMapWeb {
 		if(env.getProperty("sm.maxdumpage")!=null){
 			maxdumpage = Long.parseLong(env.getProperty("sm.maxdumpage"));
 		}else{
-			log.warn("sm.maxdumpage, using value " + maxdumpage);
+			log.info("sm.maxdumpage, using value " + maxdumpage);
 		}
 		
 	}

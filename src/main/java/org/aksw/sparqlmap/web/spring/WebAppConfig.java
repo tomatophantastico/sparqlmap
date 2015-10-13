@@ -21,27 +21,13 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = { "org.aksw.sparqlmap.web", "org.aksw.sparqlmap", "org.aksw.sparqlmap.spring" })
+@ComponentScan(basePackages = { "org.aksw.sparqlmap.web", "org.aksw.sparqlmap.spring" })
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	org.springframework.core.env.Environment env;
 	
-	@Bean
-	public SparqlMapContextManager createContextManager(){
-		
-		//guessing the configuration folder
-	
-		
-		ApplicationContext root =  ContextSetup.contextFromFolder(	env.getProperty("SPARQLMAP_HOME"));
-		SparqlMapContextManager conMgm = new SparqlMapContextManager();
-		
-		conMgm.putContext(SparqlMapContextManager.ROOT, root);
-		
-		
-		
-		return conMgm;
-	}
+
 	
 	
 	@Override

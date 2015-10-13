@@ -33,14 +33,14 @@ import com.google.common.collect.Lists;
  */
 public class dumpTest {
   
-  private Server server;
+  private static Server server;
   
 
   
   @Before
   public void startDatabase() throws SQLException{
    
-    if(server!=null){
+    if(server==null){
       server = new Server();
       server.setSilent(true);
       server.setDatabaseName(0, "sparqlmap" );
@@ -81,8 +81,11 @@ public class dumpTest {
 				"./src/test/resources/hsql-bsbm/mapping.ttl",
 				"-dbfile", "./src/test/resources/hsql-bsbm/db.properties" };
 		String output = performCommand(params);
-
-		Assert.assertTrue(output.toString().contains("Not a valid token"));
+		
+		//check for an arbitrary triple
+		Assert.assertTrue(output.toString().contains("<http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor2/Offer4536> <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/validFrom> \"2008-05-12\"^^<http://www.w3.org/2001/XMLSchema#date> ."));
+		//and that it is big
+		Assert.assertTrue(output.length()>100000);
 	}
 
 	@Test
@@ -203,5 +206,16 @@ public class dumpTest {
 				"xxxx"));
 
 	}
+	
+	
+	
+	@Test
+	public void testWeb(){
+	  String[] params = { "-web","-r2rmlfile",
+        "./src/test/resources/hsql-bsbm/mapping.ttl",
+        "-dbfile", "./src/test/resources/hsql-bsbm/db.properties" };
+	  String output = performCommand(params);
+	}
+	
 }
 

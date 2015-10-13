@@ -6,8 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-@SpringBootApplication
-public class SparqlmapWebApplication {
+
+public class SpringBootEntryPoint {
   public static void main(String[] args) {
     ApplicationContext ctx = SpringApplication.run(WebAppConfig.class, args);
 

@@ -18,6 +18,8 @@ import org.aksw.sparqlmap.core.config.syntax.r2rml.R2RMLValidationException;
 import org.aksw.sparqlmap.core.db.CSVHelper;
 import org.aksw.sparqlmap.core.db.CSVHelper.CSVColumnConfig;
 import org.aksw.sparqlmap.core.db.CSVHelper.CSVTableConfig;
+import org.aksw.sparqlmap.web.SparqlMapContextManager;
+import org.aksw.sparqlmap.web.spring.WebAppConfig;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -33,6 +35,8 @@ import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.WebContent;
 import org.apache.metamodel.MetaModelException;
 import org.springframework.beans.BeansException;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.ClassPathResource;
@@ -63,7 +67,7 @@ public class sparqlmap {
 	private Options options;
 	private AnnotationConfigApplicationContext ctxt;
 
-	public AnnotationConfigApplicationContext setupSparqlMap(
+	private AnnotationConfigApplicationContext setupSparqlMap(
 			Properties... props) throws Throwable {
 
 		AnnotationConfigApplicationContext ctxt;
@@ -95,9 +99,19 @@ public class sparqlmap {
 		Options options = new Options();
 		
 		OptionGroup action = new OptionGroup();
-		action.addOption(OptionBuilder.withDescription("Writes an rdf dump into stdout according to the supplied mapping file").create("dump"));
-		action.addOption(OptionBuilder.withDescription("Creates a mapping file that maps the specified database into R2RML according to the direct mapping specification").create("generateMapping"));
-
+		action.isRequired();
+		action.addOption(
+		    OptionBuilder.withDescription("Writes an rdf dump into stdout according to the supplied mapping file")
+		      .create("dump"));
+		action.addOption(
+		    OptionBuilder.withDescription("Creates a mapping file that maps the specified database into R2RML according to the direct mapping specification")
+		    .create("generateMapping"));
+		action.addOption(OptionBuilder.withDescription("Execute the given query over the specified database and mapping")
+		    .hasArg()
+		    .withArgName("sparql-query")
+		    .create("query"));
+		action.addOption(OptionBuilder.withDescription("Start the included webserver with the given database connection and mapping configuration or with a given configuration directory.")
+		    .create("web"));
 		
 		options.addOptionGroup(action);
 		
@@ -107,31 +121,58 @@ public class sparqlmap {
 				.withDescription(
 						"A file properties file containing the parameters for connecting to the database.")
 				.create("dbfile"));
+		
 		options.addOption(OptionBuilder
 				.withArgName("jdbc-url")
 				.hasArg()
 				.withDescription(
 						"the full connection url for the database, like it is used for connection in java to a db. Example: jdbc:postgresql://localhost/mydb")
 				.create("dburi"));
+		
 		options.addOption(OptionBuilder.withArgName("db-username").hasArg()
 				.withDescription("username for the db connection")
 				.create("dbuser"));
+		
 		options.addOption(OptionBuilder.withArgName("db-password").hasArg()
 				.withDescription("password for the db connection")
 				.create("dbpass"));
+		
 		options.addOption(OptionBuilder
 				.withArgName("base-iri")
 				.hasArg()
 				.withDescription(
 						"Base iri used for cases in the mapping process, where no explicit iri is defined.")
 				.create("baseiri"));
-		options.addOption(OptionBuilder.withArgName("r2rmlfile").hasArg().withDescription("The R2RML file according which defines the mapping for the dump.").create("r2rmlfile"));		
-		options.addOption(OptionBuilder.withArgName("sparqlmapfile").hasArg().withDescription("A properties file that configures SparqlMap. Usually contains the properties given here as options. Explicit options override the values of the properties file.").create("sparqlmapfile"));
 		
-		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("CSV File name").create("csvfile"));
-		options.addOption(OptionBuilder.withDescription("The first line of the file describes the headers. For details check: http://hsqldb.org/doc/guide/texttables-chapt.html").create("csvhasheader"));
-		options.addOption(OptionBuilder.withDescription("The file as rows with a varying count of columns").create("varyingcolcount"));
-		options.addOption(OptionBuilder.withArgName("char").hasArg().withDescription("The char separator character. Defaults to ','.  For greater detail check: http://hsqldb.org/doc/guide/texttables-chapt.html").create("csvsepchar"));
+		options.addOption(OptionBuilder.withArgName("r2rmlfile")
+		    .hasArg()
+		    .withDescription("The R2RML file according which defines the mapping for the dump.")
+		    .create("r2rmlfile"));		
+		
+		options.addOption(OptionBuilder.withArgName("sparqlmapfile")
+		    .hasArg()
+		    .withDescription("A properties file that configures SparqlMap. Usually contains the properties given here as options. Explicit options override the values of the properties file.")
+		    .create("sparqlmapfile"));
+		
+		options.addOption(OptionBuilder
+		    .withArgName("file")
+		    .hasArg()
+		    .withDescription("CSV File name")
+		    .create("csvfile"));
+		
+		options.addOption(OptionBuilder
+		    .withDescription("The first line of the file describes the headers. For details check: http://hsqldb.org/doc/guide/texttables-chapt.html")
+		    .create("csvhasheader"));
+		
+		options.addOption(OptionBuilder
+		    .withDescription("The file as rows with a varying count of columns")
+		    .create("varyingcolcount"));
+		
+		options.addOption(OptionBuilder
+		    .withArgName("char")
+		    .hasArg()
+		    .withDescription("The char separator character. Defaults to ','.  For greater detail check: http://hsqldb.org/doc/guide/texttables-chapt.html")
+		    .create("csvsepchar"));
 		options.addOption(OptionBuilder.withArgName("char").hasArg().withDescription("The varcharchar separator character.Defaults to ','. For greater detail check: http://hsqldb.org/doc/guide/texttables-chapt.html").create("csvsepvarchar"));
 		options.addOption(OptionBuilder.withArgName("encoding").hasArg().withDescription("The encoding of the csv file.").create("csvencoding"));
 		
@@ -207,7 +248,7 @@ public class sparqlmap {
 				
 				
 			} else if (cl.hasOption("web")){
-			    error("web application needs to be implemented.");
+			    web(args);
 			}else{
 			  
 			  error("Either -dump -generateMapping or -web has to be set.");
@@ -374,10 +415,29 @@ public class sparqlmap {
 		
 		SparqlMap sm = ctxt.getBean(SparqlMap.class);
 		
-		sm.dump(System.out, langoutputf);
+		sm.dump(out, langoutputf);
 		
 	}
 	
+	public void query(String query) throws SQLException{
+	  
+	  SparqlMap sm = ctxt.getBean(SparqlMap.class);
+	  sm.executeSparql(query, null, out);
+	  
+	}
+	
+	
+	public void web(String[] args){
+	  
+	  
+    ApplicationContext ctx = SpringApplication.run(WebAppConfig.class, args);
+    
+    SparqlMapContextManager manager =  ctx.getBean(SparqlMapContextManager.class);
+    manager.putContext(SparqlMapContextManager.ROOT, ctxt);
+	  
+	  
+	  
+	}
 
 	
 	
