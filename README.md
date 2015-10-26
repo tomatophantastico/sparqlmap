@@ -7,6 +7,32 @@ It can be used in allows both extracting RDF from an relational database and rew
 
 The SparqlMap Client provides command line and web access to the SparqlMap core.
 
+## Building and installation
+
+SparqlMap requires the following dependencies, which are not present in the main repos.
+
+1. JSqlParser
+```
+git clone https://github.com/tomatophantastico/sparqlmap-jsqlparser.git 
+cd sparqlmap-jsqlparser 
+mvn install
+```
+
+2. Metamodel with a patch
+```
+git clone https://github.com/tomatophantastico/metamodel.git
+cd metamodel
+mvn install
+```
+
+3. SparqlMap core
+```
+git clone https://github.com/tomatophantastico/sparqlmap-core.git
+cd sparqlmap-core
+./gradlew publishToMavenLocal
+```
+
+
 
 ## Overview over the mapping process
 
