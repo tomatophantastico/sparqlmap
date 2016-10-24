@@ -7,32 +7,10 @@ It can be used in allows both extracting RDF from an relational database and rew
 
 The SparqlMap Client provides command line and web access to the SparqlMap core.
 
-## Building and installation
+## Download
 
-SparqlMap requires the following dependencies, which are not present in the main repos.
-
-1. JSqlParser
-```
-git clone https://github.com/tomatophantastico/sparqlmap-jsqlparser.git 
-cd sparqlmap-jsqlparser 
-mvn install
-```
-
-2. Metamodel with a patch
-```
-git clone https://github.com/tomatophantastico/metamodel.git
-cd metamodel
-mvn install
-```
-
-3. SparqlMap core
-```
-git clone https://github.com/tomatophantastico/sparqlmap-core.git
-cd sparqlmap-core
-./gradlew publishToMavenLocal
-```
-
-
+Get the latest release on the [release page](https://github.com/tomatophantastico/sparqlmap/releases).
+Please note, that no MySQL driver is included. You will need to get it from the [MySQL page](https://dev.mysql.com/downloads/connector/j/)  and copy it into the ./lib folder.
 
 ## Overview over the mapping process
 
@@ -86,3 +64,30 @@ SparqlMap conforms with the R2RML specification and was tested with PostgreSQL, 
 ## Adding additional database drivers
 
 Simply copy them into the lib folder.
+
+## Building and installation
+
+SparqlMap requires the following dependencies, which are not present in the main repos.
+
+1. JSqlParser
+```
+git clone https://github.com/tomatophantastico/sparqlmap-jsqlparser.git 
+cd sparqlmap-jsqlparser 
+mvn install
+```
+
+2. Metamodel with a patch
+```
+git clone https://github.com/tomatophantastico/metamodel.git
+cd metamodel
+mvn install
+```
+
+3. SparqlMap core
+```
+git clone https://github.com/tomatophantastico/sparqlmap-core.git
+cd sparqlmap-core
+./gradlew publishToMavenLocal
+```
+
+
