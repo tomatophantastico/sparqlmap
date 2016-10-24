@@ -19,8 +19,8 @@ apply plugin: 'maven-publish'
 
 
 // We use Java 7
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 // deal with the changing dependency of sparqlmap
 configurations.all {
@@ -54,7 +54,7 @@ springBoot {
 
 jar {
     baseName = 'sparqlmap'
-    version =  '0.6.4-SNAPSHOT'
+    version =  '0.7.0-SNAPSHOT'
 }
 
 repositories {
@@ -79,8 +79,9 @@ dependencies {
     	exclude module: "logback-classic"
     }
 
-    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.6.4-SNAPSHOT", changing: true
+    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.7.0-SNAPSHOT", changing: true
     compile 'commons-cli:commons-cli:1.2'
+    compile 'com.beust:jcommander:1.58'
     testCompile("junit:junit")
 }
 
