@@ -14,7 +14,7 @@ import java.util.Properties;
 import org.aksw.sparqlmap.core.ImplementationException;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.automapper.AutomapperWrapper;
-import org.aksw.sparqlmap.core.config.syntax.r2rml.R2RMLValidationException;
+import org.aksw.sparqlmap.core.r2rml.R2RMLValidationException;
 import org.aksw.sparqlmap.core.db.CSVHelper;
 import org.aksw.sparqlmap.core.db.CSVHelper.CSVColumnConfig;
 import org.aksw.sparqlmap.core.db.CSVHelper.CSVTableConfig;
@@ -148,11 +148,6 @@ public class sparqlmap {
 		    .hasArg()
 		    .withDescription("The R2RML file according which defines the mapping for the dump.")
 		    .create("r2rmlfile"));		
-		
-		options.addOption(OptionBuilder.withArgName("sparqlmapfile")
-		    .hasArg()
-		    .withDescription("A properties file that configures SparqlMap. Usually contains the properties given here as options. Explicit options override the values of the properties file.")
-		    .create("sparqlmapfile"));
 		
 		options.addOption(OptionBuilder
 		    .withArgName("file")
