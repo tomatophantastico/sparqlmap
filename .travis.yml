@@ -4,7 +4,7 @@ jdk:
 
 before_install:
   - git clone https://github.com/tomatophantastico/sparqlmap-core/ && cd sparqlmap-core && ./gradlew publishToMavenLocal
-  - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout feature/quoteColumns && mvn install
+  - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout 4ef1aa2f4dacc4e1c20d6560422d04a895ca3791 && mvn install
 
 script:
   ./gradlew distZip
