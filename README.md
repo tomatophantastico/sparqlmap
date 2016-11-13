@@ -91,3 +91,21 @@ cd sparqlmap-core
 ```
 
 
+
+## Using with MongoDB
+
+ds.location  the host and port of the mongodb server, e.g.: localhost:11111
+ds.identifier the database name
+ds.username  username
+ds.password  password
+
+
+## Using with a JDBC database
+First, make sure that a JDBC4 driver is in the classpath. SparqlMap already contains drivers for the most important FOSS RDBMs, for closed source RDBMs, they have to be added manually.
+
+
+ds.location  the full jdbc url, e.g. jdbc:mysql://localhost:3306/test
+ds.identifier ** not used **
+ds.username  username of the RDBMS
+ds.password  password of the RDBMS
+ds.maxPoolSize max number of connections to the RDBMs, defaults to 10

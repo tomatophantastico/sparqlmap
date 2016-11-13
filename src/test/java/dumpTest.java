@@ -1,28 +1,21 @@
 
 
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 
-import org.apache.commons.cli.ParseException;
-import org.apache.jena.riot.RDFFormat;
+import org.aksw.sparqlmap.cli.SparqlMapCli;
+import org.aksw.sparqlmap.common.SparqlMapSetup;
 import org.hsqldb.Server;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.SpringApplication;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import com.google.common.collect.Lists;
 
 /**
  * This test case puts the dump class under test with various invalid mappings
@@ -49,7 +42,7 @@ public class dumpTest {
       
       
       try(Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:sparqlmap","sa","")){
-      
+        
         ResourceDatabasePopulator rdp = new ResourceDatabasePopulator();
         rdp.addScript(new FileSystemResource(new File("./src/test/resources/hsql-bsbm/dataset.sql")));
         conn.setAutoCommit(true);
@@ -102,15 +95,13 @@ public class dumpTest {
 	private String performCommand(String[] params) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+		SparqlMapCli.out = new PrintStream(baos);
+		SparqlMapCli.err = new PrintStream(baos);
 		
-		sparqlmap sm = new sparqlmap(new PrintStream(baos),new PrintStream(baos));
-		try {
-      sm.processCommand(params);
-    } catch (Throwable e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
+    SpringApplication springApp = new SpringApplication(SparqlMapSetup.class,SparqlMapCli.class);
+    springApp.setWebEnvironment(false);
+    springApp.run(params).close();
+		
 		
 		String output = baos.toString();
 		System.out.print(output);

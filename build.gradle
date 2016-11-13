@@ -1,26 +1,38 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
-    }
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://maven.aksw.org/archiva/repository/internal" }
+    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
 }
 
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+    repositories{
+        mavenLocal()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+            
 
-
+}
+apply plugin: 'spring-boot'
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'distribution'
-apply plugin: 'spring-boot'
-apply plugin: 'maven-publish'
+apply plugin: 'application'
 
 
-// We use Java 7
+// We use Java 8
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+//
+ext {
+    sparqlMapVersion = '0.7.0-SNAPSHOT'
+}
+
 
 // deal with the changing dependency of sparqlmap
 configurations.all {
@@ -34,35 +46,16 @@ configurations{
 }
 
 
-// maven publication
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'org.aksw.sparqlmap'
-            artifactId 'sparqlmap-client'
-            version '0.6.4'
-
-            from components.java 
-        }
-    }
-}
-
 springBoot {
     mainClass = "org.aksw.sparqlmap.web.spring.SparqlmapWebApplication"
 }
 
 jar {
     baseName = 'sparqlmap'
-    version =  '0.7.0-SNAPSHOT'
+    version =  sparqlMapVersion
 }
 
-repositories {
-	mavenLocal()
-    mavenCentral()
-    maven { url "http://maven.aksw.org/archiva/repository/internal" }
-    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
-}
+
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") {
@@ -74,22 +67,27 @@ dependencies {
     compile("org.springframework:spring-tx")
     compile("org.springframework.boot:spring-boot-starter-jetty")
 
+    compileOnly "org.projectlombok:lombok:1.16.10"
+
 
     compile("org.springframework.boot:spring-boot-starter-actuator"){
     	exclude module: "logback-classic"
     }
 
-    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.7.0-SNAPSHOT", changing: true
-    compile 'commons-cli:commons-cli:1.2'
-    compile 'com.beust:jcommander:1.58'
+    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: sparqlMapVersion, changing: true
+    compile 'commons-cli:commons-cli:1.3.1'
+    compile "com.zaxxer:HikariCP:2.5.1"
+    
     testCompile("junit:junit")
+    testCompile 'org.springframework:spring-jdbc:4.1.5.RELEASE'
+
 }
 
 
 
 startScripts {
     classpath = files()
-    mainClassName = 'sparqlmap'
+    mainClassName = 'org.aksw.sparqlmap.cli.SparqlMapCli'
     applicationName = 'sparqlmap'
       doLast {
         def windowsScriptFile = file getWindowsScript()

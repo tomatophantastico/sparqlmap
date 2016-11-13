@@ -1,24 +1,24 @@
 package org.aksw.sparqlmap.web;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.aksw.sparqlmap.core.SparqlMap;
-import org.springframework.context.ApplicationContext;
+
+import com.google.common.collect.Maps;
 
 
 public class SparqlMapContextManager {
 	
 	public static String ROOT = "ROOT";
 	
-	private Map<String, ApplicationContext> resourceString2sparqlmapContext = new HashMap<String, ApplicationContext>();
+	private Map<String, SparqlMap> resource2sparqlmap = Maps.newHashMap();
 	
 	public SparqlMap getSparqlMap(String resource){
-		return resourceString2sparqlmapContext.get(resource).getBean(SparqlMap.class);
+		return resource2sparqlmap.get(resource);
 	}
 	
-	public void putContext(String resource, ApplicationContext context){
-		resourceString2sparqlmapContext.put(resource, context);
+	public void putContext(String resource, SparqlMap context){
+	  resource2sparqlmap.put(resource, context);
 	}
 	
 	
