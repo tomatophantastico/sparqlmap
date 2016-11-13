@@ -3,11 +3,11 @@ jdk:
 - oraclejdk8
 
 before_install:
-  - git clone https://github.com/tomatophantastico/sparqlmap-core/ && cd sparqlmap-core && gradle publishToMavenLocal
+  - git clone https://github.com/tomatophantastico/sparqlmap-core/ && cd sparqlmap-core && ./gradlew publishToMavenLocal
   - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout feature/quoteColumns && mvn install
 
 script:
-  gradle distZip
+  ./gradlew distZip
 
 deploy:
   provider: releases
