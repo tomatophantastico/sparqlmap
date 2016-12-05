@@ -14,10 +14,12 @@ import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
+import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +48,7 @@ public class SparqlMapCli implements ApplicationRunner{
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
+    try{
     OutputStream out;
     if(cliConf.getDumpLocation()==null){
       out = SparqlMapCli.out;
@@ -63,11 +66,15 @@ public class SparqlMapCli implements ApplicationRunner{
     case DUMP:
       RDFFormat dtargetLang =  new RDFFormat(RDFLanguages.nameToLang(cliConf.getOutputFormat()));
       sm.getDumpExecution().dump(cliConf.getMappings(), cliConf.isFast()).forEach(graphmap->
+      {DatasetGraph partDsg = MetaModelQueryDump.convert(graphmap);
+    
       RDFDataMgr.write(
           out,
-          MetaModelQueryDump.convert(graphmap),
-          dtargetLang)
-      );
+          partDsg,
+          RDFFormat.NQUADS);
+    
+
+      });
       break;
     case QUERY:
       TranslationContext tcon = new TranslationContext();
@@ -95,6 +102,10 @@ public class SparqlMapCli implements ApplicationRunner{
     
     out.close();
     
+  } catch (Throwable e){
+    e.printStackTrace();
+  }
+    
     
   }
   
@@ -106,6 +117,7 @@ public class SparqlMapCli implements ApplicationRunner{
   public static void main(String[] args) {
     SpringApplication springApp = new SpringApplication(SparqlMapCli.class,SparqlMapSetup.class);
     springApp.setWebEnvironment(false);
+    springApp.setBannerMode(Mode.OFF);
     springApp.run(args).close();
   }
   
