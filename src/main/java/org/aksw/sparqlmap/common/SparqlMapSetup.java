@@ -1,8 +1,12 @@
 package org.aksw.sparqlmap.common;
 
+import java.io.File;
+
 import org.aksw.sparqlmap.core.ImplementationException;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +21,9 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableAutoConfiguration
 @ComponentScan
 public class SparqlMapSetup {
+  
+  
+  private static final Logger log = LoggerFactory.getLogger(SparqlMapSetup.class);
   
   @Autowired
   BaseConfig conf;
@@ -49,10 +56,10 @@ public class SparqlMapSetup {
         break;
       case ACCESS:
         
-       smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToAccess(conf.getDsLocation());
+       smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToAccess(warnEmptyFile(conf.getDsLocation()));
       
       case CSV:
-        smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToCsv(conf.getDsLocation());
+        smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToCsv(warnEmptyFile(conf.getDsLocation()));
         
         break;
         
@@ -73,6 +80,18 @@ public class SparqlMapSetup {
       smb.mappedBy(conf.getR2rmlfile());
     }
     return smb.create();    
+  }
+  
+  /**
+   * 
+   * @return the exact same String
+   */
+  private String warnEmptyFile(String fileLocation){
+    File dsFile = new File(fileLocation); 
+    if(!dsFile.exists() || dsFile.length()<=0){
+      log.warn("empty datasource file: " + fileLocation);
+    }
+    return fileLocation;
   }
 
 }
