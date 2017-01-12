@@ -19,8 +19,8 @@ public class SparqlMapCliConfig {
 
 
   
-  @NotNull(message="Specify what you want to do, either: DIRECTMAPPING, DUMP, QUERY" )
-  private SparqlMapCliAction action;
+  @NotNull(message="Specify what you want to do, either: DIRECTMAPPING, DUMP, QUERY or WEB" )
+  private SparqlMapAction action;
   
   private String query;
   

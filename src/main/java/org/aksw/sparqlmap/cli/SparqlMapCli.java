@@ -2,6 +2,7 @@ package org.aksw.sparqlmap.cli;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.stream.Collectors;
 
 import org.aksw.sparqlmap.common.BaseConfigValidator;
 import org.aksw.sparqlmap.common.SparqlMapSetup;
@@ -16,6 +17,8 @@ import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.resultset.ResultsFormat;
+import org.apache.metamodel.factory.DataContextFactory;
+import org.apache.metamodel.factory.DataContextProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,6 +29,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
+
+import com.google.common.collect.Lists;
 
 @Configuration
 @EnableAutoConfiguration
@@ -43,6 +48,9 @@ public class SparqlMapCli implements ApplicationRunner{
   @Autowired
   SparqlMap sm;
 
+  
+  DataContextFactory dconf;
+  DataContextProperties props;
   
 
 
@@ -113,13 +121,5 @@ public class SparqlMapCli implements ApplicationRunner{
   public Validator getValidator(){
     return  new BaseConfigValidator();
   }
-  
-  public static void main(String[] args) {
-    SpringApplication springApp = new SpringApplication(SparqlMapCli.class,SparqlMapSetup.class);
-    springApp.setWebEnvironment(false);
-    springApp.setBannerMode(Mode.OFF);
-    springApp.run(args).close();
-  }
-  
-  
+
 }

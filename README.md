@@ -18,7 +18,7 @@ Please note, that no MySQL driver is included. You will need to get it from the 
 
 
 
-##Convert Relational Database into RDF
+##Quick Start
 
 Most of the time, dump creation will take place on the command line.
 In the binary distributions use the sparqlmap command. 
@@ -29,22 +29,33 @@ Let's have a look at some samples:
 ### RDF Dump
 
 ```shell
-./bin/sparqlmap -dburi "jdbc:mysql://192.168.59.103:3306/sparqlmaptest?padCharsWithSpace=true&sessionVariables=sql_mode='ANSI_QUOTES'" -dbuser sparqlmap -dbpass sparqlmap -r2rmlfile src/test/resources/hsql-bsbm/mapping.ttl -dump   
+./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" -ds.username=sparqlmap --ds.password=sparqlmap  -r2rml.file=src/test/resources/hsql-bsbm/mapping.ttl   
 ```
-This sample creates a dump from a mysql database. Take note of the following:
-* The database can be configured by either using the -dburi/-dbusername/-dbpass options or by providing a file with the database connection information, using the -dbfile option.
-* When connecting to MySQL, ANSI_QUOTES and padCharsWithSpace have to be set, as in the above jdbc url.
+Or if you do not have a R2RML mapping, you can create a dump based on a Direct Mapping
+
+```shell
+./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" --ds.username=sparqlmap --ds.password=sparqlmap 
+```
+
 
 ### Mapping generation
 
-Creating a R2RML representation of a default mapping is as easy as this:
+Creating a R2RML representation of a default mapping is as easy as this, just change the action:
 
+```shell
+./bin/sparqlmap --action=directmapping --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" -ds.username=sparqlmap  --ds.password=sparqlmap  
 ```
-./bin/sparqlmap -dbfile ./src/test/resources/hsql-bsbm/db.properties  -generateMapping
-```
-Here the database connection is provided by a file, e.g.:
 
-[db.properties](https://raw.githubusercontent.com/tomatophantastico/sparqlmap/develop/src/test/resources/hsql-bsbm/db.properties)
+
+
+
+
+## Options
+
+### Configuring the Mapping
+
+
+
 
 
 ## Rewrite SPARQL queries into SQL
@@ -52,7 +63,7 @@ Here the database connection is provided by a file, e.g.:
 For rewriting SPARQL queries into SQL SparqlMap can expose a SPARQL endpoint by an embedded tomcat.
 The enpoint is started by 
 ```shell
-./bin/sparqlmap -web
+./bin/sparqlmap --action=web -ds.type=CSV -ds.
 ```
 This will expose an SPARQL endpoint with a little snorql interface.
 
@@ -91,21 +102,98 @@ cd sparqlmap-core
 ```
 
 
+# Actions
 
-## Using with MongoDB
+## CLI
+SparqlMap allows the following command line interactions, selected by the ```--action=<action>´´ parameter
 
-ds.location  the host and port of the mongodb server, e.g.: localhost:11111
-ds.identifier the database name
-ds.username  username
-ds.password  password
+### dump
+### directmapping
+### query
+
+## web
+SparqlMap can be used as a SPARQL enndpoint, for example for exposing a ACCESS database:
+
+ ```bin/sparqlmap --action=web --ds.type=ACCESS --ds.url=mydata.accdb´´ 
+
+The endpoint will be accessible on:
+
+localhost:8080/sparql
+
+Currently, a number of limitations apply:
+* Some the query processing is executed in-memory, which degrades performance
+* There is no further UI for entering and viewing queries
+
+
+
+# Mapping Options
+Existing mapping files can be provided via the r2rmlfile-parameter:
+--r2rmlFile=<filename>
+If this parameter is omitted, a direct mapping will be created.
+
+The direct mapping generation can be modified by following attributes.
+If you just define the  <baseUriPrefix> you should be fine in most cases.
+--dm.baseUriPrefix=http://localhost/baseiri/
+--dm.mappingUriPrefix=<baseUriPrefix>/mapping/
+--dm.vocabUriPrefix=<baseUriPrefix>/instance/
+--dm.instanceUriPrefix=<baseUriPrefix>/vocab/
+--dm.separatorChar=+
+
+# Data Sources
+
+
+## Using with MongoDB (--ds.type=MONGODB2 or --ds.type=MONGODB3)
+--ds.type=MONGODB2 or --ds.type=MONGODB3
+--ds.url  the host and port of the mongodb server, e.g.: localhost:11111
+--ds.dbname the database name
+--ds.username  username
+--ds.password  password
 
 
 ## Using with a JDBC database
 First, make sure that a JDBC4 driver is in the classpath. SparqlMap already contains drivers for the most important FOSS RDBMs, for closed source RDBMs, they have to be added manually.
 
 
-ds.location  the full jdbc url, e.g. jdbc:mysql://localhost:3306/test
-ds.identifier ** not used **
-ds.username  username of the RDBMS
-ds.password  password of the RDBMS
-ds.maxPoolSize max number of connections to the RDBMs, defaults to 10
+--ds.url  the full jdbc url, e.g. jdbc:mysql://localhost:3306/test
+--ds.username  username of the RDBMS
+--ds.password  password of the RDBMS
+--ds.maxPoolSize max number of connections to the RDBMs, defaults to 10
+
+
+## Using with CSV files (--ds.type=CSV)
+For more details check the [Apache MetaModel CSV adapter wiki page](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=65875503)
+
+Required parameters
+--ds.type=CSV If it is not CSV, you will have to look at your other options
+--ds.url=<path> required  The path to the file
+
+Optional parameters and their defaults
+--ds.quoteChar=" Encloses values
+--ds.separatorChar=, default to , values in a row are split according to this value
+--ds.escapeChar=\ for escaping special characters
+--ds.encoding=UTF-8 
+--ds.columnNameLineNumber=1 Starting from 1, 
+--ds.failOnInconsistentRowLength=true defaults to true if the column count varies in the file, this pushes the parser further.
+--ds.multilineValues=false allows multiline values
+
+
+##Excel-Files
+--ds.type=EXCEL  Mandatory
+--ds.url=<path> required  The path to the file
+
+Optional
+--ds.columnNameLineNumber=1
+--ds.SkipEmptyLines=true
+--ds.SkipEmptyColumns=true
+
+
+## Access-Files
+Besides the type, only the file location needs to be provided
+--ds.type=ACCESS  Mandatory
+--ds.url=<path>
+##CouchDB
+--ds.type=COUCHDB  Mandatory
+--ds.url=<httpurl> required  The url of the couchdbserver (using ektorp)
+Optionally:
+--ds.username=<username>
+--ds.password=<password>

@@ -28,8 +28,8 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 @RequestMapping("/")
-public class SparqlMapWeb {
-	Logger log = LoggerFactory.getLogger(SparqlMapWeb.class);
+public class SparqlMapWebController {
+	Logger log = LoggerFactory.getLogger(SparqlMapWebController.class);
 	
 	@Autowired
 	SparqlMapContextManager smManager;

@@ -8,7 +8,12 @@
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix mapping: <http://aksw.org/Projects/sparqlmap/mappings/bsbm/>.
 @prefix rev:     <http://purl.org/stuff/rev#>.
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
+<> a void:Dataset ;
+  dcterms:title "An R2RML mapping of the BVL dataset".
+  
 mapping:Product
       rr:logicalTable
       		[

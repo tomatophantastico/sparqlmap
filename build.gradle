@@ -47,7 +47,7 @@ configurations{
 
 
 springBoot {
-    mainClass = "org.aksw.sparqlmap.web.spring.SparqlmapWebApplication"
+    mainClass = "org.aksw.sparqlmap.web.SparqlMapWebApp"
 }
 
 jar {
@@ -87,7 +87,7 @@ dependencies {
 
 startScripts {
     classpath = files()
-    mainClassName = 'org.aksw.sparqlmap.cli.SparqlMapCli'
+    mainClassName = 'org.aksw.sparqlmap.cli.SparqlMapStarter'
     applicationName = 'sparqlmap'
       doLast {
         def windowsScriptFile = file getWindowsScript()

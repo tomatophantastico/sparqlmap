@@ -1,10 +1,15 @@
 package org.aksw.sparqlmap.common;
 
 import java.io.File;
+import java.util.Map;
 
 import org.aksw.sparqlmap.core.ImplementationException;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
+import org.apache.metamodel.DataContext;
+import org.apache.metamodel.DataContextFactory;
+import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
+import org.apache.metamodel.factory.DataContextPropertiesImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,45 +32,27 @@ public class SparqlMapSetup {
   
   @Autowired
   BaseConfig conf;
+  
+  @Autowired
+  DataSourceConfig dsconf;
+  
+  @Autowired
+  DataContext dc;
     
   @Bean
   public SparqlMap configSparqlMap(){
-    
+    String baseIri = conf.getBaseiri();
+
     //create the datacontext
    
     SparqlMapBuilder.SparqlMapMappingBuilder smb = null;
     
-    DataSourceType dst = conf.getDsType();
-    String baseIri = conf.getBaseiri();
     
-    switch(dst){
-      case JDBC:
-        HikariConfig hconf = new HikariConfig();
-        hconf.setJdbcUrl(conf.getDsLocation());
-        hconf.setUsername(conf.getDsUsername());
-        hconf.setPassword(conf.getDsPassword());
-        hconf.setMaximumPoolSize(conf.getMaxPoolSize());
-        HikariDataSource hds = new HikariDataSource(hconf);
-        
-        smb = SparqlMapBuilder.newSparqlMap(baseIri).connectJdbcBackend(hds);
-        
-        
-        break;
-      case MONGODB3:
-       smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToMongoDb3(conf.getDsLocation(), conf.getDsIdentifier(),conf.getDsUsername(),conf.getDsPassword());
-        break;
-      case ACCESS:
-        
-       smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToAccess(warnEmptyFile(conf.getDsLocation()));
-      
-      case CSV:
-        smb = SparqlMapBuilder.newSparqlMap(baseIri).connectToCsv(warnEmptyFile(conf.getDsLocation()));
-        
-        break;
-        
-      default:
-        throw new ImplementationException(String.format("Sorry, {} is not yet implemented", conf.getDsType().toString()));
-    }
+    
+    
+    smb = SparqlMapBuilder.newSparqlMap(baseIri).connectTo(dc);
+    
+    
     if(conf.getR2rmlfile()==null){
       //use direct mapping
       smb.mappedByDefaultMapping(

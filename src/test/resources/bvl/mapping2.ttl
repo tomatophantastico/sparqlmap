@@ -1,0 +1,30 @@
+@prefix dc:         <http://purl.org/dc/elements/1.1/>
+@prefix elevator:   <https://github.com/AKSW/leds-asp-f-ontologies/blob/master/ontologies/elevator/ontology.ttl#>
+@prefix geo:        <http://www.w3.org/2003/01/geo/>
+@prefix inst:       <https://behindertenverband-leipzig.de/gebaeude/> .
+@prefix mapping:    <https://behindertenverband-leipzig.de/mapping/> .
+@prefix rr:         <http://www.w3.org/ns/r2rml#> .
+@prefix schema:     <http://schema.org/> .
+@prefix unitmea:    <https://github.com/AKSW/leds-asp-f-ontologies/blob/master/ontologies/unit-and-measurements/ontology.ttl#> .
+@prefix placeonto:  <https://behindertenverband-leipzig.de/place-ontology/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<> a void:Dataset ;
+  dcterms:title "An R2RML mapping of the BVL dataset".
+
+#          hasElevatorCabine
+# place1 --------------------------> elevatorcabine
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "\"le-online-extracted-places.csv\""
+    ] ;
+    rr:subjectMap [
+        rr:class placeonto:place ;
+        rr:template "https://behindertenverband-leipzig.de/gebaeude/{ID}" ;
+        rr:termType rr:IRI
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:hasElevatorCabine;
+        rr:objectMap [ rr:template "https://behindertenverband-leipzig.de/gebaeude/{ID}/elevatorCabine" ]
+    ] .

@@ -27,16 +27,18 @@ public class BaseConfigValidator implements Validator{
   
   
   private void validateDataSource(BaseConfig conf, Errors errors ){
-    switch(conf.getDsType()){
-    case ACCESS:
-      
-      if(!new File(conf.getDsLocation()).exists()){
-        errors.rejectValue("dsLocation", "The file does not exist.");
-      }
-      break;
-    
-    }
-    
+//    
+//    
+//    switch(conf.getDs().get("type")){
+//    case ACCESS:
+//      
+//      if(!new File(conf.getDsLocation()).exists()){
+//        errors.rejectValue("dsLocation", "The file does not exist.");
+//      }
+//      break;
+//    
+//    }
+//    
     
     
   }
