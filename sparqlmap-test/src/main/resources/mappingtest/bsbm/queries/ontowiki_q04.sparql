@@ -1,0 +1,27 @@
+
+SELECT DISTINCT ?resourceUri   
+                
+WHERE {  
+{  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/SpatialArea>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/Planet>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/Continent>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/Country>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/Province>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/District>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ns.aksw.org/spatialHierarchy/City>  
+}  
+                 
+} LIMIT 1 

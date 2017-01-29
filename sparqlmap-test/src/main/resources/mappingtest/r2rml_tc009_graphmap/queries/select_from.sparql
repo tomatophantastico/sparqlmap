@@ -1,0 +1,9 @@
+SELECT * 
+FROM <http://example.com/resource/graph_10>
+#FROM NAMED <http://example.com/resource/graph_20>
+{
+  {?s ?p ?o}
+
+
+} 
+

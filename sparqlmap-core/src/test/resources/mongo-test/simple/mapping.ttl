@@ -1,0 +1,38 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.com/example/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.com/base/> .
+
+<TriplesMapEmployee> a rr:TriplesMap;
+        
+   rr:logicalTable [ rr:tableName "employee" ];
+	
+    rr:subjectMap [ rr:template "employee/{id}"; ]; 
+	
+    rr:predicateObjectMap
+    [ 
+      rr:predicate	foaf:name ; 
+      rr:objectMap	[ rr:column "name"; ];
+    ];
+    rr:predicateObjectMap
+    [ 
+      rr:predicate  ex:inDepartment ; 
+      rr:objectMap  [ rr:column "depid"; ];
+    ];
+  .
+
+
+<TriplesMapDepartment> a rr:TriplesMap;
+        
+   rr:logicalTable [ rr:tableName "department" ];
+  
+    rr:subjectMap [ rr:template "department/{id}"; ]; 
+  
+    rr:predicateObjectMap
+    [ 
+      rr:predicate  rdfs:label; 
+      rr:objectMap  [ rr:column "name"; ];
+    ];
+  .

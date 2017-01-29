@@ -1,0 +1,4 @@
+
+SELECT  ?0 ?1  
+            
+WHERE { {?s <http://www.w3.org/2000/01/rdf-schema#label> ?0.} UNION {?s <http://purl.org/dc/elements/1.1/title> ?1.} FILTER (sameTerm(?s, <http://bsbm/10m>)) } 

@@ -1,0 +1,45 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix data:  <http://example.com/base/> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+
+<http://example.com/base/%E6%88%90%E5%88%86>
+        rr:logicalTable        [ rr:tableName  "\"成分\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"使用部\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%88%90%E5%88%86#%E4%BD%BF%E7%94%A8%E9%83%A8>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"植物名\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%88%90%E5%88%86#%E6%A4%8D%E7%89%A9%E5%90%8D>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"皿\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%88%90%E5%88%86#%E7%9A%BF>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"使用部\"" ;
+                                                                        rr:parent  "\"使用部\""
+                                                                      ] ;
+                                                 rr:joinCondition     [ rr:child   "\"植物名\"" ;
+                                                                        rr:parent  "\"名\""
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/%E6%A4%8D%E7%89%A9>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/%E6%88%90%E5%88%86#ref-%E6%A4%8D%E7%89%A9%E5%90%8D;%E4%BD%BF%E7%94%A8%E9%83%A8>
+                               ] ;
+        rr:subjectMap          [ rr:class     <http://example.com/base/%E6%88%90%E5%88%86> ;
+                                 rr:template  "http://example.com/base/%E6%88%90%E5%88%86={\"皿\"};%E6%88%90%E5%88%86={\"植物名\"};%E6%88%90%E5%88%86={\"使用部\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .
+
+<http://example.com/base/%E6%A4%8D%E7%89%A9>
+        rr:logicalTable        [ rr:tableName  "\"植物\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"条件\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%A4%8D%E7%89%A9#%E6%9D%A1%E4%BB%B6>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"使用部\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%A4%8D%E7%89%A9#%E4%BD%BF%E7%94%A8%E9%83%A8>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"名\"" ] ;
+                                 rr:predicate  <http://example.com/base/%E6%A4%8D%E7%89%A9#%E5%90%8D>
+                               ] ;
+        rr:subjectMap          [ rr:class     <http://example.com/base/%E6%A4%8D%E7%89%A9> ;
+                                 rr:template  "http://example.com/base/%E6%A4%8D%E7%89%A9/%E5%90%8D={\"名\"};%E4%BD%BF%E7%94%A8%E9%83%A8={\"使用部\"}"
+                               ] .

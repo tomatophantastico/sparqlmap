@@ -1,0 +1,22 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/Student>
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Added subquery for having acccess to rowid functionality." ;
+        rr:logicalTable        [ rr:sqlQuery  "select *, @sparqlmapCurRow := @sparqlmapCurRow + 1 AS sm_rowid  from \"Student\",(SELECT @sparqlmapCurRow := 0) sparqlmap_rowid;" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"LastName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Student#LastName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"FirstName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Student#FirstName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Student#ID>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Student ;
+                                 rr:template  "http://example.com/base/Student/sm_rowid={\"sm_rowid\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .

@@ -1,0 +1,6 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?resource FROM <http://thesimpsons.com/GraphOverall>
+WHERE {
+  ?resource <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://thesimpsons.com/Person>.
+  FILTER(EXISTS { ?r <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?resource. })
+}

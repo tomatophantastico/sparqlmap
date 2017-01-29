@@ -1,0 +1,11 @@
+SELECT DISTINCT ?resourceUri   
+                
+WHERE {  
+{  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Group>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Organization>  
+}  
+                 
+} LIMIT 1 

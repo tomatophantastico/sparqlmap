@@ -1,0 +1,9 @@
+SELECT DISTINCT ?resourceUri   
+                
+FROM <http://bsbm/10m> 
+WHERE {  
+{  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.geneontology.org/dtds/go.dtd#term>  
+}  
+                 
+} LIMIT 1 

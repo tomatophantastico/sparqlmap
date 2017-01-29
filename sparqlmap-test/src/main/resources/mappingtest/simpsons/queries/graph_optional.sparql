@@ -1,0 +1,7 @@
+SELECT DISTINCT ?s ?g {
+   GRAPH <http://thesimpsons.com/GraphAdult> {?s ?p ?o .}
+   OPTIONAL {GRAPH ?g {?s ?x ?y .}
+           FILTER (?g != <http://thesimpsons.com/GraphAdult>)  
+        
+    }
+} ORDER BY ?s ?g

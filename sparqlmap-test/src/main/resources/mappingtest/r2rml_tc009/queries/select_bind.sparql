@@ -1,0 +1,8 @@
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+
+select ?s ?name {
+?s foaf:name ?o.
+bind(?o as ?name)
+FILTER (?name = "Demi Moore")
+}

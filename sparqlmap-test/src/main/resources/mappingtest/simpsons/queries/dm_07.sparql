@@ -1,0 +1,15 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?_resource ?resource FROM <http://thesimpsons.com/GraphOverall>
+WHERE {
+  {
+    ?resource <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://thesimpsons.com/Person>.
+    BIND(?resource AS ?_resource)
+  }
+  UNION
+  {
+    ?class <http://www.w3.org/2000/01/rdf-schema#subClassOf>+ <http://thesimpsons.com/Person>.
+    ?resource <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class.
+    BIND(?resource AS ?_resource)
+  }
+}
+LIMIT 10

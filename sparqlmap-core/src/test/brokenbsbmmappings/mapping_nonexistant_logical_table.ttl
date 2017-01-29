@@ -1,0 +1,122 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix ex:      <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bsbm:    <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://localhost/bsbmMapping/TriplesMap4>
+	rr:logicalTable [
+		rr:tableName "producturios";
+		];
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum1"
+                        ] ;
+                rr:predicate ex:productPropertyNum1
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum2"
+                        ] ;
+                rr:predicate ex:propertyNum2
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum5"
+                        ] ;
+                rr:predicate ex:productPropertyNum5
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex1"
+                        ] ;
+                rr:predicate ex:productPropertyTex1
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex5"
+                        ] ;
+                rr:predicate ex:productPropertyTex5
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "publishDate" ;
+                          rr:datatype xsd:date
+                        ] ;
+                rr:predicate dc:date
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum3"
+                        ] ;
+                rr:predicate ex:propertyNum3
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex3"
+                        ] ;
+                rr:predicate ex:productPropertyTex3
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "comment"
+                        ] ;
+                rr:predicate rdfs:comment
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "label"
+                        ] ;
+                rr:predicate rdfs:label
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum6"
+                        ] ;
+                rr:predicate ex:productPropertyNum6
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex2"
+                        ] ;
+                rr:predicate ex:propertyTex2
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyNum4"
+                        ] ;
+                rr:predicate ex:propertyNum4
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/Producer{producer}"
+                        ] ;
+                rr:predicate ex:producer
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex4"
+                        ] ;
+                rr:predicate ex:productPropertyTex4
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "propertyTex6"
+                        ] ;
+                rr:predicate ex:propertyTex6
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/Publisher{publisher}"
+                        ] ;
+                rr:predicate dc:publisher
+              ] ;
+      rr:subjectMap
+              [ rr:class bsbm:Product ;
+                rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{producer}/Product{nr}"
+              ] .
+
+

@@ -1,0 +1,17 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/Student_Sport>
+        rr:logicalTable        [ rr:tableName  "\"Student_Sport\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Sport\"" ] ;
+                                 rr:predicate  <http://example.com/base/Student_Sport#Sport>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Student\"" ] ;
+                                 rr:predicate  <http://example.com/base/Student_Sport#Student>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Student_Sport ;
+                                 rr:template  "http://example.com/base/Student_Sport/Student={\"Student\"};Sport={\"Sport\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .

@@ -1,0 +1,4 @@
+SELECT DISTINCT ?s ?o WHERE {
+  GRAPH <http://thesimpsons.com/GraphLisa> {?s ?x ?y .}
+  GRAPH ?g {?s <http://thesimpsons.com/childOf> ?o . }
+} ORDER BY ?s ?o

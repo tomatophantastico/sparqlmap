@@ -1,0 +1,19 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix ex:      <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bsbm:    <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://localhost/bsbmMapping/TriplesMap4>
+      rr:logicalTable
+      		[
+                rr:tableName "product"
+              ] ;
+     
+      rr:subjectMap
+              [ rr:class bsbm:Product ;
+                rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{producer}/Product{nr}"
+              ] .

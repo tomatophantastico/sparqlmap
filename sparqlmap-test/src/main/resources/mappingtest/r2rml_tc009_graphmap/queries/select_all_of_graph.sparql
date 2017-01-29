@@ -1,0 +1,4 @@
+
+
+SELECT * 
+{GRAPH <http://example.com/resource/graph_10> {?s ?p ?o}} 

@@ -1,0 +1,13 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?resource FROM <http://thesimpsons.com/GraphOverall>
+WHERE {
+  { ?resource <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing>. }
+  UNION
+  {
+    ?r <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?resource.
+    FILTER(NOT EXISTS { ?resource <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super. })
+  }
+  FILTER(!REGEX(STR(?resource), "^http://(www.w3.org/(2002/07/owl|2000/01/rdf-schema|1999/02/22-rdf-syntax-ns))#", "i"))
+}
+LIMIT 10

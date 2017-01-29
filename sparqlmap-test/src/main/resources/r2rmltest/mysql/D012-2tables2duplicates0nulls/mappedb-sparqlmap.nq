@@ -1,0 +1,4 @@
+_:BBobX5FSmith <http://example.com/city> "London" .
+_:BSueX5FJones <http://example.com/city> "Madrid" .
+_:BBobX5FSmith <http://xmlns.com/foaf/0.1/name> "Bob Smith" .
+_:BSueX5FJones <http://xmlns.com/foaf/0.1/name> "Sue Jones" .

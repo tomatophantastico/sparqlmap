@@ -1,0 +1,1 @@
+SELECT distinct ?g { GRAPH ?g {?s a ?o}} ORDER BY ?g

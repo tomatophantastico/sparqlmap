@@ -1,0 +1,2 @@
+SELECT ?relation ?object FROM <http://thesimpsons.com/GraphOverall>
+WHERE { <http://thesimpsons.com/Krusty> ?relation ?object. }

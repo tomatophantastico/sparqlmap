@@ -1,0 +1,2 @@
+* in rr:sqlQuery the alias for functions are all quoted. (2d,3b, 11a, 14bc)
+* x||y replaced by concat(x,y) ( 14bc) (This was actually not neccessary)

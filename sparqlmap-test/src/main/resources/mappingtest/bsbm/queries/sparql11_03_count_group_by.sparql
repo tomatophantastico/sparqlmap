@@ -1,0 +1,2 @@
+#fails: aggregates not implemented 
+SELECT ?propNum1 (COUNT(?prod) AS ?no) { ?prod <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/productPropertyNumeric1>  ?propNum1  } GROUP BY ?propNum1

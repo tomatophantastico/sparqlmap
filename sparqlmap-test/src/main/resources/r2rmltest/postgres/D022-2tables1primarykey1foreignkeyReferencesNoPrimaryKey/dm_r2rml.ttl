@@ -1,0 +1,57 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/Source>
+        rr:logicalTable        [ rr:tableName  "\"Source\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"attrB\"" ] ;
+                                 rr:predicate  <http://example.com/base/Source#attrB>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"attrA\"" ] ;
+                                 rr:predicate  <http://example.com/base/Source#attrA>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Source#ID>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"attrB\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"key2attr1\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Target>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Source#ref-attrB>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"attrA\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"key2attr2\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Target>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Source#ref-attrA>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Source ;
+                                 rr:template  "http://example.com/base/Source/ID={\"ID\"}"
+                               ] .
+
+<http://example.com/base/mapping/Target>
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Added subquery for having acccess to rowid functionality." ;
+        rr:logicalTable        [ rr:sqlQuery  "SELECT \"Target\".* , row_number() OVER () as sm_rowid FROM \"Target\";" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"key2attr2\"" ] ;
+                                 rr:predicate  <http://example.com/base/Target#key2attr2>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"key2attr1\"" ] ;
+                                 rr:predicate  <http://example.com/base/Target#key2attr1>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"key1attr2\"" ] ;
+                                 rr:predicate  <http://example.com/base/Target#key1attr2>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"key1attr1\"" ] ;
+                                 rr:predicate  <http://example.com/base/Target#key1attr1>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"litattr1\"" ] ;
+                                 rr:predicate  <http://example.com/base/Target#litattr1>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Target ;
+                                 rr:template  "http://example.com/base/Target/sm_rowid={\"sm_rowid\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .

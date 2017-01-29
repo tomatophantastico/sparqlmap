@@ -1,0 +1,12 @@
+#fails: values not implemented
+prefix : <http://thesimpsons.com/>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?o
+{
+  GRAPH ?g { ?s ?p ?o .
+  VALUES (?g ?p) {
+    (:GraphPublic owl:sameAs)
+    (:GraphAdult owl:sameAs)
+  }}
+}
+ORDER BY ?o

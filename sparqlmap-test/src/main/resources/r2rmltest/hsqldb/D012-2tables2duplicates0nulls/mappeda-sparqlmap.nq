@@ -1,0 +1,4 @@
+_:BhttpX3AX2FX2FJorgsX2DMacBookX2DProX2ElocalX2FbaseiriX2FBobX5FSmithX5F30X2E0 <http://xmlns.com/foaf/0.1/name> "http://Jorgs-MacBook-Pro.local/baseiri/Bob Smith" .
+_:BhttpX3AX2FX2FJorgsX2DMacBookX2DProX2ElocalX2FbaseiriX2FSueX5FJonesX5F20X2E0 <http://xmlns.com/foaf/0.1/name> "http://Jorgs-MacBook-Pro.local/baseiri/Sue Jones" .
+_:BhttpX3AX2FX2FJorgsX2DMacBookX2DProX2ElocalX2FbaseiriX2FBobX5FSmithX5F30X2E0 <http://example.com/amount> "30.0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:BhttpX3AX2FX2FJorgsX2DMacBookX2DProX2ElocalX2FbaseiriX2FSueX5FJonesX5F20X2E0 <http://example.com/amount> "20.0"^^<http://www.w3.org/2001/XMLSchema#integer> .

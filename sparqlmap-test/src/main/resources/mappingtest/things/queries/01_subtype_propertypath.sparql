@@ -1,0 +1,3 @@
+select distinct ?oid {
+?sid <http://aksw.org/Projects/SparqlMap/test/things/subof>+ ?oid
+}

@@ -1,0 +1,2 @@
+#fails: aggregates not implemented 
+SELECT (COUNT(distinct ?o) AS ?no) { ?s a ?o }

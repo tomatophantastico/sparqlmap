@@ -1,0 +1,55 @@
+PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX  dcterms: <http://purl.org/dc/terms/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX  dc:   <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT  ?label
+FROM <http://thesimpsons.com/GraphLisa>
+FROM <http://thesimpsons.com/GraphChild>
+FROM <http://thesimpsons.com/GraphPublic>
+FROM <http://thesimpsons.com/GraphSimpsons>
+FROM NAMED <http://thesimpsons.com/GraphLisa>
+FROM NAMED <http://thesimpsons.com/GraphChild>
+FROM NAMED <http://thesimpsons.com/GraphPublic>
+FROM NAMED <http://thesimpsons.com/GraphSimpsons>
+WHERE
+  { { { { { { { { { OPTIONAL
+                      { <http://rdfs.org/ns/void#triples> skos:prefLabel ?label
+                        FILTER langMatches(lang(?label), "en")
+                      }
+                    OPTIONAL
+                      { <http://rdfs.org/ns/void#triples> skos:prefLabel ?label}
+                  }
+                  OPTIONAL
+                    { <http://rdfs.org/ns/void#triples> foaf:name ?label
+                      FILTER langMatches(lang(?label), "en")
+                    }
+                }
+                OPTIONAL
+                  { <http://rdfs.org/ns/void#triples> foaf:name ?label}
+              }
+              OPTIONAL
+                { <http://rdfs.org/ns/void#triples> dc:title ?label
+                  FILTER langMatches(lang(?label), "en")
+                }
+            }
+            OPTIONAL
+              { <http://rdfs.org/ns/void#triples> dc:title ?label}
+          }
+          OPTIONAL
+            { <http://rdfs.org/ns/void#triples> dcterms:title ?label
+              FILTER langMatches(lang(?label), "en")
+            }
+        }
+        OPTIONAL
+          { <http://rdfs.org/ns/void#triples> dcterms:title ?label}
+      }
+      OPTIONAL
+        { <http://rdfs.org/ns/void#triples> rdfs:label ?label
+          FILTER langMatches(lang(?label), "en")
+        }
+    }
+    OPTIONAL
+      { <http://rdfs.org/ns/void#triples> rdfs:label ?label}
+  }
