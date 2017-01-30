@@ -1,4 +1,4 @@
-package org.aksw.sparqlmap.core.translate.metamodel;
+package org.aksw.sparqlmap.backend.metamodel;
 
 import java.util.Map;
 import java.util.Set;
@@ -8,6 +8,9 @@ import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.Quad;
 
+import lombok.Data;
+
+@Data
 public class TranslationContextMetaModel {
   
   

@@ -15,6 +15,7 @@ import org.apache.jena.ext.com.google.common.collect.Maps;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.WebContent;
 import org.apache.jena.sparql.core.DatasetGraph;
@@ -137,7 +138,7 @@ public class SparqlMapWebController {
 	@RequestMapping("/{context}/dump")
 	public void dump(WebRequest req, @PathVariable String context, HttpServletResponse resp) throws SQLException, IOException{
 		String outFormat = getContentType(req);
-		smManager.getSparqlMap(context).getDumpExecution().dump(resp.getOutputStream(),RDFLanguages.nameToLang(outFormat));
+		smManager.getSparqlMap(context).getDumpExecution().dump(resp.getOutputStream(), RDFLanguages.nameToLang(outFormat));
 	}
 	
 	@RequestMapping("/context")

@@ -26,7 +26,7 @@ public class SparqlMapCliConfig {
   
   private String dumpLocation;
   
-  private String outputFormat;
+  private String outputFormat = "TTL";
   
   private List<String> mappings;
   

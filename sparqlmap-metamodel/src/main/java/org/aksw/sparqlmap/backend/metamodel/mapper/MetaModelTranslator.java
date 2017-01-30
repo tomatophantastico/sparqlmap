@@ -1,6 +1,6 @@
-package org.aksw.sparqlmap.core.mapper;
+package org.aksw.sparqlmap.backend.metamodel.mapper;
 
-import org.aksw.sparqlmap.core.translate.metamodel.TranslationContextMetaModel;
+import org.aksw.sparqlmap.backend.metamodel.TranslationContextMetaModel;
 import org.apache.jena.query.ResultSet;
 
 public class MetaModelTranslator {
