@@ -12,6 +12,26 @@ The SparqlMap Client provides command line and web access to the SparqlMap core.
 Get the latest release on the [release page](https://github.com/tomatophantastico/sparqlmap/releases).
 Please note, that no MySQL driver is included. You will need to get it from the [MySQL page](https://dev.mysql.com/downloads/connector/j/)  and copy it into the ./lib folder.
 
+
+## Building
+
+We use a [patched version](https://github.com/tomatophantastico/metamodel) of [Apache Metamode](http://metamodel.apache.org/), which improves quotation mark handling.
+
+To include it into your SparqlMap-build please install it locally (using [maven](http://maven.apache.org))
+```
+git clone --branch feature/quoteColumns https://github.com/tomatophantastico/metamodel && cd metamodel && mvn install
+```
+
+SparqlMap utilizes gradle, so you can just run
+```
+./gradle installDist
+```
+which will create a distribution in `build/install/sparqlmap`.
+
+
+
+
+
 ## Overview over the mapping process
 
 ![SparqlMap overview](https://raw.github.com/tomatophantastico/sparqlmap/doc/doc/sparqlMap.png)
