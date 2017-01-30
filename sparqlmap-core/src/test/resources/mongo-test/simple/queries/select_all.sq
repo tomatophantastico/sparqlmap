@@ -1,0 +1,1 @@
+select * {?s ?p ?o}

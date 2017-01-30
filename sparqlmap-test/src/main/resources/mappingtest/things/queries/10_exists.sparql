@@ -1,0 +1,5 @@
+select ?sid {
+?sid ?p  ?o.
+
+FILTER ( EXISTS {<http://aksw.org/Projects/SparqlMap/test/things/thing2> ?p ?o} )
+}

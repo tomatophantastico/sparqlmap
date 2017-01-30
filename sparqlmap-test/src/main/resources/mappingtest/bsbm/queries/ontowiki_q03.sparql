@@ -1,0 +1,17 @@
+SELECT DISTINCT ?resourceUri   
+                
+WHERE {  
+{  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty>  
+}  
+                UNION {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty>  
+}  
+                 
+} LIMIT 1 

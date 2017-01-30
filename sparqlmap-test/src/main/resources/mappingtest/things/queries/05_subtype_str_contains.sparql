@@ -1,0 +1,5 @@
+select ?sid {
+?sid ?p  ?o.
+
+FILTER (contains(str(?sid),"http"))
+}

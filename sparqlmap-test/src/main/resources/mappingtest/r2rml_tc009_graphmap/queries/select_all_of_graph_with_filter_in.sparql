@@ -1,0 +1,4 @@
+
+SELECT * 
+{GRAPH ?g {?s ?p ?o} FILTER(?g in (<http://example.com/resource/graph_10>))} 
+

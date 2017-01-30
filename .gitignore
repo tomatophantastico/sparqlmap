@@ -5,3 +5,8 @@
 build
 *.lock
 .settings
+.gradle
+.pmd
+**/.*
+**/bin
+**/target

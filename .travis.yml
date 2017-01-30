@@ -1,0 +1,21 @@
+language: java
+jdk:
+- oraclejdk8
+
+before_install:
+  - git clone https://github.com/tomatophantastico/sparqlmap-core/ && cd sparqlmap-core && ./gradlew publishToMavenLocal
+  - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout 4ef1aa2f4dacc4e1c20d6560422d04a895ca3791 && mvn install
+
+script:
+  ./gradlew distZip
+
+deploy:
+  provider: releases
+  api_key:
+    secure: mXH/7qvtMnUetwsyypbXMoehwBbC8Ldfe5c9/WrNkZ8B5STLklB+YgSvama0sSMrmAeXCVua5fQfp9jev9tQjibKvhYVlZArp5S9ihzc5HFKHD1yH/OkKQxIno+5F4F7OL4ZPaGZ1rtZ8bGiXNPB/4QvwOlcfjtfXEq93wXk89qL2hH9iCoKmEpcECaOt7e0RYFge80iEdHW4ebTZ6x6F2yeOvM4IU0sCygreRCcUi51sEnz9Es+baXMWdMZ8+nPICJ9sffD0eFVoByROXJKqKVEx3qTNt8EX1Nx7mGUWh5BYKH50hBeuV3GH+rPpbjRsiE5ScxCZPdZgPBfmRD4F/VxkkmiP52kMCzuLjczNr08bJi7PZT6ojr/vPjaX3JTccLa1FfyrDaNdHjkLZ8JRHPSyMESsUQwwuYPymA1bZHDGsK/jTJe5KxArGF8v8CJtZSSnbQaGEuPWga77eYhdpPNnBGYIjvujOsIVuPT8NomNqZ94HQ4De0WPV9r3cY3ieO9vhKMwsbO+WQR0sfe8DlkipF3QmIxpCBU8dQJMfjvzinNA9DWCuubh1eO7u5huT0Ixb3sUWsZy6h0t3trJrqJ4yZGwYVdqg/vM4yhAe6CHcz/OgMCFFReJ2cDHje86ARtUn1mV2cvJQdCnx4wXevrU01aZFo9RhV5633r7FQ=
+  file: build/distributions/sparqlmap.zip
+  on:
+    repo: tomatophantastico/sparqlmap
+    branch: develop
+    tags: true
+  skip_cleanup: true

@@ -1,0 +1,5 @@
+CONSTRUCT 
+
+{?s ?p ?o} 
+
+{GRAPH <http://example.com/graph/students> {?s ?p ?o}} 

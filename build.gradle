@@ -1,83 +1,311 @@
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
+        classpath "org.ajoberstar:gradle-git:1.6.0"    
+        classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+
     }
 }
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'distribution'
-apply plugin: 'spring-boot'
-apply plugin: 'maven-publish'
+apply plugin: "org.ajoberstar.grgit"
+apply plugin: "com.github.hierynomus.license"
 
 
-// We use Java 7
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
 
-// deal with the changing dependency of sparqlmap
-configurations.all {
-    // check for updates every build
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+allprojects {
+
+    group = 'org.aksw.sparqlmap'
+    version = '0.7.0'
+}
+
+subprojects {
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'eclipse'
+
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java 
+                artifact testJar{
+                    classifier "test"
+                }
+                artifact sourceJar {
+                    classifier "sources"
+                }
+            }
+           
+        }
+       
+        def name = grgit.branch.current.name
+        def shouldPublish =  name.equals('develop') || name.equals('master') 
+
+
+
+        if(shouldPublish && project.hasProperty('aksw_archiva_user') && project.hasProperty('aksw_archiva_pass')){
+            repositories {
+                mavenLocal()
+                maven {
+                    credentials {
+                        username (aksw_archiva_user )
+                        password (aksw_archiva_pass )
+                    }
+
+                    if(project.version.endsWith('-SNAPSHOT')) {
+                        url "http://maven.aksw.org/archiva/repository/snapshots/"
+                    } else {
+                        url "http://maven.aksw.org/archiva/repository/internal/"
+                    }
+                }
+            }
+        }
+    }
+
+
+    dependencyManagement {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+        }
+        dependencies {
+            dependency ("org.springframework.boot:spring-boot-starter-web:1.4.3.RELEASE")
+
+
+
+
+    //        exclude module: "spring-boot-starter-tomcat"
+    //        exclude module: 'spring-boot-starter-logging'
+    //        exclude module: "logback-classic"
+            dependency ("org.apache.metamodel:MetaModel-full:4.5.4"){
+                exclude module: "Metamodel-spring"
+
+            }
+            dependency ("org.apache.metamodel:MetaModel-core:4.5.4")
+            dependency ("org.apache.jena:jena-arq:3.1.1")
+            dependency ("org.apache.jena:jena-tdb:3.1.1")
+            dependency ("com.zaxxer:HikariCP:2.4.7")
+            dependency ("com.google.guava:guava:21.0")
+
+
+        }
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:Athens-SR2'
+        }
+
+    }
+
+
+
+
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenLocal()
+    mavenCentral()
+    //    maven { url "http://repo.maven.apache.org/maven2" }
+//    maven { url "http://download.java.net/maven/2/" }
+//    maven { url "https://repository.apache.org/content/repositories/releases/" }
+//    maven { url "http://maven.aksw.org/archiva/repository/internal" }
+//    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
+  }
+
+    task testJar(type: Jar) {
+        classifier = 'tests'
+        from sourceSets.test.output
+    }
+
+    task sourceJar(type: Jar) {
+        classifier = 'source'
+        from sourceSets.main.java
+}
 }
 
 
 
-// maven publication
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'org.aksw.sparqlmap'
-            artifactId 'sparqlmap-client'
-            version '0.6.4'
 
-            from components.java 
+
+
+def guavaVersion = '18.0'
+def metaModelVersion  = '4.5.4'
+
+
+subprojects {
+    plugins.withType(JavaPlugin){
+        configurations.all {
+            exclude group: "org.slf4j", module: "log4j-over-slf4j"
+            exclude module: "servlet-api"
+            exclude module: "jsp-api"
+        }
+
+        dependencies{
+            compileOnly "org.projectlombok:lombok:1.16.10"
         }
     }
 }
 
-springBoot {
-    mainClass = "org.aksw.sparqlmap.web.spring.SparqlmapWebApplication"
-}
-
-jar {
-    baseName = 'sparqlmap'
-    version =  '0.6.4-SNAPSHOT'
-}
-
-repositories {
-	mavenLocal()
-    mavenCentral()
-    maven { url "http://maven.aksw.org/archiva/repository/internal" }
-    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
-}
-
-dependencies {
-    // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    	exclude module: "spring-boot-starter-logging"
-    	exclude module: "logback-classic"
-
-    }
-    compile("org.springframework:spring-tx")
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator"){
-    	exclude module: "logback-classic"
-    }
-    // end::actuator[]
+project(':sparqlmap-test'){
+    dependencies {
+        compile ("org.hsqldb:sqltool:2.3.4")
+        compile ("org.hsqldb:hsqldb:2.3.4")
+        compile ("org.apache.jena:jena-tdb")
+        compile ("org.springframework:spring-context")
+        compile ("org.springframework:spring-jdbc")
+        compile ("com.zaxxer:HikariCP")
+        compile ("io.dropwizard.metrics:metrics-core:3.1.0") 
+        compile ('junit:junit:4.11')
+        compile ("com.spotify:docker-client:7.0.2")
+        compile ('org.eobjects.metamodel-extras:MetaModel-extras:4.4.0') 
+        compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0') 
+        compile ("org.apache.metamodel:MetaModel-full") {
+            changing=true
+        }
 
    
-    compile group: "org.aksw.sparqlmap", name: "sparqlmap-core", version: "0.6.4-SNAPSHOT", changing: true
-    compile 'commons-cli:commons-cli:1.2'
-
-    testCompile("junit:junit")
+    }
 }
+
+project(':sparqlmap-mapping'){
+    dependencies {
+        compile ("org.apache.jena:jena-arq")
+        compile ("com.google.guava:guava")
+
+        testCompile project(':sparqlmap-test')
+    }
+}
+
+
+project(':sparqlmap-core'){
+    dependencies {
+        compile project(':sparqlmap-metamodel')
+        testCompile project(':sparqlmap-test')
+    }
+    
+}
+
+project(':sparqlmap-metamodel'){
+    dependencies {
+        compile project(':sparqlmap-mapping')
+        compile ("com.aol.simplereact:cyclops-react:1.0.5") {
+            exclude module:  "slf4j-simple"
+        }
+        compile ("org.apache.metamodel:MetaModel-core") {changing=true}
+        testCompile project(':sparqlmap-test')
+    }
+
+}
+
+project(':sparqlmap-jdbc'){
+    dependencies {
+        compile project(':sparqlmap-mapping')
+        compile ("com.github.jsqlparser:jsqlparser:0.9.6")
+        testCompile project(':sparqlmap-test')
+    }
+
+}
+
+
+project(':sparqlmap-client'){
+
+    
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'application'
+
+
+    dependencies {
+        compile project(':sparqlmap-core')
+        compile("org.springframework.boot:spring-boot-starter-web") {
+                exclude module: "spring-boot-starter-tomcat"
+                exclude module: "log4j-over-slf4j"
+                exclude module: "logback-classic"
+
+        }
+        compile("org.springframework.boot:spring-boot-starter-jetty")
+
+        compile("org.springframework.boot:spring-boot-starter-actuator"){
+                exclude module: "logback-classic"
+                exclude module: "log4j-over-slf4j"
+
+        }
+
+        compile("org.springframework.boot:spring-boot-starter-logging"){
+                exclude module: "log4j-over-slf4j"
+                exclude module: "logback-classic"
+        }
+
+        compile ("com.zaxxer:HikariCP")
+
+
+        compile ("org.apache.metamodel:MetaModel-full")  {
+            changing=true              
+        }
+        compile ('org.eobjects.metamodel-extras:MetaModel-extras:4.4.0') 
+        compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0') 
+        testCompile project(':sparqlmap-test')
+    }
+
+    springBoot {
+          mainClass = "org.aksw.sparqlmap.cli.SparqlMapStarter"
+    }
+    bootRun {
+        if ( project.hasProperty('args') ) {
+            args project.args.split('\\s+')
+        }
+    }
+
+
+    distributions{
+        main {
+            contents {
+                from(new File(rootProject.rootDir , 'README.md')){
+                    into "README.md"
+                }
+            }
+
+        }
+
+    }
+
+    startScripts {
+        classpath = files()
+        mainClassName = 'org.aksw.sparqlmap.cli.SparqlMapStarter'
+        applicationName = 'sparqlmap'
+          doLast {
+            def windowsScriptFile = file getWindowsScript()
+            def unixScriptFile  = file getUnixScript()
+            windowsScriptFile.text = windowsScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=%APP_HOME%\\lib\\*')
+            unixScriptFile.text  = unixScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=$APP_HOME/lib/*')
+        }
+    }
+    
+}
+
+
+
+task tagRelease {
+  description = 'Tags the current head with the project\'s version.'
+  doLast {
+    grgit.tag.add {
+      name = project.version
+      message = "Release of ${project.version}"
+    }
+  }
+}
+
+allprojects {
+    downloadLicenses {
+        includeProjectDependencies = false
+    }
+
+}
+

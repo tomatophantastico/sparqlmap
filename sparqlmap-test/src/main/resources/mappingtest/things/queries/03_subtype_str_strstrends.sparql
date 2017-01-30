@@ -1,0 +1,5 @@
+select ?sid {
+?sid ?p  ?o.
+
+FILTER (STRENDS(str(?sid),"thing3_1"))
+}

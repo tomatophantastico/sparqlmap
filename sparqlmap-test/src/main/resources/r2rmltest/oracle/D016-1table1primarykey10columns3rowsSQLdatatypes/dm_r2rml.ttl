@@ -1,0 +1,39 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix data:  <http://example.com/base/> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+
+vocab:Patient  rr:logicalTable  [ rr:tableName  "\"Patient\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"BirthDate\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#BirthDate>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Height\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Height>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Photo\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Photo>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Weight\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Weight>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Sex\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Sex>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"PaidInAdvance\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#PaidInAdvance>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"FirstName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#FirstName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"EntranceDate\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#EntranceDate>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#ID>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"LastName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#LastName>
+                               ] ;
+        rr:subjectMap          [ rr:class     vocab:Patient ;
+                                 rr:template  "http://example.com/base/Patient/ID={\"ID\"}"
+                               ] .

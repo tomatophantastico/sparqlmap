@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SparqlMap - YASGUI</title>
+  <link rel="icon"  type="image/png" href="yasgui/favicon.png">
+  <link href="yasgui/yasgui.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+  
+	<div id='showcase'></div>
+ <script src="yasgui/yasgui.bundled.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script type="text/javascript">
+  //require('jquery')
+  function getEndpoints() {
+    return $.ajax({
+      url: 'context',
+      type: 'GET' 
+    });
+  }
+
+
+  YASGUI.YASQE.defaults.sparql.endpoint
+	var yasgui = YASGUI(document.getElementById("showcase"),{
+    yasqe : { sparql: {endpoint: '/sparql'}} ,
+    //catalogueEndpoints: [{ endpoint: '/sparql', title: 'local sparqlmap'} ] 
+    catalogueEndpoints : function(yasgui, callback ){
+      getEndpoints().done(function (endpoints){
+        callback(endpoints);
+      }
+        );
+      }
+      //alert('catalogueEndpoints called');
+      //[{ endpoint: '/sparql', title: 'local sparqlmap'} ]
+    });
+
+</script>
+  </body>
+</html>
+
+
+
+
+
+

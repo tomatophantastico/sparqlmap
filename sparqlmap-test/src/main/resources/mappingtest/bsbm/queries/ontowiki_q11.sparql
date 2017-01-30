@@ -1,0 +1,24 @@
+SELECT DISTINCT ?resourceUri   
+                
+WHERE {  
+?resourceUri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?classUri  
+OPTIONAL {  
+?subResourceUri <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?resourceUri  
+}   
+OPTIONAL {  
+?resourceUri <http://ns.ontowiki.net/SysOnt/hidden> ?reg  
+}   
+OPTIONAL {  
+{  
+?resourceUri <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super  
+}  
+                 
+}   
+FILTER (?classUri IN (<http://www.w3.org/2002/07/owl#Class>,<http://www.w3.org/2000/01/rdf-schema#Class>))  
+FILTER (!isBLANK(?resourceUri))  
+FILTER (!BOUND(?reg))  
+FILTER (!REGEX(STR(?resourceUri), "^http://www.w3.org/1999/02/22-rdf-syntax-ns#"))  
+FILTER (!REGEX(STR(?resourceUri), "^http://www.w3.org/2000/01/rdf-schema#"))  
+FILTER (!REGEX(STR(?resourceUri), "^http://www.w3.org/2002/07/owl#"))  
+FILTER (REGEX(STR(?super), "^http://www.w3.org/2002/07/owl#") || !BOUND(?super))  
+} LIMIT 11 

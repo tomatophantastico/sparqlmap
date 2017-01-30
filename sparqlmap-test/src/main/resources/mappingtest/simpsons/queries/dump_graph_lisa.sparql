@@ -1,0 +1,3 @@
+
+SELECT distinct ?s ?p ?o FROM <http://thesimpsons.com/GraphLisa>
+WHERE { ?s ?p ?o } ORDER BY ?s ?p ?o

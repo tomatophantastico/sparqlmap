@@ -1,0 +1,6 @@
+package org.aksw.sparqlmap.common;
+
+public enum DataSourceType {
+  JDBC,MONGODB2,MONGODB3,COUCHDB,HBASE,CASSANDRA,ELASTIC,SALESFORCE,SUGARCRM,CSV,EXCEL,ACCESS,XML,JSON
+
+}

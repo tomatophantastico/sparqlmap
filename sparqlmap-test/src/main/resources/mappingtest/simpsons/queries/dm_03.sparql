@@ -1,0 +1,8 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?resource FROM <http://thesimpsons.com/GraphOverall>
+WHERE {
+  ?r <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?resource.
+  OPTIONAL { ?resource <http://www.w3.org/2000/01/rdf-schema#label> ?label. }
+  FILTER((REGEX(STR(?resource), "Person", "i")) || (REGEX(STR(?label), "Person", "i")))
+}
+LIMIT 10

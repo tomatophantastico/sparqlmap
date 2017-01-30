@@ -1,0 +1,21 @@
+SELECT DISTINCT ?s ?0 ?1 ?2 ?3 FROM <http://thesimpsons.com/GraphOverall>
+WHERE {
+  ?s ?p ?o.
+  OPTIONAL {
+    ?s <http://www.w3.org/2000/01/rdf-schema#comment> ?0.
+    FILTER((ISLITERAL(?0)) || (ISIRI(?0)))
+  }
+  OPTIONAL {
+    ?s <http://purl.org/dc/terms/description> ?1.
+    FILTER((ISLITERAL(?1)) || (ISIRI(?1)))
+  }
+  OPTIONAL {
+    ?s <http://purl.org/dc/elements/1.1/description> ?2.
+    FILTER((ISLITERAL(?2)) || (ISIRI(?2)))
+  }
+  OPTIONAL {
+    ?s <http://purl.org/dc/terms/abstract> ?3.
+    FILTER((ISLITERAL(?3)) || (ISIRI(?3)))
+  }
+  FILTER((?s = <http://thesimpsons.com/GraphOverall>) || (?s = <http://thesimpsons.com/GraphOverall>))
+}

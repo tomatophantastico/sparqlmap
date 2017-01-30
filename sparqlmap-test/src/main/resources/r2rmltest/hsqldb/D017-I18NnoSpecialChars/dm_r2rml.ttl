@@ -1,0 +1,49 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/植物>
+        rr:logicalTable        [ rr:tableName  "\"植物\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"条件\"" ] ;
+                                 rr:predicate  <http://example.com/base/植物#条件>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"使用部\"" ] ;
+                                 rr:predicate  <http://example.com/base/植物#使用部>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"名\"" ] ;
+                                 rr:predicate  <http://example.com/base/植物#名>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:植物 ;
+                                 rr:template  "http://example.com/base/植物/名={\"名\"};使用部={\"使用部\"}"
+                               ] .
+
+<http://example.com/base/mapping/成分>
+        rr:logicalTable        [ rr:tableName  "\"成分\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"使用部\"" ] ;
+                                 rr:predicate  <http://example.com/base/成分#使用部>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"植物名\"" ] ;
+                                 rr:predicate  <http://example.com/base/成分#植物名>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"皿\"" ] ;
+                                 rr:predicate  <http://example.com/base/成分#皿>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"使用部\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"使用部\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/植物>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/成分#ref-使用部>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"植物名\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"名\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/植物>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/成分#ref-植物名>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:成分 ;
+                                 rr:template  "http://example.com/base/成分/皿={\"皿\"};植物名={\"植物名\"};使用部={\"使用部\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .

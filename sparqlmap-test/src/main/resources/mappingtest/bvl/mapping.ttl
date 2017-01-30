@@ -1,0 +1,231 @@
+@prefix dc:         <http://purl.org/dc/elements/1.1/>
+@prefix elevator:   <https://github.com/AKSW/leds-asp-f-ontologies/blob/master/ontologies/elevator/ontology.ttl#>
+@prefix geo:        <http://www.w3.org/2003/01/geo/>
+@prefix inst:       <http://behindertenverband-leipzig.de/place/> .
+@prefix mapping:    <http://behindertenverband-leipzig.de/mapping/> .
+@prefix rr:         <http://www.w3.org/ns/r2rml#> .
+@prefix schema:     <http://schema.org/> .
+@prefix unitmea:    <https://github.com/AKSW/leds-asp-f-ontologies/blob/master/ontologies/unit-and-measurements/ontology.ttl#> .
+@prefix placeonto:  <http://behindertenverband-leipzig.de/place-ontology/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<> a void:Dataset ;
+  dcterms:title "An R2RML mapping for the behindertenverband-leipzig (BVL) ".
+
+#
+# Was NOT generated automatically, but based on the ontologies of https://github.com/AKSW/leds-asp-f-ontologies
+#
+
+# information about a place (place1)
+<http://behindertenverband-leipzig.de/place>
+        # target table
+        rr:logicalTable [
+            rr:tableName "bvl-gebaeude"
+        ] ;
+        # subject information
+        rr:subjectMap [
+            rr:class placeonto:place ;
+            rr:template "http://behindertenverband-leipzig.de/place/{ID}"
+        ] ;
+
+        # ID of the building
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"ID\"" ] ;
+            rr:predicate placeonto:ID
+        ] ;
+
+        # Title of the building
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"Titel\"" ] ;
+            rr:predicate dc:title
+        ] ;
+
+        # Address
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"Strasse\"" ] ; rr:predicate schema:streetAddress
+        ] ;
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"PLZ\"" ] ; rr:predicate schema:postalCode
+        ] ;
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"Ort\"" ] ; rr:predicate schema:addressLocality
+        ] ;
+        # Geolocation
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"Latitude\"" ] ; rr:predicate geo:lat
+        ] ;
+        rr:predicateObjectMap [
+            rr:objectMap [ rr:column "\"Longitude\"" ] ; rr:predicate geo:long
+        ] .
+
+
+#
+# Information about elevator cabine
+#
+
+#          hasElevatorCabine
+# place1 --------------------------> elevatorcabine
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:class placeonto:place ;
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:hasElevatorCabine;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine" ]
+    ] .
+
+
+#                   isAvailable
+# elevatorCabine ---------------> "ja"
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:class elevator:ElevatorCabine ;
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:isAvailable;
+        rr:objectMap [ rr:column "\"Aufzug-in-der-Einrichtung-vorhanden\"" ]
+    ] .
+
+
+#                  hasDoorWidth                                 cm
+# elevatorCabine ----------------> elevatorCabine/doorWidth ---------> "..."
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:hasDoorWidth;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine/doorWidth" ]
+    ] .
+
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine/doorWidth"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:cm;
+        rr:objectMap [ rr:column "\"Aufzug-Tuerbreite-cm\"" ]
+    ] .
+
+
+#                  width                              cm
+# elevatorCabine ------------> elevatorCabineWidth ---------> ".."
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:width;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabineWidth" ]
+    ] .
+
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabineWidth"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:cm;
+        rr:objectMap [ rr:column "\"Aufzug-Breite-Innenkabine-cm\"" ]
+    ] .
+
+
+#                  length                              cm
+# elevatorCabine ------------> elevatorCabineLength ---------> ".."
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:length;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabineLength" ]
+    ] .
+
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabineLength"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:cm;
+        rr:objectMap [ rr:column "\"Aufzug-Tiefe-Innenkabine-cm\"" ]
+    ] .
+
+
+#                  highestDistanceOfControlPanelButtonFromGroundInside                                    cm
+# elevatorCabine --------------------------------------------------------> elevatorHighestButtonInside ---------> ".."
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:highestDistanceOfControlPanelButtonFromGroundInside;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorHighestButtonInside" ]
+    ] .
+
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorHighestButtonInside"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:cm;
+        rr:objectMap [ rr:column "\"Aufzug-Hoehe-oberster-Bedienknopf-in-Innenkabine-cm\"" ]
+    ] .
+
+
+#                  highestDistanceOfControlPanelButtonFromGroundOutside                                    cm
+# elevatorCabine --------------------------------------------------------> elevatorHighestButtonOutside ---------> ".."
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorCabine"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate elevator:highestDistanceOfControlPanelButtonFromGroundOutside;
+        rr:objectMap [ rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorHighestButtonOutside" ]
+    ] .
+
+[] a rr:TriplesMap;
+    rr:logicalTable [
+        rr:tableName "bvl-gebaeude"
+    ] ;
+    rr:subjectMap [
+        rr:template "http://behindertenverband-leipzig.de/place/{ID}/elevatorHighestButtonOutside"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate unitmea:cm;
+        rr:objectMap [ rr:column "\"Aufzug-Hoehe-oberster-Bedienknopf-außerhalb-cm\"" ]
+    ] .

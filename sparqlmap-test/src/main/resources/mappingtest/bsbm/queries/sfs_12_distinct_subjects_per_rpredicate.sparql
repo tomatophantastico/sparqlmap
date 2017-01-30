@@ -1,0 +1,2 @@
+#fails: aggregates not implemented 
+SELECT  ?p (COUNT(DISTINCT ?s ) AS ?count ) { ?s ?p ?o } GROUP BY ?p ORDER BY ?count

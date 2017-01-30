@@ -1,0 +1,4 @@
+
+
+SELECT distinct ?g
+{GRAPH ?g {?s ?p ?o}} 

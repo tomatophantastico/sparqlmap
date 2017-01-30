@@ -1,0 +1,19 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/Person>
+        rr:logicalTable        [ rr:tableName  "\"Person\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"DateOfBirth\"" ] ;
+                                 rr:predicate  <http://example.com/base/Person#DateOfBirth>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Name\"" ] ;
+                                 rr:predicate  <http://example.com/base/Person#Name>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Person#ID>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Person ;
+                                 rr:template  "http://example.com/base/Person/ID={\"ID\"}"
+                               ] .

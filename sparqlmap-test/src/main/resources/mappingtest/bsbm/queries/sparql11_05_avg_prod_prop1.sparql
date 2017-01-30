@@ -1,0 +1,2 @@
+SELECT (avg(?propNum1) AS ?avgpropnum1) 
+{ ?prod <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/productPropertyNumeric1>  ?propNum1  }

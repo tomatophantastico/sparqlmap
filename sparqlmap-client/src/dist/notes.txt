@@ -1,0 +1,6 @@
+for further information on SparqlMap, please visit:
+
+https://github.com/tomatophantastico/sparqlmap
+
+
+Many thanks.

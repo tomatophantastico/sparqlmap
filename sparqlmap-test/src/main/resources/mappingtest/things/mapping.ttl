@@ -1,0 +1,43 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix : <http://aksw.org/Projects/SparqlMap/test/things/> .
+
+<#TriplesMapThing1>
+    rr:logicalTable [ rr:tableName "thing1" ];
+    rr:subjectMap [
+        rr:template "http://aksw.org/Projects/SparqlMap/test/things/{id}";
+    ];
+    rr:predicateObjectMap [
+      rr:predicate :label;
+        rr:objectMap [ rr:column "label" ];
+    ];
+    .
+
+<#TriplesMapThing2>
+    rr:logicalTable [ rr:tableName "thing2" ];
+    rr:subjectMap [
+        rr:template "http://aksw.org/Projects/SparqlMap/test/things/{id}";
+    ];
+    rr:predicateObjectMap [
+      rr:predicate :label;
+        rr:objectMap [ rr:column "label" ];
+    ];
+    rr:predicateObjectMap [
+      rr:predicate :subof;
+        rr:objectMap [ rr:template "http://aksw.org/Projects/SparqlMap/test/things/{subof}" ];
+    ];
+    .
+<#TriplesMapThing3>
+    rr:logicalTable [ rr:tableName "thing3" ];
+    rr:subjectMap [
+        rr:template "http://aksw.org/Projects/SparqlMap/test/things/{id}";
+    
+    ];
+    rr:predicateObjectMap [
+      rr:predicate :label;
+        rr:objectMap [ rr:column "label" ];
+    ];
+    rr:predicateObjectMap [
+      rr:predicate :subof;
+        rr:objectMap [ rr:template "http://aksw.org/Projects/SparqlMap/test/things/{subof}" ];
+    ];
+    .    

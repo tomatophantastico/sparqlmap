@@ -1,0 +1,186 @@
+@prefix rr:    <http://www.w3.org/ns/r2rml#> .
+@prefix mapping: <http://example.com/base/> .
+@prefix vocab: <http://example.com/base/> .
+@prefix inst:  <http://example.com/base/> .
+
+<http://example.com/base/mapping/Addresses>
+        rr:logicalTable        [ rr:tableName  "\"Addresses\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"state\"" ] ;
+                                 rr:predicate  <http://example.com/base/Addresses#state>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"city\"" ] ;
+                                 rr:predicate  <http://example.com/base/Addresses#city>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Addresses#ID>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Addresses ;
+                                 rr:template  "http://example.com/base/Addresses/ID={\"ID\"}"
+                               ] .
+
+<http://example.com/base/mapping/TaskAssignments>
+        rr:logicalTable        [ rr:tableName  "\"TaskAssignments\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"worker\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"ID\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/People>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-worker>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptName\"" ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#deptName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"project\"" ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#project>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"project\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"name\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Projects>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-project>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptName\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"deptName\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Projects>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-deptName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptName\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"name\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-deptName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptCity\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"city\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptCity\"" ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptCity\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"deptCity\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Projects>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#ref-deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"worker\"" ] ;
+                                 rr:predicate  <http://example.com/base/TaskAssignments#worker>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:TaskAssignments ;
+                                 rr:template  "http://example.com/base/TaskAssignments/worker={\"worker\"};project={\"project\"}"
+                               ] .
+
+<http://example.com/base/mapping/Projects>
+        rr:logicalTable        [ rr:tableName  "\"Projects\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptCity\"" ] ;
+                                 rr:predicate  <http://example.com/base/Projects#deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Projects#deptName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"name\"" ] ;
+                                 rr:predicate  <http://example.com/base/Projects#name>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"lead\"" ] ;
+                                 rr:predicate  <http://example.com/base/Projects#lead>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"lead\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"ID\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/People>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Projects#ref-lead>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptCity\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"city\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Projects#ref-deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptName\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"name\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Projects#ref-deptName>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Projects ;
+                                 rr:template  "http://example.com/base/Projects/lead={\"lead\"};name={\"name\"};deptName={\"deptName\"};deptCity={\"deptCity\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .
+
+<http://example.com/base/mapping/Department>
+        rr:logicalTable        [ rr:tableName  "\"Department\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"manager\"" ] ;
+                                 rr:predicate  <http://example.com/base/Department#manager>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"city\"" ] ;
+                                 rr:predicate  <http://example.com/base/Department#city>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"name\"" ] ;
+                                 rr:predicate  <http://example.com/base/Department#name>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/Department#ID>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"manager\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"ID\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/People>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Department#ref-manager>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:Department ;
+                                 rr:template  "http://example.com/base/Department/ID={\"ID\"}"
+                               ] .
+
+<http://example.com/base/mapping/People>
+        rr:logicalTable        [ rr:tableName  "\"People\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptCity\"" ] ;
+                                 rr:predicate  <http://example.com/base/People#deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"fname\"" ] ;
+                                 rr:predicate  <http://example.com/base/People#fname>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"addr\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"ID\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Addresses>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/People#ref-addr>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"deptName\"" ] ;
+                                 rr:predicate  <http://example.com/base/People#deptName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"addr\"" ] ;
+                                 rr:predicate  <http://example.com/base/People#addr>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptCity\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"city\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/People#ref-deptCity>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ID\"" ] ;
+                                 rr:predicate  <http://example.com/base/People#ID>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptName\""^^<http://www.w3.org/2001/XMLSchema#string> ;
+                                                                        rr:parent  "\"name\""^^<http://www.w3.org/2001/XMLSchema#string>
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Department>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/People#ref-deptName>
+                               ] ;
+        rr:subjectMap          [ rr:class     inst:People ;
+                                 rr:template  "http://example.com/base/People/ID={\"ID\"}"
+                               ] .

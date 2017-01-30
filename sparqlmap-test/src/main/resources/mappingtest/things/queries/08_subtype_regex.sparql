@@ -1,0 +1,5 @@
+select ?sid {
+?sid ?p  ?o.
+
+FILTER (regex(?o,"THing1_1","i"))
+}

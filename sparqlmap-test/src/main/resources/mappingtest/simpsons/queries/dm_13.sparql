@@ -1,0 +1,3 @@
+SELECT DISTINCT ?resource FROM <http://thesimpsons.com/GraphOverall>
+WHERE { ?resource <http://thesimpsons.com/Krusty> ?other. }
+LIMIT 7
