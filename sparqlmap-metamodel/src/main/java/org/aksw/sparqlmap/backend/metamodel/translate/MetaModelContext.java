@@ -1,4 +1,4 @@
-package org.aksw.sparqlmap.core.translate.metamodel;
+package org.aksw.sparqlmap.backend.metamodel.translate;
 
 import org.aksw.sparqlmap.core.ContextConfiguration;
 import org.apache.metamodel.DataContext;

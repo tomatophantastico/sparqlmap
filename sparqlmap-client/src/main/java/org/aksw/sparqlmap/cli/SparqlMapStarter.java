@@ -7,12 +7,9 @@ import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
 
 import com.google.common.collect.Lists;
-
-@SpringBootApplication
-@EnableAutoConfiguration(exclude={org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class})
 
 public class SparqlMapStarter {
   
@@ -24,7 +21,7 @@ public class SparqlMapStarter {
       springApp = new SpringApplication(SparqlMapWebController.class,ContextManagerConfiguration.class,SparqlMapSetup.class);
       springApp.run(args);
     }else{
-      springApp = new SpringApplication(SparqlMapCli.class,SparqlMapSetup.class);
+      springApp = new SpringApplication(SparqlMapSetup.class,SparqlMapCli.class);
       springApp.setWebEnvironment(false);
       springApp.setBannerMode(Mode.OFF);
       springApp.run(args).close();

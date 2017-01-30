@@ -1,4 +1,4 @@
-package org.aksw.sparqlmap.core.translate.metamodel;
+package org.aksw.sparqlmap.backend.metamodel.translate;
 
 import java.util.Collection;
 import java.util.HashSet;

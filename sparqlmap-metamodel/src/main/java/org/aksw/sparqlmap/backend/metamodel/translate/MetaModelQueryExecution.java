@@ -1,8 +1,9 @@
-package org.aksw.sparqlmap.core.translate.metamodel;
+package org.aksw.sparqlmap.backend.metamodel.translate;
 
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
+import org.aksw.sparqlmap.backend.metamodel.TranslationContextMetaModel;
 import org.aksw.sparqlmap.core.errors.ImplementationException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
@@ -27,9 +28,9 @@ public class MetaModelQueryExecution implements QueryExecution{
     super();
 
     
-    this.query = tc.tcontext.getQuery();
+    this.query = tc.getTcontext().getQuery();
     
-    dataset = DatasetImpl.wrap(MetaModelQueryDump.assembleDs(tc.tcontext, dcontext)); 
+    dataset = DatasetImpl.wrap(MetaModelQueryDump.assembleDs(tc.getTcontext(), dcontext)); 
     
     
   }

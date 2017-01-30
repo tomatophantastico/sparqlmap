@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.aksw.sparqlmap.backend.metamodel.DumperMetaModel;
+import org.aksw.sparqlmap.backend.metamodel.TranslationContextMetaModel;
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryExecution;
 import org.aksw.sparqlmap.core.errors.SparqlMapException;
 import org.aksw.sparqlmap.core.mapper.finder.Binder;
 import org.aksw.sparqlmap.core.mapper.finder.FilterFinder;
@@ -21,10 +25,6 @@ import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
-import org.aksw.sparqlmap.core.translate.metamodel.DumperMetaModel;
-import org.aksw.sparqlmap.core.translate.metamodel.MetaModelContext;
-import org.aksw.sparqlmap.core.translate.metamodel.MetaModelQueryExecution;
-import org.aksw.sparqlmap.core.translate.metamodel.TranslationContextMetaModel;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.apache.jena.graph.Graph;
@@ -178,8 +178,8 @@ public class SparqlMap {
   }
   
   @Deprecated
-  public void dump(OutputStream out, Lang format){
-    new DumperMetaModel(new MetaModelContext(this.dataContext, this.contextConf), mapping).dump(out,format);
+  public void dump(OutputStream out, Lang lang){
+    new DumperMetaModel(new MetaModelContext(this.dataContext, this.contextConf), mapping).dump(out, lang);
    
     
   }

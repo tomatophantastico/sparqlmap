@@ -129,14 +129,21 @@ mvn install
 # Actions
 
 ## CLI
-SparqlMap allows the following command line interactions, selected by the ```--action=<action>´´ parameter
+SparqlMap allows the following command line interactions, selected by the `--action=<action>´ parameter
 
 ### dump
 
-This creates a dump 
+This creates a dump of the mapped database. You can specify the outputformat, using the `--format=<FORMAT>` parameter.
+Supported is TURTLE,  TRIG, NTRIPLES and NQUADS.
+Triple serializations simply ignore the graph definitions of the mappings. A triple that occurs in multiple graphs will consequently appear multiple times in the result.
 
 ### directmapping
+
+A R2RML mapping is created, based on the concept of a direct mapping, always yields TURTLE output.
+
 ### query
+
+A query is executed and the result is returned on the command line.
 
 ## web
 SparqlMap can be used as a SPARQL enndpoint, for example for exposing a ACCESS database:

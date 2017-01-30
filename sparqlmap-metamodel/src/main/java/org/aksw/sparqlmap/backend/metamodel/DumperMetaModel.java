@@ -1,4 +1,4 @@
-package org.aksw.sparqlmap.core.translate.metamodel;
+package org.aksw.sparqlmap.backend.metamodel;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,17 +9,27 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryDump;
 import org.aksw.sparqlmap.core.Dumper;
+import org.aksw.sparqlmap.core.errors.SystemInitializationError;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
+import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
+import org.apache.jena.graph.impl.CollectionGraph;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.writer.NQuadsWriter;
+import org.apache.jena.riot.writer.NTriplesWriter;
+import org.apache.jena.riot.writer.TriGWriter;
+import org.apache.jena.riot.writer.TriGWriterBlocks;
+import org.apache.jena.riot.writer.TurtleWriter;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.sparql.util.Context;
 
 import com.google.common.collect.Multimap;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -55,51 +65,31 @@ public class DumperMetaModel implements Dumper{
 
 
   @Override
-  public Iterator<Quad> streamDump() {
+  public Stream<Quad> streamDump() {
+    
+    return dump(null, true).flatMap(quadbucket -> {
+      Collection<Quad> quads = Lists.newArrayList();
+      quadbucket.forEach((graph, triple) -> {
+        quads.add(new Quad(graph, triple));
+      });
+      return quads.stream();
+      
+    });
     
     
-    return dumpDatasetGraph().find();
-    
-//    List<Iterator<Quad>> quadIters = Lists.newArrayList();
-//    
-//    
-//    for(String mappingUri : Sets.newTreeSet(r2rmlMapping.getQuadMaps().keys())){
-//      
-//      List<QuadMap> quadMaps  = Lists.newArrayList(r2rmlMapping.getQuadMaps().get(mappingUri));
-//      //get the Logical table from the first quad map, they *must* be all the same by R2RML convention
-//      LogicalTable ltable = quadMaps.get(0).getLogicalTable();
-//      //get all columns mentioned in the quads
-//      
-//      
-//      MetaModelQueryWrapper qw = new MetaModelQueryWrapper(mcontext);
-//       
-//      int quadcount = 0; 
-//       
-//       for(QuadMap quadMap: quadMaps){
-//         Quad dumpQuad = new Quad(NodeFactory.createVariable("g_" + quadcount ), 
-//               NodeFactory.createVariable("s"), NodeFactory.createVariable("p_"+quadcount), NodeFactory.createVariable("o_"+quadcount));
-//         quadcount++;
-//         
-//         qw.addQuad(dumpQuad, quadMap, true);
-//
-//        }
-//       
-//      
-//       quadIters.add(new QueryExecutor(qw, mcontext.getConConf().getBaseUri(),mcontext.getDataContext()));
-//
-//    }
-//    return     Iterators.concat(quadIters.iterator());
   }
 
 
-
-  public void streamDump(OutputStream stream) {
+  /**
+   * Write an NQuads serailization into the outoutstream
+   */
+  public void streamDump(OutputStream outstream) {
     
     
 
-    NQuadsWriter.write(stream, streamDump());
+    NQuadsWriter.write(outstream, streamDump().iterator());
     try {
-      stream.flush();
+      outstream.flush();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -109,14 +99,31 @@ public class DumperMetaModel implements Dumper{
   
   
   /**
-   * Currently materializes the data in memory before: beware!
    * @param out
    * @param format
    */
-  public void dump(OutputStream out, Lang format){
+  public void dump(OutputStream out, Lang lang){
     
-    RDFDataMgr.write(out, dumpDatasetGraph(), format);
-    
+    if(lang.equals(Lang.NQUADS)){
+      NQuadsWriter.write(out, streamDump().iterator() );
+    }else if(Lang.TURTLE.equals(lang)){
+      TurtleWriter writer = new TurtleWriter();
+      dump(null, true).map(quads ->  new CollectionGraph(quads.values()) ).forEach(graph -> {
+        writer.write(out, graph,null,null,new Context());
+      });
+
+    }else if(Lang.NTRIPLES.equals(lang)){ 
+      NTriplesWriter.write(out, streamDump().map(quad -> quad.asTriple()).iterator());
+    }else if(Lang.TRIG.equals(lang)){
+      TriGWriterBlocks writer = new TriGWriterBlocks();
+      
+      dump(null,true).map(MetaModelQueryDump::convert).forEach(dsg -> {
+        writer.write(out, dsg, null, null, new Context());
+
+      });
+    }else{
+      throw new SystemInitializationError(String.format("Unupported output format, currently supported is: NTRIPELS,NQUADS, TURTLE, TRIG", lang));
+    }
   }
   
   /**

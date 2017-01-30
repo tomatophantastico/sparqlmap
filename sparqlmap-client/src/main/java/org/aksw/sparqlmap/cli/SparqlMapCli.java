@@ -4,14 +4,15 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.stream.Collectors;
 
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryDump;
 import org.aksw.sparqlmap.common.BaseConfigValidator;
 import org.aksw.sparqlmap.common.SparqlMapSetup;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.TranslationContext;
-import org.aksw.sparqlmap.core.translate.metamodel.MetaModelQueryDump;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
@@ -25,6 +26,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +34,8 @@ import org.springframework.validation.Validator;
 
 import com.google.common.collect.Lists;
 
-//@Configuration
-//@EnableAutoConfiguration
-//@ComponentScan
+@Configuration
+@ComponentScan
 public class SparqlMapCli implements ApplicationRunner{
   
   
@@ -72,17 +73,8 @@ public class SparqlMapCli implements ApplicationRunner{
           dmtargetLang.getLang());
       break;
     case DUMP:
-      RDFFormat dtargetLang =  new RDFFormat(RDFLanguages.nameToLang(cliConf.getOutputFormat()));
-      sm.getDumpExecution().dump(cliConf.getMappings(), cliConf.isFast()).forEach(graphmap->
-      {DatasetGraph partDsg = MetaModelQueryDump.convert(graphmap);
-    
-      RDFDataMgr.write(
-          out,
-          partDsg,
-          RDFFormat.NQUADS);
-    
-
-      });
+      Lang dtargetLang =  RDFLanguages.nameToLang(cliConf.getOutputFormat());
+      sm.getDumpExecution().dump(out, dtargetLang);
       break;
     case QUERY:
       TranslationContext tcon = new TranslationContext();
