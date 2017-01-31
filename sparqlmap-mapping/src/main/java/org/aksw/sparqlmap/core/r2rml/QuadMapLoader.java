@@ -89,7 +89,7 @@ public class QuadMapLoader {
           
           // resolve referencing maps
           
-          resolveTermMapReferencing(quadMaps);
+         
           
   
           // collect all the graph information
@@ -123,7 +123,7 @@ public class QuadMapLoader {
       }
 
     }
-    
+    resolveTermMapReferencing(quadMaps);
     
     
     return quadMaps;

@@ -54,6 +54,9 @@ public class R2RMLModelLoader {
     
     String desc = loadDescription(toLoad);
     
+    
+    
+    
     //load the triples maps
     
     R2RMLMapping mapping = new R2RMLMapping(QuadMapLoader.load(toLoad, baseIri),original,desc);
