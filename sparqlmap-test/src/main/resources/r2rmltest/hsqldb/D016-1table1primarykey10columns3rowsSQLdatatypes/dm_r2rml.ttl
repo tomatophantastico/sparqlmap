@@ -5,49 +5,49 @@
 
 <http://example.com/base/mapping/Patient>
         rr:logicalTable        [ rr:tableName  "\"Patient\"" ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Sex\"" ] ;
-                                 rr:predicate  <http://example.com/base/Patient#Sex>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Height\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#double>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/Patient#Height>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Photo\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#base64Binary>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/Patient#Photo>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"FirstName\"" ] ;
-                                 rr:predicate  <http://example.com/base/Patient#FirstName>
-                               ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"ID\"" ;
                                                  rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
                                                ] ;
                                  rr:predicate  <http://example.com/base/Patient#ID>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"EntranceDate\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#dateTime>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/Patient#EntranceDate>
                                ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"PaidInAdvance\"" ;
                                                  rr:datatype  <http://www.w3.org/2001/XMLSchema#boolean>
                                                ] ;
                                  rr:predicate  <http://example.com/base/Patient#PaidInAdvance>
                                ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Weight\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#double>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/Patient#Weight>
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Sex\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Sex>
                                ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"BirthDate\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#dateTime>
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#date>
                                                ] ;
                                  rr:predicate  <http://example.com/base/Patient#BirthDate>
                                ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"LastName\"" ] ;
                                  rr:predicate  <http://example.com/base/Patient#LastName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Weight\"" ;
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Weight>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"EntranceDate\"" ;
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#dateTime>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Patient#EntranceDate>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Height\"" ;
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Height>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"FirstName\"" ] ;
+                                 rr:predicate  <http://example.com/base/Patient#FirstName>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"Photo\"" ;
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#base64Binary>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Patient#Photo>
                                ] ;
         rr:subjectMap          [ rr:class     inst:Patient ;
                                  rr:template  "http://example.com/base/Patient/ID={\"ID\"}"

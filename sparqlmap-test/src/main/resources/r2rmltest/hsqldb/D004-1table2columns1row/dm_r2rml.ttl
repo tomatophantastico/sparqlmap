@@ -12,6 +12,6 @@
                                  rr:predicate  <http://example.com/base/Student_Sport#Student>
                                ] ;
         rr:subjectMap          [ rr:class     inst:Student_Sport ;
-                                 rr:template  "http://example.com/base/Student_Sport/Student={\"Student\"};Sport={\"Sport\"}" ;
+                                 rr:template  "http://example.com/base/Student_Sport/Student={\"Student\"}+Sport={\"Sport\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .

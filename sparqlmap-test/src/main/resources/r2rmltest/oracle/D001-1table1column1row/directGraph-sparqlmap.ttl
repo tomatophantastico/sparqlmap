@@ -1,2 +1,0 @@
-_:BhttpX3AX2FX2FexampleX2EcomX2FbaseX2FStudentX2FNameX3DVenus <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/base/Student> .
-_:BhttpX3AX2FX2FexampleX2EcomX2FbaseX2FStudentX2FNameX3DVenus <http://example.com/base/Student#Name> "Venus" .

@@ -10,3 +10,6 @@ build
 **/.*
 **/bin
 **/target
+**/directGraph-sparqlmap.ttl
+**/*-sparqlmap.nq
+**/dm_r2rml.ttl

@@ -46,13 +46,6 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/Student_Sport#ID_Student>
                                ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"ID_Student\"" ;
-                                                                        rr:parent  "\"ID\""
-                                                                      ] ;
-                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Student>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/Student_Sport#ref-ID_Student>
-                               ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"ID_Sport\"" ;
                                                                         rr:parent  "\"ID\""
                                                                       ] ;
@@ -60,6 +53,13 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/Student_Sport#ref-ID_Sport>
                                ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"ID_Student\"" ;
+                                                                        rr:parent  "\"ID\""
+                                                                      ] ;
+                                                 rr:parentTriplesMap  <http://example.com/base/mapping/Student>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/Student_Sport#ref-ID_Student>
+                               ] ;
         rr:subjectMap          [ rr:class     inst:Student_Sport ;
-                                 rr:template  "http://example.com/base/Student_Sport/ID_Student={\"ID_Student\"};ID_Sport={\"ID_Sport\"}"
+                                 rr:template  "http://example.com/base/Student_Sport/ID_Student={\"ID_Student\"}+ID_Sport={\"ID_Sport\"}"
                                ] .

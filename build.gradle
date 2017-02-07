@@ -23,13 +23,11 @@ allprojects {
     version = '0.7.2'
 }
 
-subprojects {
+configure (subprojects.findAll {it.name != 'sparqlmap-gui'}) {
     apply plugin: "io.spring.dependency-management"
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'eclipse'
-
-
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -103,20 +101,16 @@ subprojects {
 
     }
 
-
-
-
-
-// In this section you declare where to find the dependencies of your project
-repositories {
-    mavenLocal()
-    mavenCentral()
-    //    maven { url "http://repo.maven.apache.org/maven2" }
-//    maven { url "http://download.java.net/maven/2/" }
-//    maven { url "https://repository.apache.org/content/repositories/releases/" }
-//    maven { url "http://maven.aksw.org/archiva/repository/internal" }
-//    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
-  }
+    // In this section you declare where to find the dependencies of your project
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        //    maven { url "http://repo.maven.apache.org/maven2" }
+    //    maven { url "http://download.java.net/maven/2/" }
+    //    maven { url "https://repository.apache.org/content/repositories/releases/" }
+    //    maven { url "http://maven.aksw.org/archiva/repository/internal" }
+    //    maven { url "http://maven.aksw.org/archiva/repository/snapshots" }
+      }
 
     task testJar(type: Jar) {
         classifier = 'tests'
@@ -126,7 +120,7 @@ repositories {
     task sourceJar(type: Jar) {
         classifier = 'source'
         from sourceSets.main.java
-}
+    }
 }
 
 
@@ -213,6 +207,11 @@ project(':sparqlmap-jdbc'){
 
 }
 
+project(':sparqlmap-gui'){
+
+
+}
+
 
 project(':sparqlmap-client'){
 
@@ -224,6 +223,8 @@ project(':sparqlmap-client'){
 
     dependencies {
         compile project(':sparqlmap-core')
+        compile ("io.springfox:springfox-swagger2:2.6.1")
+        compile ('io.springfox:springfox-swagger-ui:2.6.1')
         compile("org.springframework.boot:spring-boot-starter-web") {
                 exclude module: "spring-boot-starter-tomcat"
                 exclude module: "log4j-over-slf4j"
@@ -251,6 +252,10 @@ project(':sparqlmap-client'){
         }
         compile ('org.eobjects.metamodel-extras:MetaModel-extras:4.4.0') 
         compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0') 
+
+        compile("org.springframework.boot:spring-boot-devtools")
+
+
         testCompile project(':sparqlmap-test')
     }
 

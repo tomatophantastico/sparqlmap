@@ -17,7 +17,7 @@
                                  rr:predicate  <http://example.com/base/LIKES#id>
                                ] ;
         rr:subjectMap          [ rr:class     inst:LIKES ;
-                                 rr:template  "http://example.com/base/LIKES/id={\"id\"};likeType={\"likeType\"};likedObj={\"likedObj\"}" ;
+                                 rr:template  "http://example.com/base/LIKES/id={\"id\"}+likeType={\"likeType\"}+likedObj={\"likedObj\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .
 
@@ -35,7 +35,7 @@
                                  rr:predicate  <http://example.com/base/DEPT#deptno>
                                ] ;
         rr:subjectMap          [ rr:class     inst:DEPT ;
-                                 rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"};dname={\"dname\"};loc={\"loc\"}" ;
+                                 rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"}+dname={\"dname\"}+loc={\"loc\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .
 

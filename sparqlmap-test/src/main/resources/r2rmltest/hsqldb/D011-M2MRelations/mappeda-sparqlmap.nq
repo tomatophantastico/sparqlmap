@@ -1,6 +1,0 @@
-<http://example.com/110/Tennis> <http://example.com/description> "Tennis" .
-<http://example.com/110/Tennis> <http://example.com/id> "110"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<http://example.com/111/Football> <http://example.com/description> "Football" .
-<http://example.com/112/Formula1> <http://example.com/id> "112"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<http://example.com/111/Football> <http://example.com/id> "111"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<http://example.com/112/Formula1> <http://example.com/description> "Formula1" .
