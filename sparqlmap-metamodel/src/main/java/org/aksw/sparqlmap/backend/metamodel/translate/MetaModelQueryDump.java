@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 
 import org.aksw.sparqlmap.core.TranslationContext;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
-import org.apache.jena.ext.com.google.common.collect.Sets;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
@@ -33,6 +32,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 /**
  * ignores the joins and fetches data based on the tables of the quad maps

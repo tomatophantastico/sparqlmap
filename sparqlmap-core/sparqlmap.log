@@ -1,0 +1,897 @@
+22:51:31,839 INFO  TestFileManager: Reading testcases from folder: ../sparqlmap-test/src/main/resources/r2rmltest/hsqldb
+22:51:32,693 INFO  TestFileManager: Reading testcases from folder: ../sparqlmap-test/src/main/resources/r2rmltest/mysql
+22:51:32,796 INFO  TestFileManager: Reading testcases from folder: ../sparqlmap-test/src/main/resources/r2rmltest/oracle
+22:51:32,888 INFO  TestFileManager: Reading testcases from folder: ../sparqlmap-test/src/main/resources/r2rmltest/postgres
+22:51:33,374 INFO  HikariDataSource: HikariPool-1 - Started.
+22:51:33,418 INFO  PoolBase: HikariPool-1 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:33,468 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:33,469 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D000-1table1column0rows/create.sql into the database
+22:51:33,924 INFO  HikariPool: HikariPool-1 - Close initiated...
+22:51:33,926 INFO  HikariPool: HikariPool-1 - Closed.
+22:51:33,934 INFO  HikariDataSource: HikariPool-2 - Started.
+22:51:33,934 INFO  PoolBase: HikariPool-2 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:33,951 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:33,951 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D000-1table1column0rows/create.sql into the database
+22:51:34,122 INFO  HikariPool: HikariPool-2 - Close initiated...
+22:51:34,123 INFO  HikariPool: HikariPool-2 - Closed.
+22:51:34,130 INFO  HikariDataSource: HikariPool-3 - Started.
+22:51:34,131 INFO  PoolBase: HikariPool-3 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,139 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,139 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D001-1table1column1row/create.sql into the database
+22:51:34,248 INFO  HikariPool: HikariPool-3 - Close initiated...
+22:51:34,250 INFO  HikariPool: HikariPool-3 - Closed.
+22:51:34,255 INFO  HikariDataSource: HikariPool-4 - Started.
+22:51:34,256 INFO  PoolBase: HikariPool-4 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,262 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,262 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D001-1table1column1row/create.sql into the database
+22:51:34,365 INFO  HikariPool: HikariPool-4 - Close initiated...
+22:51:34,367 INFO  HikariPool: HikariPool-4 - Closed.
+22:51:34,373 INFO  HikariDataSource: HikariPool-5 - Started.
+22:51:34,373 INFO  PoolBase: HikariPool-5 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,381 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,381 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D001-1table1column1row/create.sql into the database
+22:51:34,491 INFO  HikariPool: HikariPool-5 - Close initiated...
+22:51:34,493 INFO  HikariPool: HikariPool-5 - Closed.
+22:51:34,498 INFO  HikariDataSource: HikariPool-6 - Started.
+22:51:34,498 INFO  PoolBase: HikariPool-6 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,504 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,505 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:34,579 INFO  HikariPool: HikariPool-6 - Close initiated...
+22:51:34,580 INFO  HikariPool: HikariPool-6 - Closed.
+22:51:34,584 INFO  HikariDataSource: HikariPool-7 - Started.
+22:51:34,585 INFO  PoolBase: HikariPool-7 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,589 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,590 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:34,656 INFO  HikariPool: HikariPool-7 - Close initiated...
+22:51:34,657 INFO  HikariPool: HikariPool-7 - Closed.
+22:51:34,662 INFO  HikariDataSource: HikariPool-8 - Started.
+22:51:34,663 INFO  PoolBase: HikariPool-8 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,668 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,668 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:34,722 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:34,727 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:34,729 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:34,744 INFO  HikariPool: HikariPool-8 - Close initiated...
+22:51:34,745 INFO  HikariPool: HikariPool-8 - Closed.
+22:51:34,750 INFO  HikariDataSource: HikariPool-9 - Started.
+22:51:34,750 INFO  PoolBase: HikariPool-9 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,755 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,756 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:34,803 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:34,806 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:34,806 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:34,832 INFO  HikariPool: HikariPool-9 - Close initiated...
+22:51:34,833 INFO  HikariPool: HikariPool-9 - Closed.
+22:51:34,837 INFO  HikariDataSource: HikariPool-10 - Started.
+22:51:34,837 INFO  PoolBase: HikariPool-10 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,843 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,843 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:34,890 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "StudentId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:34,893 INFO  HikariPool: HikariPool-10 - Close initiated...
+22:51:34,895 INFO  HikariPool: HikariPool-10 - Closed.
+22:51:34,914 INFO  HikariDataSource: HikariPool-11 - Started.
+22:51:34,914 INFO  PoolBase: HikariPool-11 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:34,920 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:34,920 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D002-1table2columns1row/create.sql into the database
+22:51:35,011 INFO  HikariPool: HikariPool-11 - Close initiated...
+22:51:35,011 INFO  HikariPool: HikariPool-11 - Closed.
+22:51:35,016 INFO  HikariDataSource: HikariPool-12 - Started.
+22:51:35,016 INFO  PoolBase: HikariPool-12 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,021 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,022 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D003-1table3columns1row/create.sql into the database
+22:51:35,088 INFO  HikariPool: HikariPool-12 - Close initiated...
+22:51:35,089 INFO  HikariPool: HikariPool-12 - Closed.
+22:51:35,093 INFO  HikariDataSource: HikariPool-13 - Started.
+22:51:35,094 INFO  PoolBase: HikariPool-13 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,099 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,099 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D003-1table3columns1row/create.sql into the database
+22:51:35,165 INFO  HikariPool: HikariPool-13 - Close initiated...
+22:51:35,166 INFO  HikariPool: HikariPool-13 - Closed.
+22:51:35,170 INFO  HikariDataSource: HikariPool-14 - Started.
+22:51:35,170 INFO  PoolBase: HikariPool-14 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,175 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,175 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D003-1table3columns1row/create.sql into the database
+22:51:35,213 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:35,214 INFO  HikariPool: HikariPool-14 - Close initiated...
+22:51:35,215 INFO  HikariPool: HikariPool-14 - Closed.
+22:51:35,219 INFO  HikariDataSource: HikariPool-15 - Started.
+22:51:35,219 INFO  PoolBase: HikariPool-15 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,223 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,224 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D004-1table2columns1row/create.sql into the database
+22:51:35,281 INFO  HikariPool: HikariPool-15 - Close initiated...
+22:51:35,288 INFO  HikariPool: HikariPool-15 - Closed.
+22:51:35,299 INFO  HikariDataSource: HikariPool-16 - Started.
+22:51:35,300 INFO  PoolBase: HikariPool-16 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,305 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,305 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D004-1table2columns1row/create.sql into the database
+22:51:35,406 INFO  HikariPool: HikariPool-16 - Close initiated...
+22:51:35,408 INFO  HikariPool: HikariPool-16 - Closed.
+22:51:35,413 INFO  HikariDataSource: HikariPool-17 - Started.
+22:51:35,413 INFO  PoolBase: HikariPool-17 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,418 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,418 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D005-1table3columns3rows2duplicates/create.sql into the database
+22:51:35,473 WARN  ErrorHandlerFactory$ErrorLogger: [line: 3, col: 131] Lexical form '30.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:35,474 WARN  ErrorHandlerFactory$ErrorLogger: [line: 7, col: 131] Lexical form '20.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:35,474 WARN  ErrorHandlerFactory$ErrorLogger: [line: 11, col: 131] Lexical form '30.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:35,478 INFO  HikariPool: HikariPool-17 - Close initiated...
+22:51:35,479 INFO  HikariPool: HikariPool-17 - Closed.
+22:51:35,484 INFO  HikariDataSource: HikariPool-18 - Started.
+22:51:35,485 INFO  PoolBase: HikariPool-18 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,489 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,490 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D005-1table3columns3rows2duplicates/create.sql into the database
+22:51:35,624 INFO  HikariPool: HikariPool-18 - Close initiated...
+22:51:35,626 INFO  HikariPool: HikariPool-18 - Closed.
+22:51:35,630 INFO  HikariDataSource: HikariPool-19 - Started.
+22:51:35,630 INFO  PoolBase: HikariPool-19 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,635 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,635 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D005-1table3columns3rows2duplicates/create.sql into the database
+22:51:35,731 INFO  HikariPool: HikariPool-19 - Close initiated...
+22:51:35,732 INFO  HikariPool: HikariPool-19 - Closed.
+22:51:35,735 INFO  HikariDataSource: HikariPool-20 - Started.
+22:51:35,736 INFO  PoolBase: HikariPool-20 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,740 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,740 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D006-1table1primarykey1column1row/create.sql into the database
+22:51:35,787 INFO  HikariPool: HikariPool-20 - Close initiated...
+22:51:35,788 INFO  HikariPool: HikariPool-20 - Closed.
+22:51:35,790 INFO  HikariDataSource: HikariPool-21 - Started.
+22:51:35,791 INFO  PoolBase: HikariPool-21 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,797 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,797 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D006-1table1primarykey1column1row/create.sql into the database
+22:51:35,889 INFO  R2RMLTest: not all reference graphs were created[http://example.com/graph/student]
+22:51:35,890 INFO  HikariPool: HikariPool-21 - Close initiated...
+22:51:35,891 INFO  HikariPool: HikariPool-21 - Closed.
+22:51:35,895 INFO  HikariDataSource: HikariPool-22 - Started.
+22:51:35,895 INFO  PoolBase: HikariPool-22 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,900 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,900 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:35,957 INFO  HikariPool: HikariPool-22 - Close initiated...
+22:51:35,958 INFO  HikariPool: HikariPool-22 - Closed.
+22:51:35,963 INFO  HikariDataSource: HikariPool-23 - Started.
+22:51:35,963 INFO  PoolBase: HikariPool-23 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:35,968 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:35,968 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,031 INFO  HikariPool: HikariPool-23 - Close initiated...
+22:51:36,032 INFO  HikariPool: HikariPool-23 - Closed.
+22:51:36,037 INFO  HikariDataSource: HikariPool-24 - Started.
+22:51:36,037 INFO  PoolBase: HikariPool-24 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,042 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,042 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,178 INFO  R2RMLTest: not all reference graphs were created[http://example.com/PersonGraph]
+22:51:36,178 INFO  HikariPool: HikariPool-24 - Close initiated...
+22:51:36,181 INFO  HikariPool: HikariPool-24 - Closed.
+22:51:36,185 INFO  HikariDataSource: HikariPool-25 - Started.
+22:51:36,186 INFO  PoolBase: HikariPool-25 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,192 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,192 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,344 INFO  R2RMLTest: not all reference graphs were created[http://example.com/PersonGraph]
+22:51:36,344 INFO  HikariPool: HikariPool-25 - Close initiated...
+22:51:36,345 INFO  HikariPool: HikariPool-25 - Closed.
+22:51:36,349 INFO  HikariDataSource: HikariPool-26 - Started.
+22:51:36,349 INFO  PoolBase: HikariPool-26 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,354 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,354 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,448 INFO  HikariPool: HikariPool-26 - Close initiated...
+22:51:36,449 INFO  HikariPool: HikariPool-26 - Closed.
+22:51:36,453 INFO  HikariDataSource: HikariPool-27 - Started.
+22:51:36,454 INFO  PoolBase: HikariPool-27 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,458 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,459 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,549 INFO  HikariPool: HikariPool-27 - Close initiated...
+22:51:36,550 INFO  HikariPool: HikariPool-27 - Closed.
+22:51:36,554 INFO  HikariDataSource: HikariPool-28 - Started.
+22:51:36,554 INFO  PoolBase: HikariPool-28 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,558 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,559 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,678 INFO  R2RMLTest: not all reference graphs were created[http://example.com/PersonGraph]
+22:51:36,679 INFO  HikariPool: HikariPool-28 - Close initiated...
+22:51:36,681 INFO  HikariPool: HikariPool-28 - Closed.
+22:51:36,684 INFO  HikariDataSource: HikariPool-29 - Started.
+22:51:36,684 INFO  PoolBase: HikariPool-29 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,689 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,689 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D007-1table1primarykey2columns1row/create.sql into the database
+22:51:36,746 INFO  HikariPool: HikariPool-29 - Close initiated...
+22:51:36,747 INFO  HikariPool: HikariPool-29 - Closed.
+22:51:36,751 INFO  HikariDataSource: HikariPool-30 - Started.
+22:51:36,751 INFO  PoolBase: HikariPool-30 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,756 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,756 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D008-1table1compositeprimarykey3columns1row/create.sql into the database
+22:51:36,797 INFO  HikariPool: HikariPool-30 - Close initiated...
+22:51:36,798 INFO  HikariPool: HikariPool-30 - Closed.
+22:51:36,802 INFO  HikariDataSource: HikariPool-31 - Started.
+22:51:36,802 INFO  PoolBase: HikariPool-31 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,805 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,805 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D008-1table1compositeprimarykey3columns1row/create.sql into the database
+22:51:36,859 INFO  HikariPool: HikariPool-31 - Close initiated...
+22:51:36,860 INFO  HikariPool: HikariPool-31 - Closed.
+22:51:36,863 INFO  HikariDataSource: HikariPool-32 - Started.
+22:51:36,863 INFO  PoolBase: HikariPool-32 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,867 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,867 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D008-1table1compositeprimarykey3columns1row/create.sql into the database
+22:51:36,941 INFO  HikariPool: HikariPool-32 - Close initiated...
+22:51:36,942 INFO  HikariPool: HikariPool-32 - Closed.
+22:51:36,946 INFO  HikariDataSource: HikariPool-33 - Started.
+22:51:36,946 INFO  PoolBase: HikariPool-33 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:36,950 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:36,951 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D008-1table1compositeprimarykey3columns1row/create.sql into the database
+22:51:37,095 INFO  R2RMLTest: not all reference graphs were created[http://example.com/graph/Student/10/Venus%20Williams]
+22:51:37,096 INFO  HikariPool: HikariPool-33 - Close initiated...
+22:51:37,097 INFO  HikariPool: HikariPool-33 - Closed.
+22:51:37,101 INFO  HikariDataSource: HikariPool-34 - Started.
+22:51:37,101 INFO  PoolBase: HikariPool-34 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,105 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,105 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D009-2tables1primarykey1foreignkey/create.sql into the database
+22:51:37,169 INFO  HikariPool: HikariPool-34 - Close initiated...
+22:51:37,170 INFO  HikariPool: HikariPool-34 - Closed.
+22:51:37,174 INFO  HikariDataSource: HikariPool-35 - Started.
+22:51:37,174 INFO  PoolBase: HikariPool-35 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,194 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,194 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D009-2tables1primarykey1foreignkey/create.sql into the database
+22:51:37,234 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "SPORTCOUNT" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:37,244 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,244 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,245 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,245 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,285 INFO  HikariPool: HikariPool-35 - Close initiated...
+22:51:37,286 INFO  HikariPool: HikariPool-35 - Closed.
+22:51:37,290 INFO  HikariDataSource: HikariPool-36 - Started.
+22:51:37,290 INFO  PoolBase: HikariPool-36 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,306 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,306 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D009-2tables1primarykey1foreignkey/create.sql into the database
+22:51:37,347 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+22:51:37,349 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,350 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:37,372 INFO  HikariPool: HikariPool-36 - Close initiated...
+22:51:37,373 INFO  HikariPool: HikariPool-36 - Closed.
+22:51:37,377 INFO  HikariDataSource: HikariPool-37 - Started.
+22:51:37,378 INFO  PoolBase: HikariPool-37 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,398 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,398 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D009-2tables1primarykey1foreignkey/create.sql into the database
+22:51:37,547 INFO  HikariPool: HikariPool-37 - Close initiated...
+22:51:37,548 INFO  HikariPool: HikariPool-37 - Closed.
+22:51:37,552 INFO  HikariDataSource: HikariPool-38 - Started.
+22:51:37,553 INFO  PoolBase: HikariPool-38 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,574 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,574 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D009-2tables1primarykey1foreignkey/create.sql into the database
+22:51:37,648 INFO  HikariPool: HikariPool-38 - Close initiated...
+22:51:37,649 INFO  HikariPool: HikariPool-38 - Closed.
+22:51:37,653 INFO  HikariDataSource: HikariPool-39 - Started.
+22:51:37,653 INFO  PoolBase: HikariPool-39 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,667 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,667 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D010-1table1primarykey3colums3rows/create.sql into the database
+22:51:37,721 INFO  HikariPool: HikariPool-39 - Close initiated...
+22:51:37,721 INFO  HikariPool: HikariPool-39 - Closed.
+22:51:37,724 INFO  HikariDataSource: HikariPool-40 - Started.
+22:51:37,724 INFO  PoolBase: HikariPool-40 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,727 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,727 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D010-1table1primarykey3colums3rows/create.sql into the database
+22:51:37,777 INFO  HikariPool: HikariPool-40 - Close initiated...
+22:51:37,778 INFO  HikariPool: HikariPool-40 - Closed.
+22:51:37,781 INFO  HikariDataSource: HikariPool-41 - Started.
+22:51:37,781 INFO  PoolBase: HikariPool-41 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,784 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,784 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D010-1table1primarykey3colums3rows/create.sql into the database
+22:51:37,833 INFO  HikariPool: HikariPool-41 - Close initiated...
+22:51:37,834 INFO  HikariPool: HikariPool-41 - Closed.
+22:51:37,836 INFO  HikariDataSource: HikariPool-42 - Started.
+22:51:37,837 INFO  PoolBase: HikariPool-42 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,840 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,840 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D010-1table1primarykey3colums3rows/create.sql into the database
+22:51:37,887 INFO  HikariPool: HikariPool-42 - Close initiated...
+22:51:37,888 INFO  HikariPool: HikariPool-42 - Closed.
+22:51:37,890 INFO  HikariDataSource: HikariPool-43 - Started.
+22:51:37,891 INFO  PoolBase: HikariPool-43 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,894 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,894 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D011-M2MRelations/create.sql into the database
+22:51:37,956 INFO  HikariPool: HikariPool-43 - Close initiated...
+22:51:37,957 INFO  HikariPool: HikariPool-43 - Closed.
+22:51:37,962 INFO  HikariDataSource: HikariPool-44 - Started.
+22:51:37,962 INFO  PoolBase: HikariPool-44 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:37,985 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:37,985 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D011-M2MRelations/create.sql into the database
+22:51:38,113 INFO  HikariPool: HikariPool-44 - Close initiated...
+22:51:38,114 INFO  HikariPool: HikariPool-44 - Closed.
+22:51:38,116 INFO  HikariDataSource: HikariPool-45 - Started.
+22:51:38,117 INFO  PoolBase: HikariPool-45 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,130 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,130 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D011-M2MRelations/create.sql into the database
+22:51:38,164 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "LastName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "LastName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "LastName" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "LastName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Sport_ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Description" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "ID" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "LastName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+22:51:38,180 ERROR JdbcUtils: Could not execute query: user lacks privilege or object not found: Description
+java.sql.SQLSyntaxErrorException: user lacks privilege or object not found: Description
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.fetchResult(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.executeQuery(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeQuery(ProxyStatement.java:111)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.executeQuery(HikariProxyStatement.java)
+	at org.apache.metamodel.jdbc.JdbcDataContext.execute(JdbcDataContext.java:443)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:506)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:168)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.hsqldb.HsqlException: user lacks privilege or object not found: Description
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.ExpressionColumn.checkColumnsResolved(Unknown Source)
+	at org.hsqldb.QueryExpression.resolve(Unknown Source)
+	at org.hsqldb.ParserDQL.compileCursorSpecification(Unknown Source)
+	at org.hsqldb.ParserCommand.compilePart(Unknown Source)
+	at org.hsqldb.ParserCommand.compileStatements(Unknown Source)
+	at org.hsqldb.Session.executeDirectStatement(Unknown Source)
+	at org.hsqldb.Session.execute(Unknown Source)
+	... 11 more
+22:51:38,180 ERROR JdbcUtils: Error code=-5501, SQL state=42501
+22:51:38,180 ERROR MetaModelSelectiveDump: Error executing: SELECT "Description", "Sport_ID", "FirstName", "ID", "LastName" FROM (SELECT "Student"."ID" AS ID, "Student"."FirstName" AS FirstName, "Student"."LastName" AS LastName, "Sport"."Description" AS Description, "Sport"."ID" AS Sport_ID FROM PUBLIC."Student", PUBLIC."Sport", PUBLIC."Student_Sport" WHERE "Student"."ID" = "Student_Sport"."ID_Student" AND "Sport"."ID" = "Student_Sport"."ID_Sport") sq
+org.apache.metamodel.MetaModelException: Could not execute query: user lacks privilege or object not found: Description
+	at org.apache.metamodel.jdbc.JdbcUtils.wrapException(JdbcUtils.java:61)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:511)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:168)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.sql.SQLSyntaxErrorException: user lacks privilege or object not found: Description
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.fetchResult(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.executeQuery(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeQuery(ProxyStatement.java:111)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.executeQuery(HikariProxyStatement.java)
+	at org.apache.metamodel.jdbc.JdbcDataContext.execute(JdbcDataContext.java:443)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:506)
+	... 5 more
+Caused by: org.hsqldb.HsqlException: user lacks privilege or object not found: Description
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.ExpressionColumn.checkColumnsResolved(Unknown Source)
+	at org.hsqldb.QueryExpression.resolve(Unknown Source)
+	at org.hsqldb.ParserDQL.compileCursorSpecification(Unknown Source)
+	at org.hsqldb.ParserCommand.compilePart(Unknown Source)
+	at org.hsqldb.ParserCommand.compileStatements(Unknown Source)
+	at org.hsqldb.Session.executeDirectStatement(Unknown Source)
+	at org.hsqldb.Session.execute(Unknown Source)
+	... 11 more
+22:51:38,247 INFO  HikariPool: HikariPool-45 - Close initiated...
+22:51:38,249 INFO  HikariPool: HikariPool-45 - Closed.
+22:51:38,251 INFO  HikariDataSource: HikariPool-46 - Started.
+22:51:38,252 INFO  PoolBase: HikariPool-46 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,268 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,268 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D012-2tables2duplicates0nulls/create.sql into the database
+22:51:38,310 WARN  ErrorHandlerFactory$ErrorLogger: [line: 15, col: 131] Lexical form '30.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:38,310 WARN  ErrorHandlerFactory$ErrorLogger: [line: 19, col: 131] Lexical form '20.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:38,310 WARN  ErrorHandlerFactory$ErrorLogger: [line: 23, col: 131] Lexical form '30.0' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:38,312 INFO  HikariPool: HikariPool-46 - Close initiated...
+22:51:38,313 INFO  HikariPool: HikariPool-46 - Closed.
+22:51:38,316 INFO  HikariDataSource: HikariPool-47 - Started.
+22:51:38,316 INFO  PoolBase: HikariPool-47 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,321 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,321 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D012-2tables2duplicates0nulls/create.sql into the database
+22:51:38,464 INFO  HikariPool: HikariPool-47 - Close initiated...
+22:51:38,465 INFO  HikariPool: HikariPool-47 - Closed.
+22:51:38,468 INFO  HikariDataSource: HikariPool-48 - Started.
+22:51:38,468 INFO  PoolBase: HikariPool-48 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,471 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,471 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D012-2tables2duplicates0nulls/create.sql into the database
+22:51:38,529 INFO  HikariPool: HikariPool-48 - Close initiated...
+22:51:38,530 INFO  HikariPool: HikariPool-48 - Closed.
+22:51:38,532 INFO  HikariDataSource: HikariPool-49 - Started.
+22:51:38,533 INFO  PoolBase: HikariPool-49 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,536 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,536 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D012-2tables2duplicates0nulls/create.sql into the database
+22:51:38,592 INFO  HikariPool: HikariPool-49 - Close initiated...
+22:51:38,593 INFO  HikariPool: HikariPool-49 - Closed.
+22:51:38,596 INFO  HikariDataSource: HikariPool-50 - Started.
+22:51:38,596 INFO  PoolBase: HikariPool-50 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,600 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,600 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D013-1table1primarykey3columns2rows1nullvalue/create.sql into the database
+22:51:38,636 INFO  HikariPool: HikariPool-50 - Close initiated...
+22:51:38,637 INFO  HikariPool: HikariPool-50 - Closed.
+22:51:38,640 INFO  HikariDataSource: HikariPool-51 - Started.
+22:51:38,640 INFO  PoolBase: HikariPool-51 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,644 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,644 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D013-1table1primarykey3columns2rows1nullvalue/create.sql into the database
+22:51:38,690 INFO  HikariPool: HikariPool-51 - Close initiated...
+22:51:38,690 INFO  HikariPool: HikariPool-51 - Closed.
+22:51:38,693 INFO  HikariDataSource: HikariPool-52 - Started.
+22:51:38,693 INFO  PoolBase: HikariPool-52 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,695 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,695 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D014-3tables1primarykey1foreignkey/create.sql into the database
+22:51:38,752 INFO  HikariPool: HikariPool-52 - Close initiated...
+22:51:38,753 INFO  HikariPool: HikariPool-52 - Closed.
+22:51:38,756 INFO  HikariDataSource: HikariPool-53 - Started.
+22:51:38,756 INFO  PoolBase: HikariPool-53 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,772 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,772 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D014-3tables1primarykey1foreignkey/create.sql into the database
+22:51:38,800 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap4
+Cannot bind col "empno" in mapping http://example.com/base/TriplesMap4
+Cannot bind col "ROLE" in mapping http://example.com/base/TriplesMap4
+22:51:38,801 INFO  HikariPool: HikariPool-53 - Close initiated...
+22:51:38,802 INFO  HikariPool: HikariPool-53 - Closed.
+22:51:38,805 INFO  HikariDataSource: HikariPool-54 - Started.
+22:51:38,805 INFO  PoolBase: HikariPool-54 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,823 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,823 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D014-3tables1primarykey1foreignkey/create.sql into the database
+22:51:38,864 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "dname" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "deptno" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "loc" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+22:51:38,867 INFO  HikariPool: HikariPool-54 - Close initiated...
+22:51:38,868 INFO  HikariPool: HikariPool-54 - Closed.
+22:51:38,868 WARN  ProxyConnection: HikariPool-54 - Connection org.hsqldb.jdbc.JDBCConnection@4314d365 marked as broken because of SQLSTATE(08503), ErrorCode(-1353)
+java.sql.SQLNonTransientConnectionException: connection exception: closed
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.checkClosed(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.executeQuery(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeQuery(ProxyStatement.java:111)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.executeQuery(HikariProxyStatement.java)
+	at org.apache.metamodel.jdbc.JdbcDataContext.execute(JdbcDataContext.java:443)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:506)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:168)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.hsqldb.HsqlException: connection exception: closed
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.error.Error.error(Unknown Source)
+	... 14 more
+22:51:38,869 ERROR JdbcUtils: Could not execute query: connection exception: closed
+java.sql.SQLNonTransientConnectionException: connection exception: closed
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.checkClosed(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.executeQuery(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeQuery(ProxyStatement.java:111)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.executeQuery(HikariProxyStatement.java)
+	at org.apache.metamodel.jdbc.JdbcDataContext.execute(JdbcDataContext.java:443)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:506)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:168)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.hsqldb.HsqlException: connection exception: closed
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.error.Error.error(Unknown Source)
+	... 14 more
+22:51:38,869 ERROR JdbcUtils: Error code=-1353, SQL state=08503
+22:51:38,869 ERROR MetaModelSelectiveDump: Error executing: SELECT "EMP"."ename", "EMP"."etype", "EMP"."empno", "EMP"."job", "EMP"."deptno" FROM PUBLIC."EMP"
+org.apache.metamodel.MetaModelException: Could not execute query: connection exception: closed
+	at org.apache.metamodel.jdbc.JdbcUtils.wrapException(JdbcUtils.java:61)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:511)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:168)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.sql.SQLNonTransientConnectionException: connection exception: closed
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCUtil.sqlException(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.checkClosed(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatementBase.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.getResultSet(Unknown Source)
+	at org.hsqldb.jdbc.JDBCStatement.executeQuery(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeQuery(ProxyStatement.java:111)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.executeQuery(HikariProxyStatement.java)
+	at org.apache.metamodel.jdbc.JdbcDataContext.execute(JdbcDataContext.java:443)
+	at org.apache.metamodel.jdbc.JdbcDataContext.executeQuery(JdbcDataContext.java:506)
+	... 5 more
+Caused by: org.hsqldb.HsqlException: connection exception: closed
+	at org.hsqldb.error.Error.error(Unknown Source)
+	at org.hsqldb.error.Error.error(Unknown Source)
+	... 14 more
+22:51:38,872 INFO  HikariDataSource: HikariPool-55 - Started.
+22:51:38,872 INFO  PoolBase: HikariPool-55 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,898 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,898 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D014-3tables1primarykey1foreignkey/create.sql into the database
+22:51:38,939 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "dname" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "loc" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "deptno" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "deptno" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "jobTypeURI" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "empTypeURI" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "jobTypeURI" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "ename" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "empno" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "etype" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "empTypeURI" in mapping http://example.com/base/TriplesMap2
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "empURI" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "job" in mapping http://example.com/base/TriplesMap2
+22:51:38,940 INFO  HikariPool: HikariPool-55 - Close initiated...
+22:51:38,941 INFO  HikariPool: HikariPool-55 - Closed.
+22:51:38,946 INFO  HikariDataSource: HikariPool-56 - Started.
+22:51:38,946 INFO  PoolBase: HikariPool-56 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:38,960 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:38,960 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D014-3tables1primarykey1foreignkey/create.sql into the database
+22:51:38,993 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "deptId" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "loc" in mapping http://example.com/base/TriplesMap1
+22:51:38,994 INFO  HikariPool: HikariPool-56 - Close initiated...
+22:51:38,994 INFO  HikariPool: HikariPool-56 - Closed.
+22:51:38,998 INFO  HikariDataSource: HikariPool-57 - Started.
+22:51:38,999 INFO  PoolBase: HikariPool-57 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,016 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,016 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D015-1table3columns1composityeprimarykey3rows2languages/create.sql into the database
+22:51:39,063 INFO  HikariPool: HikariPool-57 - Close initiated...
+22:51:39,064 INFO  HikariPool: HikariPool-57 - Closed.
+22:51:39,068 INFO  HikariDataSource: HikariPool-58 - Started.
+22:51:39,068 INFO  PoolBase: HikariPool-58 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,072 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,072 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D015-1table3columns1composityeprimarykey3rows2languages/create.sql into the database
+22:51:39,102 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "Code" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap1
+Cannot parse view query of triplesmap: http://example.com/base/TriplesMap2
+Cannot bind col "Code" in mapping http://example.com/base/TriplesMap2
+Cannot bind col "Name" in mapping http://example.com/base/TriplesMap2
+22:51:39,105 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,105 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,106 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,106 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,106 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,106 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,107 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,107 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,130 INFO  HikariPool: HikariPool-58 - Close initiated...
+22:51:39,131 INFO  HikariPool: HikariPool-58 - Closed.
+22:51:39,134 INFO  HikariDataSource: HikariPool-59 - Started.
+22:51:39,134 INFO  PoolBase: HikariPool-59 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,137 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,137 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,186 WARN  ErrorHandlerFactory$ErrorLogger: [line: 2, col: 81] Lexical form '[B@47e56b48' not valid for datatype http://www.w3.org/2001/XMLSchema#base64Binary
+22:51:39,186 WARN  ErrorHandlerFactory$ErrorLogger: [line: 8, col: 88] Lexical form '2009-10-10 12:12:22.0' not valid for datatype http://www.w3.org/2001/XMLSchema#dateTime
+22:51:39,187 WARN  ErrorHandlerFactory$ErrorLogger: [line: 9, col: 82] Lexical form '80.25' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,187 WARN  ErrorHandlerFactory$ErrorLogger: [line: 11, col: 82] Lexical form '1.65' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,188 WARN  ErrorHandlerFactory$ErrorLogger: [line: 15, col: 82] Lexical form '70.22' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,188 WARN  ErrorHandlerFactory$ErrorLogger: [line: 17, col: 81] Lexical form '[B@68286f38' not valid for datatype http://www.w3.org/2001/XMLSchema#base64Binary
+22:51:39,188 WARN  ErrorHandlerFactory$ErrorLogger: [line: 19, col: 82] Lexical form '1.7' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,189 WARN  ErrorHandlerFactory$ErrorLogger: [line: 21, col: 88] Lexical form '2008-11-12 09:45:44.0' not valid for datatype http://www.w3.org/2001/XMLSchema#dateTime
+22:51:39,189 WARN  ErrorHandlerFactory$ErrorLogger: [line: 27, col: 82] Lexical form '90.31' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,189 WARN  ErrorHandlerFactory$ErrorLogger: [line: 28, col: 81] Lexical form '[B@24113f9' not valid for datatype http://www.w3.org/2001/XMLSchema#base64Binary
+22:51:39,190 WARN  ErrorHandlerFactory$ErrorLogger: [line: 31, col: 88] Lexical form '2007-03-12 02:13:14.0' not valid for datatype http://www.w3.org/2001/XMLSchema#dateTime
+22:51:39,190 WARN  ErrorHandlerFactory$ErrorLogger: [line: 32, col: 82] Lexical form '1.76' not valid for datatype http://www.w3.org/2001/XMLSchema#integer
+22:51:39,196 INFO  HikariPool: HikariPool-59 - Close initiated...
+22:51:39,197 INFO  HikariPool: HikariPool-59 - Closed.
+22:51:39,201 INFO  HikariDataSource: HikariPool-60 - Started.
+22:51:39,201 INFO  PoolBase: HikariPool-60 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,205 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,205 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,296 INFO  HikariPool: HikariPool-60 - Close initiated...
+22:51:39,297 INFO  HikariPool: HikariPool-60 - Closed.
+22:51:39,301 INFO  HikariDataSource: HikariPool-61 - Started.
+22:51:39,301 INFO  PoolBase: HikariPool-61 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,304 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,305 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,395 INFO  HikariPool: HikariPool-61 - Close initiated...
+22:51:39,396 INFO  HikariPool: HikariPool-61 - Closed.
+22:51:39,398 INFO  HikariDataSource: HikariPool-62 - Started.
+22:51:39,399 INFO  PoolBase: HikariPool-62 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,402 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,402 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,481 INFO  HikariPool: HikariPool-62 - Close initiated...
+22:51:39,482 INFO  HikariPool: HikariPool-62 - Closed.
+22:51:39,484 INFO  HikariDataSource: HikariPool-63 - Started.
+22:51:39,484 INFO  PoolBase: HikariPool-63 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,486 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,487 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,560 INFO  HikariPool: HikariPool-63 - Close initiated...
+22:51:39,561 INFO  HikariPool: HikariPool-63 - Closed.
+22:51:39,563 INFO  HikariDataSource: HikariPool-64 - Started.
+22:51:39,563 INFO  PoolBase: HikariPool-64 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,566 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,566 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D016-1table1primarykey10columns3rowsSQLdatatypes/create.sql into the database
+22:51:39,666 INFO  HikariPool: HikariPool-64 - Close initiated...
+22:51:39,667 INFO  HikariPool: HikariPool-64 - Closed.
+22:51:39,669 INFO  HikariDataSource: HikariPool-65 - Started.
+22:51:39,669 INFO  PoolBase: HikariPool-65 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,670 INFO  HikariPool: HikariPool-65 - Close initiated...
+22:51:39,670 INFO  HikariPool: HikariPool-65 - Closed.
+22:51:39,673 INFO  HikariDataSource: HikariPool-66 - Started.
+22:51:39,673 INFO  PoolBase: HikariPool-66 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,675 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,675 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D018-1table1primarykey2columns3rows/create.sql into the database
+22:51:39,706 INFO  HikariPool: HikariPool-66 - Close initiated...
+22:51:39,707 INFO  HikariPool: HikariPool-66 - Closed.
+22:51:39,710 INFO  HikariDataSource: HikariPool-67 - Started.
+22:51:39,710 INFO  PoolBase: HikariPool-67 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,712 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,713 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D018-1table1primarykey2columns3rows/create.sql into the database
+22:51:39,793 INFO  HikariPool: HikariPool-67 - Close initiated...
+22:51:39,794 INFO  HikariPool: HikariPool-67 - Closed.
+22:51:39,796 INFO  HikariDataSource: HikariPool-68 - Started.
+22:51:39,796 INFO  PoolBase: HikariPool-68 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,799 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,799 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D019-1table1primarykey3columns3rows/create.sql into the database
+22:51:39,824 WARN  SparqlMapBuilder$SparqlMapMappingBuilder: Cannot parse view query of triplesmap: http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+Cannot bind col "FirstName" in mapping http://example.com/base/TriplesMap1
+22:51:39,828 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,828 WARN  AbstractQueryRewriter: Failed to retrieve null value using type-specific getter, retrying with generic getObject(...) method
+java.lang.NullPointerException
+	at org.apache.metamodel.jdbc.dialects.AbstractQueryRewriter.getResultSetValue(AbstractQueryRewriter.java:444)
+	at org.apache.metamodel.jdbc.JdbcDataSet.getValue(JdbcDataSet.java:157)
+	at org.apache.metamodel.jdbc.JdbcDataSet.next(JdbcDataSet.java:121)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.dump(MetaModelSelectiveDump.java:169)
+	at org.aksw.sparqlmap.backend.metamodel.translate.MetaModelSelectiveDump.run(MetaModelSelectiveDump.java:317)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+22:51:39,844 INFO  HikariPool: HikariPool-68 - Close initiated...
+22:51:39,845 INFO  HikariPool: HikariPool-68 - Closed.
+22:51:39,847 INFO  HikariDataSource: HikariPool-69 - Started.
+22:51:39,848 INFO  PoolBase: HikariPool-69 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,850 INFO  JdbcMetadataLoader: No table metadata records returned for schema 'PUBLIC'
+22:51:39,850 INFO  HsqlR2RMLTest: Loading /Users/joerg/Projects/rdb2rdf/sparqlmap/sparqlmap-core/../sparqlmap-test/src/main/resources/r2rmltest/hsqldb/D020-1table1column5rows/create.sql into the database
+22:51:39,902 INFO  HikariPool: HikariPool-69 - Close initiated...
+22:51:39,903 INFO  HikariPool: HikariPool-69 - Closed.
+22:51:39,905 INFO  HikariDataSource: HikariPool-70 - Started.
+22:51:39,906 INFO  PoolBase: HikariPool-70 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,907 INFO  HikariPool: HikariPool-70 - Close initiated...
+22:51:39,907 INFO  HikariPool: HikariPool-70 - Closed.
+22:51:39,910 INFO  HikariDataSource: HikariPool-71 - Started.
+22:51:39,910 INFO  PoolBase: HikariPool-71 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,911 INFO  HikariPool: HikariPool-71 - Close initiated...
+22:51:39,911 INFO  HikariPool: HikariPool-71 - Closed.
+22:51:39,915 INFO  HikariDataSource: HikariPool-72 - Started.
+22:51:39,916 INFO  PoolBase: HikariPool-72 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,917 INFO  HikariPool: HikariPool-72 - Close initiated...
+22:51:39,917 INFO  HikariPool: HikariPool-72 - Closed.
+22:51:39,920 INFO  HikariDataSource: HikariPool-73 - Started.
+22:51:39,920 INFO  PoolBase: HikariPool-73 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,921 INFO  HikariPool: HikariPool-73 - Close initiated...
+22:51:39,922 INFO  HikariPool: HikariPool-73 - Closed.
+22:51:39,925 INFO  HikariDataSource: HikariPool-74 - Started.
+22:51:39,925 INFO  PoolBase: HikariPool-74 - Driver does not support get/set network timeout for connections. (feature not supported)
+22:51:39,926 INFO  HikariPool: HikariPool-74 - Close initiated...
+22:51:39,927 INFO  HikariPool: HikariPool-74 - Closed.

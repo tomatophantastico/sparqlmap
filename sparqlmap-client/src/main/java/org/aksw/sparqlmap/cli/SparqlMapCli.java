@@ -27,6 +27,7 @@ import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ import com.google.common.collect.Lists;
 
 @Configuration
 @ComponentScan
+@EnableAutoConfiguration(exclude={CassandraAutoConfiguration.class, DataSourceAutoConfiguration.class})
 public class SparqlMapCli implements ApplicationRunner{
   
   

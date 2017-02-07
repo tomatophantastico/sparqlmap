@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import org.aksw.sparqlmap.DBHelper;
 import org.aksw.sparqlmap.DockerHelper.DBConnConfig;
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.R2RMLTestParameter;
 import org.aksw.sparqlmap.TestHelper;
 import org.aksw.sparqlmap.core.SparqlMap;
@@ -159,7 +160,7 @@ public abstract class R2RMLTest {
 		    ";",
 		    null);
 		
-		Model mapping = db2r2rml.generateMapping(getDatacontext());
+		Model mapping = db2r2rml.generateMapping(SchemaTranslator.translate(getDatacontext().getDefaultSchema()));
 		mapping.write(new FileOutputStream(new File(wheretowrite)), "TTL", null);
 		
 		

@@ -2,6 +2,7 @@ package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
 
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 
 import com.google.common.collect.Lists;
@@ -40,20 +41,7 @@ public class QuadMap {
   }
 
   
-  @Data
-  @Builder
-  public static class LogicalTable{
-    
-    private String tablename;
-        
-    private String version;
-    
-    private String query;
-    
-    
-    public final static LogicalTable NULLTABLE = LogicalTable.builder().build();
 
-  }
   
   
   public static QuadMap NULLQUADMAP = QuadMap.builder().graph(TermMap.NULLTERMMAP).subject(TermMap.NULLTERMMAP).predicate(TermMap.NULLTERMMAP).object(TermMap.NULLTERMMAP).triplesMapUri(SM.NULLQUADMAPSTRING).logicalTable(LogicalTable.NULLTABLE).build(); 

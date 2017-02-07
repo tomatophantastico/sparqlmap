@@ -1,5 +1,6 @@
 package org.aksw.sparqlmap.querytests;
 
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
 import org.aksw.sparqlmap.core.automapper.MappingGenerator;
@@ -24,7 +25,7 @@ public class AccessQueryTest {
   
   @Test
   public void testPfarrerbuchSchemaGen(){
-    Model defaultMapping = new MappingGenerator("http://example.com/pfarrerbuch/").generateMapping(new AccessDataContext(PFARRERBUCHLOCATION));
+    Model defaultMapping = new MappingGenerator("http://example.com/pfarrerbuch/").generateMapping(SchemaTranslator.translate(new AccessDataContext(PFARRERBUCHLOCATION).getDefaultSchema()));
     
     defaultMapping.write(System.out,"TTL");
     

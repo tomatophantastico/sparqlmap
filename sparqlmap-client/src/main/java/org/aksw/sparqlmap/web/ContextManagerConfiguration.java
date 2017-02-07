@@ -1,7 +1,6 @@
-package org.aksw.sparqlmap.web.spring;
+package org.aksw.sparqlmap.web;
 
 import org.aksw.sparqlmap.core.SparqlMap;
-import org.aksw.sparqlmap.web.SparqlMapContextManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

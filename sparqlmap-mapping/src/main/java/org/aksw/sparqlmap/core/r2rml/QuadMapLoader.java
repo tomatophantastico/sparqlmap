@@ -3,20 +3,18 @@ package org.aksw.sparqlmap.core.r2rml;
 import java.util.List;
 import java.util.Set;
 
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 public class QuadMapLoader {

@@ -12,14 +12,15 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
 import org.aksw.sparqlmap.core.r2rml.R2RML;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
 import org.aksw.sparqlmap.core.r2rml.TermMapColumn;
 import org.aksw.sparqlmap.core.r2rml.TermMapConstant;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplate;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplateTuple;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.atlas.lib.IRILib;
 import org.apache.jena.datatypes.BaseDatatype;
@@ -241,27 +242,7 @@ public class MetaModelSelectiveDump implements Runnable{
     XSDDatatype dt = null;
     if(tm instanceof TermMapColumn){
       ColumnType ct = colnameSelectItem.get(((TermMapColumn) tm).getColumn()).getType();
-      if(ct ==null || ct.isLiteral()){
-        // do nothing
-      }else if(ct.isBinary()){
-        dt = XSDDatatype.XSDbase64Binary;
-      }else if(ct.isBoolean()){
-        dt = XSDDatatype.XSDboolean;
-      }else if(ct.isNumber()){
-        if(ct.getJavaEquivalentClass().equals(Double.class)){
-          dt = XSDDatatype.XSDdouble;
-        } if (ct.getJavaEquivalentClass().equals(UUID.class) ) {
-          // do nothing
-        }else{
-          dt = XSDDatatype.XSDinteger;
-        }
-      } else if (ct.getName().equals("DATE")){
-        dt = XSDDatatype.XSDdate;
-      }else if(ct.getName().equals("TIME")){
-        dt = XSDDatatype.XSDtime;
-      }else if(ct.getName().equals("TIMESTAMP")){
-        dt = XSDDatatype.XSDdateTime;
-      }
+      dt = SchemaTranslator.getXSDDataType(ct).orElse(null);
     }
       
     return dt;

@@ -3,11 +3,11 @@ package org.aksw.sparqlmap.backend.metamodel.translate;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
 import org.aksw.sparqlmap.core.r2rml.TermMapColumn;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplate;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplateTuple;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.query.FromItem;
 import org.apache.metamodel.query.SelectItem;
