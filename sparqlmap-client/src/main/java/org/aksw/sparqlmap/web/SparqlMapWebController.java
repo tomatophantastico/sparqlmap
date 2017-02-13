@@ -16,11 +16,10 @@ import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.schema.LogicalSchema;
 import org.apache.jena.atlas.lib.tuple.Tuple;
+
 import org.apache.jena.ext.com.google.common.collect.Maps;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.WebContent;
 import org.apache.jena.sparql.core.DatasetGraph;
@@ -44,10 +43,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-
-import com.google.common.collect.Lists;
-
-import lombok.Data;
 
 
 
