@@ -143,6 +143,14 @@ public class MetaModelSelectiveDump implements Runnable{
           column = mcolumn;
         }else{
           column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumnByName(col);
+          
+          //check if the columname is actually a number
+          
+          if(column == null && col.startsWith("#")){
+            int colNo = Integer.valueOf(col.substring(1));
+            column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumn(colNo);
+          }
+          
         }
         
         
@@ -202,8 +210,8 @@ public class MetaModelSelectiveDump implements Runnable{
   private Node materialize(Row row, TermMap tm){
     Node result = null;
     BaseDatatype dt = null;
-    if(tm.getDatatypIRI()!=null){
-      dt = new BaseDatatype(tm.getDatatypIRI());
+    if(tm.getDatatypIRI().isPresent()){
+      dt = new BaseDatatype(tm.getDatatypIRI().get());
     }else{
       if(tm instanceof TermMapColumn){
         dt = getNaturalDatatype(row,tm);
@@ -220,8 +228,8 @@ public class MetaModelSelectiveDump implements Runnable{
       }else if(tm.getTermTypeIRI().equals(R2RML.BLANKNODE_STRING)){
         result = NodeFactory.createBlankNode(cfString);
       }else{
-        if(tm.getLang()!=null){
-          result = NodeFactory.createLiteral(cfString, tm.getLang());
+        if(tm.getLang().isPresent()){
+          result = NodeFactory.createLiteral(cfString, tm.getLang().get());
         }else if(dt!=null){
           result = NodeFactory.createLiteral(cfString, dt );
         }else{

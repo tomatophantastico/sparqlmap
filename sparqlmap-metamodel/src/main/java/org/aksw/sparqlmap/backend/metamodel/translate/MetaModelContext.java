@@ -16,7 +16,6 @@ public class MetaModelContext {
   
   private ContextConfiguration conConf;
   
-  private MetaModelRowBinder rowBinder;
   
   private MetaModelSchemaHelper schemaHelper;
 
@@ -24,7 +23,6 @@ public class MetaModelContext {
     super();
     this.dataContext = dataContext;
     this.conConf = conConf;
-    rowBinder = new MetaModelRowBinder(conConf.getBaseUri());
     schemaHelper = new MetaModelSchemaHelper(dataContext);
   }
 
@@ -36,9 +34,6 @@ public class MetaModelContext {
     return conConf;
   }
 
-  public MetaModelRowBinder getRowBinder() {
-    return rowBinder;
-  }
 
   public MetaModelSchemaHelper getSchemaHelper() {
     return schemaHelper;

@@ -326,10 +326,12 @@ public class CompatibilityChecker {
 		}
 		// if the language does not match
 		String nodeLang = n.getLiteralLanguage();
-		String termMapLang = termMap.getLang();
-		if(!nodeLang.equals(termMapLang)){
+		
+		if(!termMap.getLang().isPresent() || !termMap.getLang().get().equals(nodeLang)){
 		  return false;
 		}
+		
+
 		
 		
 		//otherwise we could give it a try, for now

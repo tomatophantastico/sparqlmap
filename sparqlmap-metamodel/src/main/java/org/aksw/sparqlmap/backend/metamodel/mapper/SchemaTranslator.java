@@ -31,6 +31,8 @@ public class SchemaTranslator {
   private static Set<ColumnType> dateTypes = Sets.newHashSet(ColumnType.DATE,ColumnType.TIME,ColumnType.TIMESTAMP);
   */
   
+  
+  
   public static LogicalSchema translate(Schema schema){
     
     LogicalSchema lschema = LogicalSchema.builder(schema.getName()).build();
@@ -39,8 +41,10 @@ public class SchemaTranslator {
       LogicalTable ltab = LogicalTable.builder(lschema).tablename(table.getName()).build();
       List<LogicalColumn> lcols = Arrays.stream(table.getColumns()).map(col -> {
         
-        LogicalColumn lcol = LogicalColumn.builder(ltab).name(col.getName()).xsdDataType(getDataType(col.getType())).build();
-        
+        LogicalColumn lcol = LogicalColumn.builder(ltab).xsdDataType(getDataType(col.getType()))
+          .name(col.getName())
+          .build();
+
         return lcol;
       }).collect(Collectors.toList());
       ltab.setColumns(lcols);
