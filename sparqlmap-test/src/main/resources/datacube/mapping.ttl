@@ -1,0 +1,262 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ex:  <http://example.com/>
+
+@base <http://example.com/> .
+
+@prefix sdmx-code: <http://purl.org/linked-data/sdmx/2009/code#> .
+@prefix sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#> .
+@prefix sdmx-attribute: <http://purl.org/linked-data/sdmx/2009/attribute#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix sdmx-subject: <http://purl.org/linked-data/sdmx/2009/subject#> .
+@prefix sdmx-metadata: <http://purl.org/linked-data/sdmx/2009/metadata#> .
+@prefix sdmx-measure: <http://purl.org/linked-data/sdmx/2009/measure#> .
+
+
+
+#static triples here
+
+<constTriplesMap> rr:tableName "\"dataset.csv\"".
+#<csvtable> rr:sqlQuery "select city, 1900, 1901, 1902 from dataset.csv limit 3".
+<csvtable> rr:tableName "\"dataset.csv\"".
+
+<val1>
+  a rr:TriplesMap;
+  rr:logicalTable <csvtable>;
+
+  rr:subjectMap [
+    rr:template "http://example.com/observation/{\"#0\"}/1900";
+    rr:class qb:observation;
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate qb:dataSet;
+    rr:objectMap [
+      rr:constant <http://example.com/Teapots> ;
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ex:Jahr;
+    rr:objectMap [
+      rr:constant 1900;
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate ex:Stadt;
+    rr:objectMap [
+      rr:column "#0";
+    ]
+  ];
+    rr:predicateObjectMap [
+    rr:predicate ex:teapots;
+    rr:objectMap [
+      rr:column "#1";
+    ]
+  ];
+.
+
+<val2>
+  a rr:TriplesMap;
+  rr:logicalTable <csvtable>;
+
+  rr:subjectMap [
+    rr:template "http://example.com/observation/{\"#0\"}/1901";
+    rr:class qb:observation;
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate qb:dataSet;
+    rr:objectMap [
+      rr:constant <http://example.com/Teapots> ;
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ex:Jahr;
+    rr:objectMap [
+      rr:constant 1901;
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate ex:Stadt;
+    rr:objectMap [
+      rr:column "#0";
+    ]
+  ];
+    rr:predicateObjectMap [
+    rr:predicate ex:teapots;
+    rr:objectMap [
+      rr:column "#2";
+    ]
+  ];
+.
+<val3>
+  a rr:TriplesMap;
+  rr:logicalTable <csvtable>;
+
+  rr:subjectMap [
+    rr:template "http://example.com/observation/{\"#0\"}/1902";
+    rr:class qb:observation;
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate qb:dataSet;
+    rr:objectMap [
+      rr:constant <http://example.com/Teapots> ;
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ex:Jahr;
+    rr:objectMap [
+      rr:constant 1902;
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate ex:Stadt;
+    rr:objectMap [
+      rr:column "#0";
+    ]
+  ];
+    rr:predicateObjectMap [
+    rr:predicate ex:teapots;
+    rr:objectMap [
+      rr:column "#3";
+    ]
+  ];
+.
+
+<comp1>
+    a rr:TriplesMap;    
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/component1>;
+                    rr:class qb:ComponentSpecification ];
+
+    rr:predicateObjectMap
+    [ 
+      rr:predicate		qb:componentProperty; 
+      rr:predicate    qb:dimension; 
+
+      rr:objectMap		[ rr:constant ex:Jahr; ]
+    ]
+    .
+<comp2>
+    a rr:TriplesMap ;    
+    rr:logicalTable <constTriplesMap> ;
+
+    rr:subjectMap [ rr:constant <http://example.com/component2> ;
+                    rr:class qb:ComponentSpecification ] ;
+
+    rr:predicateObjectMap
+    [ 
+      rr:predicate    qb:componentProperty; 
+      rr:predicate    qb:dimension; 
+
+      rr:objectMap    [ rr:constant ex:Stadt; ]
+    ]
+    .
+<comp3>
+    a rr:TriplesMap;    
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/component3>;
+                    rr:class qb:ComponentSpecification ];
+
+    rr:predicateObjectMap
+    [ 
+      rr:predicate    qb:componentProperty; 
+      rr:objectMap    [ rr:constant ex:teapots; ]
+    ];
+
+    rr:predicateObjectMap
+    [
+      rr:predicate <http://purl.org/linked-data/cube#componentRequired>;
+      rr:object true ;
+    ];
+    rr:predicateObjectMap
+    [
+      rr:predicate <http://purl.org/linked-data/cube#measure>;
+      rr:object  <http://example.com/teapots> ;
+    ]
+
+    .
+<Jahr>
+    a rr:TriplesMap;    
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/Jahr>;
+                    rr:class qb:DimensionProperty, rdf:Property ];
+    rr:predicateObjectMap [   rr:predicate rdfs:label;
+                              rr:object "Jahr";
+    ];
+    rr:predicateObjectMap [   rr:predicate rdfs:range;
+                              rr:object ex:Range;
+    ];
+.                    
+<Stadt>
+    a rr:TriplesMap;    
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/Stadt>;
+                    rr:class qb:DimensionProperty, rdf:Property ];
+    rr:predicateObjectMap [   rr:predicate rdfs:label;
+                              rr:object "Stadt";
+    ];
+    rr:predicateObjectMap [   rr:predicate rdfs:range;
+                              rr:object ex:Range;
+    ];
+.  
+<Teapots>
+    a rr:TriplesMap;    
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/Teapots>;
+                    rr:class qb:DataSet, qb:MeasureProperty, rdf:Property ];
+    rr:predicateObjectMap [   rr:predicate dct:generatedBy;
+                              rr:object "SparqlMap";
+    ];
+    rr:predicateObjectMap [   rr:predicate dct:issued;
+                              rr:object "2017-03-02"^^xsd:date ;
+    ];
+    rr:predicateObjectMap [   rr:predicate dct:title;
+                              rr:object "Teapots";
+    ];
+    rr:predicateObjectMap [   rr:predicate qb:structure ;
+                              rr:object <http://example.com/teapots-dc>;
+    ];
+    rr:predicateObjectMap [   rr:predicate rdfs:subPropertyOf ;
+                              rr:object sdmx-measure:obsValue;
+    ];
+.  
+
+<teapots-dc>
+    a rr:TriplesMap;
+    rr:logicalTable <constTriplesMap>;
+
+    rr:subjectMap [ rr:constant <http://example.com/teapots-dc>;
+                    rr:class qb:DataStructureDefinition;
+    ];
+
+    rr:predicateObjectMap [  rr:predicate qb:attribute ;
+                          rr:object sdmx-attribute:unitMeasure ;
+    ];
+    rr:predicateObjectMap [  rr:predicate qb:component;
+                          rr:object <http://example.com/component1> ;
+    ];
+    rr:predicateObjectMap [  rr:predicate qb:component;
+                          rr:object <http://example.com/component2> ;
+    ];
+    rr:predicateObjectMap [  rr:predicate qb:component;
+                          rr:object <http://example.com/component3> ;
+    ];
+    rr:predicateObjectMap [  rr:predicate qb:componentAttachment;
+                          rr:object qb:DataSet ;
+    ];
+.
