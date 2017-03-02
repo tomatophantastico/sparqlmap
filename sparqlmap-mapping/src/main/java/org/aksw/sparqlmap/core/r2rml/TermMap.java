@@ -2,6 +2,7 @@ package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.aksw.sparqlmap.core.errors.ImplementationException;
 
@@ -13,11 +14,11 @@ import lombok.Data;
 //@AllArgsConstructor
 public abstract class TermMap {
 
-  private String lang;
-  private String datatypIRI;
+  private Optional<String> lang;
+  private Optional<String> datatypIRI;
   private String termTypeIRI;
   
-  public TermMap(String lang, String datatypIRI, String termTypeIRI) {
+  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI) {
     super();
     if(termTypeIRI==null){
       throw new ImplementationException("provide termtype");

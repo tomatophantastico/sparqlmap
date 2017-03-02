@@ -1,13 +1,16 @@
 package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.aksw.sparqlmap.core.r2rml.TermMapReferencing.JoinOn;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.vocabulary.XSD;
 
 import com.google.common.collect.Lists;
 
@@ -15,7 +18,7 @@ public class TermMapLoader {
     
 
 
-    public static TermMap load(Model r2rmlmodel, Resource termMap, String baseIri) {
+    public static TermMap load(Model r2rmlmodel, Resource termMap, String baseIri, LogicalTable ltab) {
       
       TermMap result = null;
       
@@ -27,8 +30,9 @@ public class TermMapLoader {
       String termType = (termTypeRes == null?null:termTypeRes.getURI());
       
       
-      String column = LoaderHelper.getSingleLiteralObjectValue(
-          r2rmlmodel.listStatements(termMap, R2RML.HASCOLUMN, (RDFNode) null));
+
+      Optional<String> column = Optional.ofNullable(termMap.getProperty(R2RML.HASCOLUMN)).map(Statement::getString);
+      
       String template = LoaderHelper.getSingleLiteralObjectValue(
           r2rmlmodel.listStatements(termMap, R2RML.HASTEMPLATE, (RDFNode) null));
       
@@ -39,59 +43,70 @@ public class TermMapLoader {
       RDFNode constant = LoaderHelper.getSingleRDFNode(
           r2rmlmodel.listStatements(termMap, R2RML.HASCONSTANT, (RDFNode) null));
       
-      String language = LoaderHelper.getSingleLiteralObjectValue(
-          r2rmlmodel.listStatements(termMap, R2RML.HASLANGUAGE, (RDFNode) null));
       
-      Resource datatype = LoaderHelper.getSingleResourceObject(
-          r2rmlmodel.listStatements(termMap, R2RML.HASDATATYPE, (RDFNode) null));
+      Optional<String> language = Optional.ofNullable(termMap.getProperty(R2RML.HASLANGUAGE)).map(Statement::getString);
       
+      Optional<String> datatype = Optional.ofNullable(termMap.getProperty(R2RML.HASDATATYPE)).map(Statement::getResource).map(Resource::getURI);
+      
+
       Resource parentMap = LoaderHelper.getSingleResourceObject(
           r2rmlmodel.listStatements(termMap, R2RML.HASPARENTTRIPLESMAP, (RDFNode) null));
       
       
       //if not explicitly declared, we infer from the location (g,s,p,o) the term type
       if(termType==null){
+        //if used as object and has literal properties, it is a literal
         if(r2rmlmodel.contains(null, R2RML.HASOBJECTMAP, termMap)){
-          if(column!=null || language != null || datatype !=null){
+          if(column.isPresent() || language.isPresent() || datatype !=null){
             termType = R2RML.LITERAL_STRING;
           }else{
-            
+            termType = R2RML.IRI_STRING;
           }
+        }else{
+          // used elsewhere, default to IRI
+          termType = R2RML.IRI_STRING;
+
         }
       }
-      //defaults to iri
-      if(termType == null){
-        termType = R2RML.IRI_STRING;
-      }
+
       
       
-      if(column!=null&&template==null&&constant==null&&parentMap==null){
+      if(column.isPresent() &&template==null&&constant==null&&parentMap==null){
+        String colString = column.get();
+        
         result = TermMapColumn.builder()
-            .column(R2RMLHelper.unescape(column))
-            .datatypIRI(datatype!=null?datatype.getURI():null)
+            .column(R2RMLHelper.unescape(colString))
             .termTypeIRI(termType)
+            .datatypIRI(datatype)
+            .lang(language)
             .build();
         
        
-      }else if(column==null&&template!=null&&constant==null&&parentMap==null){
+      }else if(!column.isPresent() && template!=null&&constant==null&&parentMap==null){
         List<TermMapTemplateTuple> templateTuples =  R2RMLHelper.splitTemplate(template);
         // expand the template with the base prefix
         
         result = TermMapTemplate.builder()
             .template(templateTuples)
             .termTypeIRI(termType)
+            .datatypIRI(datatype)
+            .lang(language)
             .build();
         
         
-      }else if(column==null&&template==null&&constant!=null&&parentMap==null){
+      }else if(!column.isPresent()&&template==null&&constant!=null&&parentMap==null){
         TermMapConstant tmConst = null;
         if(constant.isURIResource()){
-          tmConst = TermMapConstant.builder().termTypeIRI(termType).constantIRI(constant.asResource().getURI()).build();
+          tmConst = TermMapConstant.builder().termTypeIRI(R2RML.IRI_STRING).constantIRI(constant.asResource().getURI()).build();
         }else if(constant.isLiteral()){
+          
+          language = Optional.ofNullable("".equals(constant.asLiteral().getLanguage())?null:constant.asLiteral().getLanguage());
+          datatype = Optional.ofNullable(constant.asLiteral().getDatatypeURI()).filter(dt -> !dt.equals(XSD.xstring.getURI()));
+          
           tmConst = TermMapConstant.builder()
                 .constantLiteral(constant.asLiteral().getLexicalForm())
-                .lang(constant.asLiteral().getLanguage())
-                .datatypIRI(constant.asLiteral().getDatatypeURI())
+                .datatypIRI(datatype)
+                .lang(language)
                 .termTypeIRI(R2RML.LITERAL_STRING)
                 .build();
 
@@ -99,7 +114,7 @@ public class TermMapLoader {
           throw new R2RMLValidationException("Blank node is not valid constant value for term map");
         }
         result = tmConst;
-      }else if(column==null&&template==null&&constant==null&&parentMap!=null){
+      }else if(!column.isPresent()&&template==null&&constant==null&&parentMap!=null){
          
           //only setting the join conditions here, parent map might not be loaded yet.
         
@@ -134,7 +149,7 @@ public class TermMapLoader {
         throw new R2RMLValidationException("Check termmap definition for multiple or lacking definitons of rr:constant, rr:template or rr:column");
       }
       
-      
+
       
       return result;
     }

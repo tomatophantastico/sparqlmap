@@ -1,6 +1,7 @@
 package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class TermMapReferencing extends TermMap {
   private List<JoinOn> conditions;
   
   @Builder
-  public TermMapReferencing(String lang, String datatypIRI, String termTypeIRI,  QuadMap parent,
+  public TermMapReferencing(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI,  QuadMap parent,
       String parentMapUri, List<JoinOn> conditions) {
     super(lang, datatypIRI, termTypeIRI);
     this.parent = parent;
@@ -59,7 +60,10 @@ public class TermMapReferencing extends TermMap {
     return true;
   }
   
-  
+  public static class TermMapReferencingBuilder{
+    Optional<String> datatypIRI = Optional.empty();
+    Optional<String> lang = Optional.empty();
+  }
   
   
   

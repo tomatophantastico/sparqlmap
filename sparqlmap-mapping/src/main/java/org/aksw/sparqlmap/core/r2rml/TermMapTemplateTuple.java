@@ -1,5 +1,7 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
+
 import lombok.Builder;
 import lombok.Data;
 

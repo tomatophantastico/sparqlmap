@@ -18,14 +18,14 @@ public class LogicalColumn {
   private LogicalTable table;
  
   private String name;
+  
+  
   private Optional<String> xsdDataType; 
+  
+
   
   public static LogicalColumnBuilder builder(LogicalTable ltab){
     return colBuilder().table(ltab);
   }
   
-  
-  public String getPath(){
-    return String.format("%s/%s", table.getPath(),getName() );
-  }
 }

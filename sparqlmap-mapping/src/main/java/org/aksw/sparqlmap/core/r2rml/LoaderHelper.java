@@ -26,8 +26,9 @@ public class LoaderHelper {
       result =  rdfnode.asLiteral().getLexicalForm();
     }
     return result;
-    
   }
+  
+
   
   public static RDFNode getSingleRDFNode(StmtIterator stmtIterator){
     RDFNode result = null;
