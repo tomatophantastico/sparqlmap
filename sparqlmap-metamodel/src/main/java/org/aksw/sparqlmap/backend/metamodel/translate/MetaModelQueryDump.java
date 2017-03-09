@@ -46,15 +46,15 @@ public class MetaModelQueryDump {
   
   
 
-  public static DatasetGraph assembleDs(TranslationContext tcontext, DataContext context) {
+  public static DatasetGraph assembleDs(TranslationContext tcontext, DataContext context, boolean rowwiseBlanks) {
 
     Collection<Node> dgraphs = tcontext.getQuery().getGraphURIs().stream().map(graphname-> NodeFactory.createURI(graphname)).collect(Collectors.toList());
     
-   return assembleDs(tcontext.getQueryBinding().getBindingMap().values(), context,dgraphs);
+   return assembleDs(tcontext.getQueryBinding().getBindingMap().values(), context,dgraphs, rowwiseBlanks);
 
   }
   
-  public static Stream<Multimap<Node,Triple>> streamFast(Collection<QuadMap> quadmaps, DataContext context, ExecutorService exec){
+  public static Stream<Multimap<Node,Triple>> streamFast(Collection<QuadMap> quadmaps, DataContext context, ExecutorService exec, boolean rowwiseBlanks){
     Multimap<LogicalTable,QuadMap> bucketedMaps = bucketFilterNonNullMaps(new HashSet<QuadMap>(quadmaps));
     Queue<Multimap<Node,Triple>> queue =  new Queue<Multimap<Node,Triple>>(new  LinkedBlockingQueue<Multimap<Node,Triple>>(1000));
     
@@ -62,7 +62,7 @@ public class MetaModelQueryDump {
     if(jobCount.get()>0){
       for (LogicalTable ltab : bucketedMaps.keySet()) {
         // build the query
-        MetaModelSelectiveDump sd = new MetaModelSelectiveDump(ltab,bucketedMaps.get(ltab) ,context,queue,jobCount);
+        MetaModelSelectiveDump sd = new MetaModelSelectiveDump(ltab,bucketedMaps.get(ltab) ,context,queue,jobCount, rowwiseBlanks);
         exec.execute(sd);
       }
     }else{
@@ -73,13 +73,13 @@ public class MetaModelQueryDump {
   
   
   public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context) {
-    return assembleDs(quadmaps, context, Lists.newArrayList(Quad.defaultGraphNodeGenerated));
+    return assembleDs(quadmaps, context, Lists.newArrayList(Quad.defaultGraphNodeGenerated),false);
   }
   
-  public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context, Collection<Node> defaultGraphs) {
+  public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context, Collection<Node> defaultGraphs, boolean rowwiseBlanks) {
     final Multimap<Node,Triple> graphs = HashMultimap.create();
 
-    Stream<Multimap<Node,Triple>> stream = streamFast(quadmaps, context,Executors.newWorkStealingPool());
+    Stream<Multimap<Node,Triple>> stream = streamFast(quadmaps, context,Executors.newWorkStealingPool(),rowwiseBlanks);
     stream.forEach(iresult-> 
       graphs.putAll(iresult));
     

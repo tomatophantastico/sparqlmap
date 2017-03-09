@@ -89,5 +89,4 @@ public abstract class TermMap {
     
     return cols;
   }
-
 }

@@ -1,8 +1,11 @@
 package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.aksw.sparqlmap.core.r2rml.TermMapReferencing.JoinOn;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.rdf.model.Model;
@@ -47,16 +50,6 @@ public class QuadMapLoader {
       Resource subjectMap = LoaderHelper.getSingleResourceObject(subjectMaps);
       TermMap subject = TermMapLoader.load(model, subjectMap,baseIri,ltab);
 
-      // here we store the graph maps declared on the subject, and therefore
-      // triples map level.
-      List<TermMap> triplesMapGraphMaps = Lists.newArrayList();
-
-      // and load the respective term maps
-      List<Statement> graphMaps = subjectMap.listProperties(R2RML.HASGRAPHMAP).toList();
-      for (Statement graphMapStmnt : graphMaps) {
-        triplesMapGraphMaps.add(TermMapLoader.load(model, graphMapStmnt.getObject().asResource(),baseIri,ltab));
-      }
-
       // get the pos
       List<Statement> pos = model.listStatements(triplesMapUri, R2RML.HASPREDICATEOBJECTMAP, (RDFNode) null).toList();
 
@@ -64,6 +57,7 @@ public class QuadMapLoader {
         if (!po.getObject().isResource()) {
           throw new R2RMLValidationException("non-resource in object position of rr:predicateObjectMap");
         }
+        List<TermMap> triplesMapGraphMaps = Lists.newArrayList();
 
         Resource poMap = po.getObject().asResource();
         
@@ -123,6 +117,7 @@ public class QuadMapLoader {
 
     }
     resolveTermMapReferencing(quadMaps);
+    optimizeTermMapReferencing(quadMaps);
     
     
     return quadMaps;
@@ -162,5 +157,37 @@ public class QuadMapLoader {
       }
     }
   }
+  
+  
+  
+  private static void optimizeTermMapReferencing(Multimap<String,QuadMap> quadMaps){
+    
+    quadMaps.values().forEach(qm-> {
+      
+      if(qm.getObject() instanceof TermMapReferencing){
+        TermMapReferencing tmr = (TermMapReferencing) qm.getObject();
+        
+        if(tmr.getParent().getSubject().isTemplate()){
+          TermMapTemplate pst = (TermMapTemplate) tmr.getParent().getSubject();
 
+          //we check, if all the columns mentioned in the on conditions are contained in the parent subject map
+          Set<String> pcols = Sets.newHashSet(TermMap.getCols(tmr.getParent().getSubject()));
+          Map<String,String> parent2ChildCol = tmr.getConditions().stream().collect(Collectors.toMap(JoinOn::getParentColumn, JoinOn::getChildColumn));
+              
+              
+          if(tmr.getConditions().stream().allMatch(on -> pcols.contains(on.getParentColumn()))){
+            // all are in, so we replace the ref map with a regular one
+            
+            List<TermMapTemplateTuple> tuples =   pst.getTemplate().stream().map(temptuple -> {
+              return TermMapTemplateTuple.builder().column(parent2ChildCol.get(temptuple.getColumn())).prefix(temptuple.getPrefix()).build();
+            
+            }).collect(Collectors.toList());
+            
+            TermMapTemplate newTmtp = TermMapTemplate.builder().termTypeIRI(pst.getTermTypeIRI()).template(tuples).build();
+            qm.setObject(newTmtp);
+          }      
+        }        
+      }
+    });
+  }
 }

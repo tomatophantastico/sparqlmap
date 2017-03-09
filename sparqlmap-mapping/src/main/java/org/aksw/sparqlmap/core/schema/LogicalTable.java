@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.jena.ext.com.google.common.collect.Lists;
+
 import com.google.common.base.Charsets;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
@@ -14,7 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Singular;
 
 @Data
-@EqualsAndHashCode(exclude={"columns","primaryKeys"})
+@EqualsAndHashCode(exclude={"columns","primaryKeys","fkRelations","pRelations"})
 @Builder(builderMethodName = "ltabbuilder")
 public class LogicalTable {
   
@@ -23,7 +25,18 @@ public class LogicalTable {
     @Singular
     private List<LogicalColumn> columns;
     
+  
     private List<LogicalColumn> primaryKeys;
+    
+    /*
+     * the relations, in which this table is the foreign table 
+     */
+    private List<LogicalRelation> fkRelations = Lists.newArrayList();
+    
+    /*
+     * the relations, in which this table is the primary table
+     */
+    private List<LogicalRelation> pRelations = Lists.newArrayList();
     
     private String tablename;
         
@@ -66,6 +79,17 @@ public class LogicalTable {
       return String.format("%s/%s", schema.getPath(),getName() );
     }
     
+    
+    
+    public static class LogicalTableBuilder{
+      private List<LogicalRelation> fkRelations = Lists.newArrayList();
+      private List<LogicalRelation> pRelations = Lists.newArrayList();
+      
+    }
+    
+    
+    
+
 
   
 }

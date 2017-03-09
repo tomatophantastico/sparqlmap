@@ -9,10 +9,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Builder(builderMethodName = "colBuilder")
 @EqualsAndHashCode(exclude = "table")
+@ToString(exclude = "table")
 public class LogicalColumn {
   
   private LogicalTable table;

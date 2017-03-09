@@ -57,7 +57,7 @@ public class TermMapLoader {
       if(termType==null){
         //if used as object and has literal properties, it is a literal
         if(r2rmlmodel.contains(null, R2RML.HASOBJECTMAP, termMap)){
-          if(column.isPresent() || language.isPresent() || datatype !=null){
+          if(column.isPresent() || language.isPresent() || datatype.isPresent()){
             termType = R2RML.LITERAL_STRING;
           }else{
             termType = R2RML.IRI_STRING;
@@ -120,13 +120,15 @@ public class TermMapLoader {
         
           //get all the join conditions
           List<TermMapReferencing.JoinOn> joinons = Lists.newArrayList();
-          List<Statement> conditions = parentMap.listProperties(R2RML.HASJOINCONDITION).toList();
+          List<Statement> conditions = termMap.listProperties(R2RML.HASJOINCONDITION).toList();
           for(Statement condition:  conditions){
             if(condition.getObject().isResource()){
               Resource condResource = condition.getObject().asResource();
               
-              String parentCol = LoaderHelper.getSingleLiteralObjectValue( condResource.listProperties(R2RML.HASPARENT));
-              String childCol = LoaderHelper.getSingleLiteralObjectValue( condResource.listProperties(R2RML.HASCHILD));
+              String parentCol = R2RMLHelper.unescape( 
+                  LoaderHelper.getSingleLiteralObjectValue( condResource.listProperties(R2RML.HASPARENT)));
+              String childCol = R2RMLHelper.unescape( 
+                  LoaderHelper.getSingleLiteralObjectValue( condResource.listProperties(R2RML.HASCHILD)));
               
               
               JoinOn joinon = new JoinOn();

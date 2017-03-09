@@ -2,6 +2,7 @@ package org.aksw.sparqlmap.backend.metamodel.translate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
@@ -11,6 +12,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
@@ -29,6 +33,7 @@ import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.XSD;
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.MetaModelException;
@@ -41,6 +46,10 @@ import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.MutableColumn;
 import org.apache.metamodel.schema.Table;
+import org.bouncycastle.util.encoders.Hex;
+import org.jooq.lambda.Seq;
+import org.jooq.lambda.tuple.Tuple;
+import org.jooq.lambda.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,16 +68,19 @@ import com.google.common.collect.Maps;
 public class MetaModelSelectiveDump implements Runnable{
   
   private AtomicInteger threadCount;
+
+  private boolean rowwiseBlanks;
   
   private static final Logger LOGGER = LoggerFactory.getLogger(MetaModelSelectiveDump.class);
 
-  public MetaModelSelectiveDump(LogicalTable ltable, Collection<QuadMap> quadmaps, DataContext dcontext, Queue<Multimap<Node,Triple>> queue, AtomicInteger threadCount) {
+  public MetaModelSelectiveDump(LogicalTable ltable, Collection<QuadMap> quadmaps, DataContext dcontext, Queue<Multimap<Node,Triple>> queue, AtomicInteger threadCount, boolean rowwiseBlanks) {
     super();
     this.ltable = ltable;
     this.quadmaps = quadmaps;
     this.dcontext = dcontext;
     this.queue = queue;
     this.threadCount = threadCount;
+    this.rowwiseBlanks = rowwiseBlanks;
     prepare();
   }
 
@@ -178,9 +190,16 @@ public class MetaModelSelectiveDump implements Runnable{
         Row row = ds.getRow();
         count++;
         Multimap<Node,Triple> rowTriples = HashMultimap.create();
+        Map<TermMap,Node> subjectsofRow = quadmaps.stream()
+            .map(qm -> qm.getSubject()).distinct()
+            .map(trms -> Tuple.tuple(trms, (rowwiseBlanks && trms.isBlank() )? ResourceFactory.createResource().asNode() : materialize(row,trms)))
+            .filter(t -> t.v2 != null)
+            .collect(Collectors.toMap(t -> t.v1, t -> t.v2));
+        
+        
         for(QuadMap qm: quadmaps){
           Node graph = materialize(row,qm.getGraph());
-          Node subject = materialize(row, qm.getSubject());
+          Node subject = subjectsofRow.get(qm.getSubject());
           Node predicate = materialize(row, qm.getPredicate());
           Node object = materialize(row, qm.getObject());
           if(graph!=null&& subject!=null&&predicate!=null &&object!=null){
@@ -189,8 +208,8 @@ public class MetaModelSelectiveDump implements Runnable{
         }
         queue.offer(rowTriples);
       }
-    }catch(MetaModelException e){
-    LOGGER.error("Error executing: "+ query.toSql() ,e);
+    }catch(Exception e){
+      LOGGER.error("Error executing: "+ query.toSql() ,e);
     }finally{
       synchronized (threadCount) {
         if(threadCount.get()>1){
@@ -289,27 +308,35 @@ public class MetaModelSelectiveDump implements Runnable{
         result = sb.toString();
       }
     } else if(tm instanceof TermMapColumn){
-      Object val = row.getValue(colnameSelectItem.get(((TermMapColumn) tm).getColumn()));
+      String colname = ((TermMapColumn) tm).getColumn();
+      Object val = row.getValue(colnameSelectItem.get(colname));
 
       if( val!=null){
         if(dt==null){
-          
-        }else if(dt.equals(XSDDatatype.XSDdateTime)){
+          // no datatype, just convert to string
+          result = val.toString();
+        }else if(dt.getURI().equals(XSDDatatype.XSDdateTime.getURI())){
           if(val instanceof Timestamp){
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(((Timestamp) val).toInstant().toEpochMilli());
+            SimpleDateFormat xsdfmttr = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            
+            result = xsdfmttr.format(val);
           }else {
             result = val.toString().replaceAll("\\s", "T");
             
           }
-        } else if(dt.equals(XSDDatatype.XSDboolean)){
+        } else if(dt.getURI().equals(XSDDatatype.XSDboolean.getURI())){
           result = val.toString().toLowerCase();
-        }else if(dt.equals(XSDDatatype.XSDhexBinary)){
-          result = Base64.getEncoder().encodeToString(val.toString().getBytes());  
+        }else if(dt.getURI().equals(XSDDatatype.XSDhexBinary.getURI())){
           
-        } 
-        
-        result = val.toString();
+          if(val instanceof byte[]){
+            result = DatatypeConverter.printHexBinary((byte[]) val);
+          }else{
+            result = DatatypeConverter.printHexBinary(val.toString().getBytes());
+          }      
+        }else{
+          // fallback
+          result = val.toString();
+        }
       }
     }
     return result;

@@ -157,7 +157,7 @@ public class DumperMetaModel implements Dumper{
      
     
     
-    return MetaModelQueryDump.streamFast(qms, mcontext.getDataContext(), execService);
+    return MetaModelQueryDump.streamFast(qms, mcontext.getDataContext(), execService, mcontext.isRowwiseBlanks());
     
   }
   

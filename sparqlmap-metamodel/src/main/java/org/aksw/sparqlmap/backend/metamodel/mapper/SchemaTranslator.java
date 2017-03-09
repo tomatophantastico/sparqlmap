@@ -49,13 +49,12 @@ public class SchemaTranslator {
       }).collect(Collectors.toList());
       ltab.setColumns(lcols);
       
-      
       //translate primary keys
-
       ltab.setPrimaryKeys(
           Arrays.stream(
               table.getPrimaryKeys()).map(
                   primCol -> ltab.getCol(primCol.getName()).get()).collect(Collectors.toList()));
+      
       
       
       return ltab;
@@ -75,8 +74,15 @@ public class SchemaTranslator {
         LogicalColumn[] cols = {primary.getCol(priColName).get(),foreign.getCol(forColName).get()};
         joinOnConditions.add(cols);
       }
-      return LogicalRelation.builder().ons(joinOnConditions).primary(primary).foreign(foreign).build();
+      
+      LogicalRelation lrel =  LogicalRelation.builder().ons(joinOnConditions).primary(primary).foreign(foreign).build();
+      lrel.getForeign().getFkRelations().add(lrel);
+      lrel.getPrimary().getPRelations().add(lrel);
+      
+      return lrel;
     }).collect(Collectors.toList());
+    
+    
     
     
     
@@ -92,13 +98,13 @@ public class SchemaTranslator {
    if(ct==null) {
      // in cast ct is null
    }else if(ct.isBinary()){
-     dt = XSDDatatype.XSDbase64Binary;
+     dt = XSDDatatype.XSDhexBinary;
    }else if(ct.isBoolean()){
      dt = XSDDatatype.XSDboolean;
    }else if(ct.isNumber()){
      if(ct.getJavaEquivalentClass().equals(Double.class)){
        dt = XSDDatatype.XSDdouble;
-     } if (ct.getJavaEquivalentClass().equals(UUID.class) ) {
+     } else if (ct.getJavaEquivalentClass().equals(UUID.class) ) {
        // do nothing
      }else{
        dt = XSDDatatype.XSDinteger;
