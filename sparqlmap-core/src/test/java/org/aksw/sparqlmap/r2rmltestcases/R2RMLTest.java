@@ -115,7 +115,15 @@ public abstract class R2RMLTest {
 		
 		//let the mapper run.
 		
-		map();
+		SparqlMap r2r = getSparqlMap();
+    
+	  
+    try {
+      r2r.getDumpExecution().streamDump(new FileOutputStream(new File(param.getOutputLocation())));
+    } catch (QueryParserException e) {
+      Assume.assumeNoException(e);
+    }
+    r2r.close();
 	
 		
 		assertAreEqual(param.getOutputLocation(),param.getReferenceOutput());
@@ -130,18 +138,6 @@ public abstract class R2RMLTest {
 	  
 	
 
-	private void map() throws SQLException, FileNotFoundException {
-
-		SparqlMap r2r = getSparqlMap();
-		
-	
-		try {
-      r2r.getDumpExecution().streamDump(new FileOutputStream(new File(param.getOutputLocation())));
-    } catch (QueryParserException e) {
-      Assume.assumeNoException(e);
-    }
-		r2r.close();
-	}
 	
 	
 	
@@ -226,6 +222,9 @@ public abstract class R2RMLTest {
 		if(fileSuffixout.equals("NQ")){
 			DatasetGraph dsgout = RDFDataMgr.loadDatasetGraph(outputLocation);
 			DatasetGraph dsdref = RDFDataMgr.loadDatasetGraph(referenceOutput);
+			
+			
+			
 			
 			Assert.assertFalse("Empty result, should have been:"+ Files.toString(new File(referenceOutput), Charsets.UTF_8) ,dsgout.isEmpty() && !dsdref .isEmpty());
 

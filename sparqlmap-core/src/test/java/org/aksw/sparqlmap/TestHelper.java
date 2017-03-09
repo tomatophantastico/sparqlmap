@@ -6,8 +6,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.aksw.sparqlmap.core.SparqlMap;
+import org.apache.jena.datatypes.BaseDatatype;
+import org.apache.jena.datatypes.xsd.impl.XSDDouble;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -17,12 +20,17 @@ import org.apache.jena.query.ResultSetFactory;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFVisitor;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.impl.StatementImpl;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.resultset.ResultSetCompare;
 import org.apache.jena.tdb.TDBFactory;
+import org.apache.jena.vocabulary.XSD;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +51,21 @@ public class TestHelper {
     assertModelAreEqual(result, expectedResult);
   }
   
-  static public void assertModelAreEqual( Model result, Model expectedresult) throws SQLException{
+  static public void assertModelAreEqual( Model result, Model expectedresultRaw) throws SQLException{
+   
+    Model cleanedExpected = ModelFactory.createDefaultModel();
+    expectedresultRaw.listStatements().mapWith(stmt -> {
+      Statement retStmt = stmt;
+      String dtUri = stmt.getObject().isLiteral() && stmt.getObject().asLiteral().getDatatypeURI() != null ? stmt.getObject().asLiteral().getDatatypeURI() : null; 
+      if(XSD.xdouble.getURI().equals(dtUri)){
+        
+        retStmt = new StatementImpl(stmt.getSubject(), stmt.getPredicate(), ResourceFactory.createTypedLiteral(stmt.getObject().asLiteral().getDouble()));
+      }
+      
+      return retStmt;
+    }).forEachRemaining(stmnt -> cleanedExpected.add(stmnt));
     
    
- 
   
     StringBuffer models =new StringBuffer();
     
@@ -58,17 +77,17 @@ public class TestHelper {
     
     models.append("=======================\nExpected was: ");
     ByteArrayOutputStream expectedResBos  =new ByteArrayOutputStream();
-    RDFDataMgr.write(expectedResBos, expectedresult,Lang.TURTLE);
+    RDFDataMgr.write(expectedResBos, cleanedExpected,Lang.TURTLE);
     models.append(expectedResBos);
     models.append("=======================\nMissing in the sparqlmap result is: ");
     
-    Model missingInActual = expectedresult.difference(result);
+    Model missingInActual = cleanedExpected.difference(result);
     ByteArrayOutputStream missingInActualResBos  =new ByteArrayOutputStream();
     RDFDataMgr.write(missingInActualResBos, missingInActual,Lang.TURTLE);
     models.append(missingInActualResBos);
     
     models.append("=======================\nThese triples were unexpected: ");
-    Model missingInExpected = result.difference(expectedresult);
+    Model missingInExpected = result.difference(cleanedExpected);
     ByteArrayOutputStream missingInExpectedResBos  =new ByteArrayOutputStream();
     RDFDataMgr.write(missingInExpectedResBos, missingInExpected,Lang.TURTLE);
     models.append(missingInExpectedResBos);
@@ -77,7 +96,7 @@ public class TestHelper {
     
     //check if we have to deal with 
     
-    assertTrue(models.toString(), result.isIsomorphicWith(expectedresult));
+    assertTrue(models.toString(), result.isIsomorphicWith(cleanedExpected));
   
     
   }
