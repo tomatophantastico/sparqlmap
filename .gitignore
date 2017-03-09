@@ -1,13 +1,12 @@
 /bin/
-.classpath
-.project
+**/.classpath
+**/.project
 *.iml
-build
 *.lock
 .settings
 .gradle
 .pmd
-**/.*
+**/build
 **/bin
 **/target
 **/directGraph-sparqlmap.ttl
