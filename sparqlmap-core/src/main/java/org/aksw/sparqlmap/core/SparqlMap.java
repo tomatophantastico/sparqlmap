@@ -165,7 +165,8 @@ public class SparqlMap {
       // use the metamodel backend
       
       TranslationContextMetaModel mmtc = new TranslationContextMetaModel(tcontext);
-      MetaModelQueryExecution mmqe = new MetaModelQueryExecution(mmtc, dataContext);
+      @SuppressWarnings("resource")
+      MetaModelQueryExecution mmqe = new MetaModelQueryExecution(mmtc, dataContext,false);
       
       
       

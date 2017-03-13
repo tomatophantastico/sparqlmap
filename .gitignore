@@ -12,3 +12,5 @@
 **/directGraph-sparqlmap.ttl
 **/*-sparqlmap.nq
 **/dm_r2rml.ttl
+sparqlmap-gui/node_modules/.bin
+sparqlmap-gui/node_modules
