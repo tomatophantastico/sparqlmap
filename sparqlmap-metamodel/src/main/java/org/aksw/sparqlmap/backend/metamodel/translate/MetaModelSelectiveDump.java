@@ -3,14 +3,9 @@ package org.aksw.sparqlmap.backend.metamodel.translate;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -29,14 +24,11 @@ import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.atlas.lib.IRILib;
 import org.apache.jena.datatypes.BaseDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.vocabulary.XSD;
 import org.apache.metamodel.DataContext;
-import org.apache.metamodel.MetaModelException;
 import org.apache.metamodel.data.DataSet;
 import org.apache.metamodel.data.Row;
 import org.apache.metamodel.query.FromItem;
@@ -46,19 +38,16 @@ import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.MutableColumn;
 import org.apache.metamodel.schema.Table;
-import org.bouncycastle.util.encoders.Hex;
-import org.jooq.lambda.Seq;
 import org.jooq.lambda.tuple.Tuple;
-import org.jooq.lambda.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.data.async.Queue;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.google.common.collect.Maps;
 
 /**
  * 
