@@ -3,6 +3,8 @@ package org.aksw.sparqlmap.core.mapper.compatibility;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Optional;
+
 import org.aksw.sparqlmap.core.r2rml.R2RML;
 import org.aksw.sparqlmap.core.r2rml.R2RMLHelper;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
@@ -62,7 +64,7 @@ public class CompatibilityCheckerTest {
   
   public TermMap constantLiteralEn = TermMapConstant.builder()
       .constantIRI("foo")
-      .lang("en")
+      .lang(Optional.of("en"))
       .termTypeIRI(R2RML.LITERAL_STRING)
       .build();
   

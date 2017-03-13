@@ -2,35 +2,33 @@ package org.aksw.sparqlmap.backend.metamodel.translate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.util.Base64;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+import javax.xml.bind.DatatypeConverter;
+
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
 import org.aksw.sparqlmap.core.r2rml.R2RML;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
 import org.aksw.sparqlmap.core.r2rml.TermMapColumn;
 import org.aksw.sparqlmap.core.r2rml.TermMapConstant;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplate;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplateTuple;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.atlas.lib.IRILib;
 import org.apache.jena.datatypes.BaseDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.vocabulary.XSD;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.metamodel.DataContext;
-import org.apache.metamodel.MetaModelException;
 import org.apache.metamodel.data.DataSet;
 import org.apache.metamodel.data.Row;
 import org.apache.metamodel.query.FromItem;
@@ -40,15 +38,16 @@ import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.MutableColumn;
 import org.apache.metamodel.schema.Table;
+import org.jooq.lambda.tuple.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.data.async.Queue;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.google.common.collect.Maps;
 
 /**
  * 
@@ -58,16 +57,19 @@ import com.google.common.collect.Maps;
 public class MetaModelSelectiveDump implements Runnable{
   
   private AtomicInteger threadCount;
+
+  private boolean rowwiseBlanks;
   
   private static final Logger LOGGER = LoggerFactory.getLogger(MetaModelSelectiveDump.class);
 
-  public MetaModelSelectiveDump(LogicalTable ltable, Collection<QuadMap> quadmaps, DataContext dcontext, Queue<Multimap<Node,Triple>> queue, AtomicInteger threadCount) {
+  public MetaModelSelectiveDump(LogicalTable ltable, Collection<QuadMap> quadmaps, DataContext dcontext, Queue<Multimap<Node,Triple>> queue, AtomicInteger threadCount, boolean rowwiseBlanks) {
     super();
     this.ltable = ltable;
     this.quadmaps = quadmaps;
     this.dcontext = dcontext;
     this.queue = queue;
     this.threadCount = threadCount;
+    this.rowwiseBlanks = rowwiseBlanks;
     prepare();
   }
 
@@ -142,6 +144,14 @@ public class MetaModelSelectiveDump implements Runnable{
           column = mcolumn;
         }else{
           column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumnByName(col);
+          
+          //check if the columname is actually a number
+          
+          if(column == null && col.startsWith("#")){
+            int colNo = Integer.valueOf(col.substring(1));
+            column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumn(colNo);
+          }
+          
         }
         
         
@@ -169,9 +179,16 @@ public class MetaModelSelectiveDump implements Runnable{
         Row row = ds.getRow();
         count++;
         Multimap<Node,Triple> rowTriples = HashMultimap.create();
+        Map<TermMap,Node> subjectsofRow = quadmaps.stream()
+            .map(qm -> qm.getSubject()).distinct()
+            .map(trms -> Tuple.tuple(trms, (rowwiseBlanks && trms.isBlank() )? ResourceFactory.createResource().asNode() : materialize(row,trms)))
+            .filter(t -> t.v2 != null)
+            .collect(Collectors.toMap(t -> t.v1, t -> t.v2));
+        
+        
         for(QuadMap qm: quadmaps){
           Node graph = materialize(row,qm.getGraph());
-          Node subject = materialize(row, qm.getSubject());
+          Node subject = subjectsofRow.get(qm.getSubject());
           Node predicate = materialize(row, qm.getPredicate());
           Node object = materialize(row, qm.getObject());
           if(graph!=null&& subject!=null&&predicate!=null &&object!=null){
@@ -180,8 +197,8 @@ public class MetaModelSelectiveDump implements Runnable{
         }
         queue.offer(rowTriples);
       }
-    }catch(MetaModelException e){
-    LOGGER.error("Error executing: "+ query.toSql() ,e);
+    }catch(Exception e){
+      LOGGER.error("Error executing: "+ query.toSql() ,e);
     }finally{
       synchronized (threadCount) {
         if(threadCount.get()>1){
@@ -201,8 +218,8 @@ public class MetaModelSelectiveDump implements Runnable{
   private Node materialize(Row row, TermMap tm){
     Node result = null;
     BaseDatatype dt = null;
-    if(tm.getDatatypIRI()!=null){
-      dt = new BaseDatatype(tm.getDatatypIRI());
+    if(tm.getDatatypIRI().isPresent()){
+      dt = new BaseDatatype(tm.getDatatypIRI().get());
     }else{
       if(tm instanceof TermMapColumn){
         dt = getNaturalDatatype(row,tm);
@@ -219,8 +236,8 @@ public class MetaModelSelectiveDump implements Runnable{
       }else if(tm.getTermTypeIRI().equals(R2RML.BLANKNODE_STRING)){
         result = NodeFactory.createBlankNode(cfString);
       }else{
-        if(tm.getLang()!=null){
-          result = NodeFactory.createLiteral(cfString, tm.getLang());
+        if(tm.getLang().isPresent()){
+          result = NodeFactory.createLiteral(cfString, tm.getLang().get());
         }else if(dt!=null){
           result = NodeFactory.createLiteral(cfString, dt );
         }else{
@@ -241,27 +258,7 @@ public class MetaModelSelectiveDump implements Runnable{
     XSDDatatype dt = null;
     if(tm instanceof TermMapColumn){
       ColumnType ct = colnameSelectItem.get(((TermMapColumn) tm).getColumn()).getType();
-      if(ct ==null || ct.isLiteral()){
-        // do nothing
-      }else if(ct.isBinary()){
-        dt = XSDDatatype.XSDbase64Binary;
-      }else if(ct.isBoolean()){
-        dt = XSDDatatype.XSDboolean;
-      }else if(ct.isNumber()){
-        if(ct.getJavaEquivalentClass().equals(Double.class)){
-          dt = XSDDatatype.XSDdouble;
-        } if (ct.getJavaEquivalentClass().equals(UUID.class) ) {
-          // do nothing
-        }else{
-          dt = XSDDatatype.XSDinteger;
-        }
-      } else if (ct.getName().equals("DATE")){
-        dt = XSDDatatype.XSDdate;
-      }else if(ct.getName().equals("TIME")){
-        dt = XSDDatatype.XSDtime;
-      }else if(ct.getName().equals("TIMESTAMP")){
-        dt = XSDDatatype.XSDdateTime;
-      }
+      dt = SchemaTranslator.getXSDDataType(ct).orElse(null);
     }
       
     return dt;
@@ -300,27 +297,35 @@ public class MetaModelSelectiveDump implements Runnable{
         result = sb.toString();
       }
     } else if(tm instanceof TermMapColumn){
-      Object val = row.getValue(colnameSelectItem.get(((TermMapColumn) tm).getColumn()));
+      String colname = ((TermMapColumn) tm).getColumn();
+      Object val = row.getValue(colnameSelectItem.get(colname));
 
       if( val!=null){
         if(dt==null){
-          
-        }else if(dt.equals(XSDDatatype.XSDdateTime)){
+          // no datatype, just convert to string
+          result = val.toString();
+        }else if(dt.getURI().equals(XSDDatatype.XSDdateTime.getURI())){
           if(val instanceof Timestamp){
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(((Timestamp) val).toInstant().toEpochMilli());
+            SimpleDateFormat xsdfmttr = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            
+            result = xsdfmttr.format(val);
           }else {
             result = val.toString().replaceAll("\\s", "T");
             
           }
-        } else if(dt.equals(XSDDatatype.XSDboolean)){
+        } else if(dt.getURI().equals(XSDDatatype.XSDboolean.getURI())){
           result = val.toString().toLowerCase();
-        }else if(dt.equals(XSDDatatype.XSDhexBinary)){
-          result = Base64.getEncoder().encodeToString(val.toString().getBytes());  
+        }else if(dt.getURI().equals(XSDDatatype.XSDhexBinary.getURI())){
           
-        } 
-        
-        result = val.toString();
+          if(val instanceof byte[]){
+            result = DatatypeConverter.printHexBinary((byte[]) val);
+          }else{
+            result = DatatypeConverter.printHexBinary(val.toString().getBytes());
+          }      
+        }else{
+          // fallback
+          result = val.toString();
+        }
       }
     }
     return result;

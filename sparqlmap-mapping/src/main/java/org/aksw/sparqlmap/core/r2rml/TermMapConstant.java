@@ -1,5 +1,7 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import java.util.Optional;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +14,7 @@ public class TermMapConstant  extends TermMap{
   private String constantIRI;
   
   @Builder
-  public TermMapConstant(String lang, String datatypIRI, String termTypeIRI,  String constantLiteral,
+  public TermMapConstant(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI,  String constantLiteral,
       String constantIRI) {
     
     super(lang, datatypIRI, termTypeIRI);
@@ -43,6 +45,12 @@ public class TermMapConstant  extends TermMap{
   @Override
   public boolean isReferencing() {
     return false;
+  }
+  
+  
+  public static class TermMapConstantBuilder{
+    Optional<String> datatypIRI = Optional.empty();
+    Optional<String> lang = Optional.empty();
   }
 
  

@@ -20,7 +20,7 @@ import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.VOID;
 
 import com.google.common.collect.Maps;
-
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Lists;
 
 /**
@@ -54,9 +54,13 @@ public class R2RMLModelLoader {
     
     String desc = loadDescription(toLoad);
     
-    //load the triples maps
     
-    R2RMLMapping mapping = new R2RMLMapping(QuadMapLoader.load(toLoad, baseIri),original,desc);
+    
+    
+    //load the triples maps
+    Multimap<String,QuadMap> quadmaps = QuadMapLoader.load(toLoad, baseIri);
+    
+    R2RMLMapping mapping = new R2RMLMapping(quadmaps,original,desc);
 
     
       

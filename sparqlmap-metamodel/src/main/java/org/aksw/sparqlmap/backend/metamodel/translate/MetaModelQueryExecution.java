@@ -24,13 +24,13 @@ public class MetaModelQueryExecution implements QueryExecution{
   
   
   
-  public MetaModelQueryExecution(TranslationContextMetaModel tc, DataContext dcontext) {
+  public MetaModelQueryExecution(TranslationContextMetaModel tc, DataContext dcontext, boolean rowwiseBlanks) {
     super();
 
     
     this.query = tc.getTcontext().getQuery();
     
-    dataset = DatasetImpl.wrap(MetaModelQueryDump.assembleDs(tc.getTcontext(), dcontext)); 
+    dataset = DatasetImpl.wrap(MetaModelQueryDump.assembleDs(tc.getTcontext(), dcontext, rowwiseBlanks)); 
     
     
   }

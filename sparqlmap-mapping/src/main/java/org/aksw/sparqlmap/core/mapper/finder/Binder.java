@@ -11,6 +11,7 @@ import org.aksw.sparqlmap.core.algebra.QuadVisitorBase;
 import org.aksw.sparqlmap.core.errors.ImplementationException;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
+import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.algebra.OpWalker;
 import org.apache.jena.sparql.algebra.op.OpJoin;
@@ -76,19 +77,25 @@ public class Binder {
 
 			Collection<Quad> leftQuads = quads.pop();
 			
-			
+			if(leftQuads== NOP_QUADS) {
+			  quads.push(rightQuads);
+			} else if (rightQuads!= NOP_QUADS) {
+			  quads.push(leftQuads);
+			}else{
 			//we now merge the bindings for each and every triple we got here.
-			
-			boolean changed = binding.preLeftJoin(leftQuads,rightQuads);
-			changed = changed | binding.preLeftJoin(rightQuads, leftQuads);
+	      
+	      boolean changed = binding.preLeftJoin(leftQuads,rightQuads);
+	      changed = changed | binding.preLeftJoin(rightQuads, leftQuads);
 
-			//if we modified any binding, we have to walk this part of the Op-Tree again.
-			
-			if(changed){
-				OpWalker.walk(opJoin, this);
+	      //if we modified any binding, we have to walk this part of the Op-Tree again.  
+	      if(changed){
+	        OpWalker.walk(opJoin, this);
 
+	      }
+	      putOnStack(leftQuads, rightQuads);
 			}
-			putOnStack(leftQuads, rightQuads);
+			
+			
 		}
 
 		@Override
@@ -182,18 +189,16 @@ public class Binder {
     public
 	  void visit(OpTable opTable){
 	    
-	    if(opTable.getTable() instanceof TableUnit){
-	      // do nothing here
-	    }else{
-	      throw new ImplementationException("Values/Table not implmeneted");
+      quads.push(NOP_QUADS);
 
-	    }
 	  }
 	}
 	
 	
-
-	
+	/*
+	 * indicates a collection quads that can be joined with other collections
+	 */
+	private static Collection<Quad> NOP_QUADS = Lists.newArrayList();
 	
 	
 	

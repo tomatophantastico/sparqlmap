@@ -35,12 +35,17 @@
                                  rr:predicate  <http://example.com/base/DEPT#deptno>
                                ] ;
         rr:subjectMap          [ rr:class     inst:DEPT ;
-                                 rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"};dname={\"dname\"};loc={\"loc\"}" ;
+                                 rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .
 
 <http://example.com/base/mapping/EMP>
         rr:logicalTable        [ rr:tableName  "\"EMP\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"}" ;
+                                                 rr:termType  rr:BlankNode
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/EMP#ref-deptno>
+                               ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"etype\"" ] ;
                                  rr:predicate  <http://example.com/base/EMP#etype>
                                ] ;
@@ -59,13 +64,6 @@
                                                  rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
                                                ] ;
                                  rr:predicate  <http://example.com/base/EMP#empno>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:joinCondition     [ rr:child   "\"deptno\"" ;
-                                                                        rr:parent  "\"deptno\""
-                                                                      ] ;
-                                                 rr:parentTriplesMap  <http://example.com/base/mapping/DEPT>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/EMP#ref-deptno>
                                ] ;
         rr:subjectMap          [ rr:class     inst:EMP ;
                                  rr:template  "http://example.com/base/EMP/empno={\"empno\"}"

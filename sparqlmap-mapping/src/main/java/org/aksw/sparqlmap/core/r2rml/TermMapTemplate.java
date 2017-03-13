@@ -1,6 +1,7 @@
 package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class TermMapTemplate  extends TermMap{
   private List<TermMapTemplateTuple> template;
 
   @Builder 
-  private TermMapTemplate(String lang, String datatypIRI, String termTypeIRI, 
+  private TermMapTemplate(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, 
       List<TermMapTemplateTuple> template) {
     super(lang, datatypIRI, termTypeIRI);
     this.template = template;
@@ -39,6 +40,11 @@ public class TermMapTemplate  extends TermMap{
     return false;
   }
 
+  
+  public static class TermMapTemplateBuilder{
+    Optional<String> datatypIRI = Optional.empty();
+    Optional<String> lang = Optional.empty();
+  }
   
   
 

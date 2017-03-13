@@ -17,6 +17,6 @@
                                  rr:predicate  <http://example.com/base/Student#ID>
                                ] ;
         rr:subjectMap          [ rr:class     inst:Student ;
-                                 rr:template  "http://example.com/base/Student/ID={\"ID\"};FirstName={\"FirstName\"};LastName={\"LastName\"}" ;
+                                 rr:template  "http://example.com/base/Student/FirstName={\"FirstName\"};ID={\"ID\"};LastName={\"LastName\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .

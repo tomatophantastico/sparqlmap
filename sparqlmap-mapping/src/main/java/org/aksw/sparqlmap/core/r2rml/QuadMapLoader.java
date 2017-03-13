@@ -1,22 +1,23 @@
 package org.aksw.sparqlmap.core.r2rml;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
+import org.aksw.sparqlmap.core.r2rml.TermMapReferencing.JoinOn;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 public class QuadMapLoader {
@@ -24,7 +25,7 @@ public class QuadMapLoader {
   public static Multimap<String,QuadMap> load(Model model, String baseIri) {
     Multimap<String,QuadMap> quadMaps = HashMultimap.create();
 
-    for (Resource triplesMapUri : model.listResourcesWithProperty(RDF.type, R2RML.TRIPLESMAP).toList()) {
+    for (Resource triplesMapUri :model.listStatements((Resource) null, RDF.type, R2RML.TRIPLESMAP).mapWith(s -> s.getSubject()).toList()) {
       
       
       
@@ -38,21 +39,16 @@ public class QuadMapLoader {
       StmtIterator versions = model.listStatements(logicalTable, R2RML.SQLVERSION, (RDFNode) null);
       Resource versionResource = LoaderHelper.getSingleResourceObject(versions);
       String version  = versionResource != null?versionResource.getURI():null;
+      
       // load the subject Map
+      LogicalTable ltab = LogicalTable.builder()
+          .tablename(tablename)
+          .query(query)
+          .version(version).build();
 
       StmtIterator subjectMaps = model.listStatements(triplesMapUri, R2RML.HASSUBJECTMAP, (RDFNode) null);
       Resource subjectMap = LoaderHelper.getSingleResourceObject(subjectMaps);
-      TermMap subject = TermMapLoader.load(model, subjectMap,baseIri);
-
-      // here we store the graph maps declared on the subject, and therefore
-      // triples map level.
-      List<TermMap> triplesMapGraphMaps = Lists.newArrayList();
-
-      // and load the respective term maps
-      List<Statement> graphMaps = subjectMap.listProperties(R2RML.HASGRAPHMAP).toList();
-      for (Statement graphMapStmnt : graphMaps) {
-        triplesMapGraphMaps.add(TermMapLoader.load(model, graphMapStmnt.getObject().asResource(),baseIri));
-      }
+      TermMap subject = TermMapLoader.load(model, subjectMap,baseIri,ltab);
 
       // get the pos
       List<Statement> pos = model.listStatements(triplesMapUri, R2RML.HASPREDICATEOBJECTMAP, (RDFNode) null).toList();
@@ -61,6 +57,7 @@ public class QuadMapLoader {
         if (!po.getObject().isResource()) {
           throw new R2RMLValidationException("non-resource in object position of rr:predicateObjectMap");
         }
+        List<TermMap> triplesMapGraphMaps = Lists.newArrayList();
 
         Resource poMap = po.getObject().asResource();
         
@@ -69,17 +66,17 @@ public class QuadMapLoader {
         
         for(Resource predicateMap: predicateMaps){
 
-          TermMap predicate = TermMapLoader.load(model, predicateMap, baseIri);
+          TermMap predicate = TermMapLoader.load(model, predicateMap, baseIri,ltab);
   
           Resource objectMap = LoaderHelper.getSingleResourceObject(
                model.listStatements(poMap, R2RML.HASOBJECTMAP, (RDFNode) null));
-          TermMap object = TermMapLoader.load(model, objectMap, baseIri);
+          TermMap object = TermMapLoader.load(model, objectMap, baseIri, ltab);
   
           List<TermMap> pographs = Lists.newArrayList();
           // and load the respective term maps
           List<Statement> pographMaps = poMap.listProperties(R2RML.HASGRAPHMAP).toList();
           for (Statement pographMapStmnt : pographMaps) {
-            TermMap graph = TermMapLoader.load(model, pographMapStmnt.getObject().asResource(),baseIri);
+            TermMap graph = TermMapLoader.load(model, pographMapStmnt.getObject().asResource(),baseIri, ltab);
             //we map the rr:defaultGraph to the jena default graph
             if(graph instanceof TermMapConstant && ((TermMapConstant) graph).getConstantIRI().equals(R2RML.DEFAULTGRAPH_STRING)){
               graph = TermMapLoader.defaultGraphTermMap();
@@ -89,7 +86,7 @@ public class QuadMapLoader {
           
           // resolve referencing maps
           
-          resolveTermMapReferencing(quadMaps);
+         
           
   
           // collect all the graph information
@@ -111,19 +108,16 @@ public class QuadMapLoader {
             predicate(predicate).
             object(object).build();
             
-            LogicalTable ltab = LogicalTable.builder()
-              .tablename(tablename)
-              .query(query)
-              .version(version).build();
+           
             quadMap.setLogicalTable(ltab);
             quadMaps.put(quadMap.getTriplesMapUri(), quadMap);
           }
-  
         }
       }
 
     }
-    
+    resolveTermMapReferencing(quadMaps);
+    optimizeTermMapReferencing(quadMaps);
     
     
     return quadMaps;
@@ -163,5 +157,37 @@ public class QuadMapLoader {
       }
     }
   }
+  
+  
+  
+  private static void optimizeTermMapReferencing(Multimap<String,QuadMap> quadMaps){
+    
+    quadMaps.values().forEach(qm-> {
+      
+      if(qm.getObject() instanceof TermMapReferencing){
+        TermMapReferencing tmr = (TermMapReferencing) qm.getObject();
+        
+        if(tmr.getParent().getSubject().isTemplate()){
+          TermMapTemplate pst = (TermMapTemplate) tmr.getParent().getSubject();
 
+          //we check, if all the columns mentioned in the on conditions are contained in the parent subject map
+          Set<String> pcols = Sets.newHashSet(TermMap.getCols(tmr.getParent().getSubject()));
+          Map<String,String> parent2ChildCol = tmr.getConditions().stream().collect(Collectors.toMap(JoinOn::getParentColumn, JoinOn::getChildColumn));
+              
+              
+          if(tmr.getConditions().stream().allMatch(on -> pcols.contains(on.getParentColumn()))){
+            // all are in, so we replace the ref map with a regular one
+            
+            List<TermMapTemplateTuple> tuples =   pst.getTemplate().stream().map(temptuple -> {
+              return TermMapTemplateTuple.builder().column(parent2ChildCol.get(temptuple.getColumn())).prefix(temptuple.getPrefix()).build();
+            
+            }).collect(Collectors.toList());
+            
+            TermMapTemplate newTmtp = TermMapTemplate.builder().termTypeIRI(pst.getTermTypeIRI()).template(tuples).build();
+            qm.setObject(newTmtp);
+          }      
+        }        
+      }
+    });
+  }
 }

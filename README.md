@@ -49,7 +49,7 @@ Let's have a look at some samples:
 ### RDF Dump
 
 ```shell
-./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" -ds.username=sparqlmap --ds.password=sparqlmap  -r2rml.file=src/test/resources/hsql-bsbm/mapping.ttl   
+./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" --ds.username=sparqlmap --ds.password=sparqlmap  --r2rmlFile=src/test/resources/hsql-bsbm/mapping.ttl   
 ```
 Or if you do not have a R2RML mapping, you can create a dump based on a Direct Mapping
 

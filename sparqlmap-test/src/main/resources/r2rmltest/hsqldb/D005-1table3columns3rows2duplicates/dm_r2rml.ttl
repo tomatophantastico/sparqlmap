@@ -17,6 +17,6 @@
                                  rr:predicate  <http://example.com/base/IOUs#fname>
                                ] ;
         rr:subjectMap          [ rr:class     inst:IOUs ;
-                                 rr:template  "http://example.com/base/IOUs/fname={\"fname\"};lname={\"lname\"};amount={\"amount\"}" ;
+                                 rr:template  "http://example.com/base/IOUs/amount={\"amount\"};fname={\"fname\"};lname={\"lname\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .

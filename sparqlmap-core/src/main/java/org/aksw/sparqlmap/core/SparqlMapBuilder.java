@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.automapper.MappingGenerator;
 import org.aksw.sparqlmap.core.errors.SystemInitializationError;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
@@ -82,7 +83,9 @@ public class SparqlMapBuilder {
     
     public SparqlMapMappingBuilder mappedByDefaultMapping(String prefix){
       MappingGenerator gen = new MappingGenerator(prefix);
-      Model mapping = gen.generateMapping(sparqlMap.getDataContext().getDefaultSchema());
+      
+      
+      Model mapping = gen.generateMapping( SchemaTranslator.translate(sparqlMap.getDataContext().getDefaultSchema()));
       sparqlMap.setMapping(loadMapping(mapping));
 
       return this;
@@ -91,8 +94,8 @@ public class SparqlMapBuilder {
     public SparqlMapMappingBuilder mappedByDefaultMapping(String prefix, String mappingPrefix,
       String instancePrefix, String vocabularyPrefix, String primaryKeySeparator){
     
-      MappingGenerator gen = new MappingGenerator(prefix,mappingPrefix,instancePrefix,vocabularyPrefix,primaryKeySeparator,null);
-      Model mapping = gen.generateMapping(sparqlMap.getDataContext().getDefaultSchema());
+      MappingGenerator gen = new MappingGenerator(prefix,mappingPrefix,instancePrefix,vocabularyPrefix,primaryKeySeparator);
+      Model mapping = gen.generateMapping(SchemaTranslator.translate(sparqlMap.getDataContext().getDefaultSchema()));
 
       sparqlMap.setMapping(loadMapping(mapping));
       return this;

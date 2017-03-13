@@ -22,9 +22,9 @@ import org.aksw.sparqlmap.core.mapper.finder.MappingBinding;
 import org.aksw.sparqlmap.core.mapper.finder.QueryInformation;
 import org.aksw.sparqlmap.core.normalizer.QueryNormalizer;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
-import org.aksw.sparqlmap.core.r2rml.QuadMap.LogicalTable;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.apache.jena.graph.Graph;
@@ -165,7 +165,8 @@ public class SparqlMap {
       // use the metamodel backend
       
       TranslationContextMetaModel mmtc = new TranslationContextMetaModel(tcontext);
-      MetaModelQueryExecution mmqe = new MetaModelQueryExecution(mmtc, dataContext);
+      @SuppressWarnings("resource")
+      MetaModelQueryExecution mmqe = new MetaModelQueryExecution(mmtc, dataContext,false);
       
       
       

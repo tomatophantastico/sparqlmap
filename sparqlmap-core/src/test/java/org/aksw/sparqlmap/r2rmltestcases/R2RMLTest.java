@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import org.aksw.sparqlmap.DBHelper;
 import org.aksw.sparqlmap.DockerHelper.DBConnConfig;
+import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.R2RMLTestParameter;
 import org.aksw.sparqlmap.TestHelper;
 import org.aksw.sparqlmap.core.SparqlMap;
@@ -34,6 +35,7 @@ import org.apache.jena.sparql.engine.binding.Binding;
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.MetaModelException;
 import org.apache.metamodel.jdbc.JdbcDataContext;
+import org.apache.metamodel.query.parser.QueryParserException;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
@@ -113,7 +115,15 @@ public abstract class R2RMLTest {
 		
 		//let the mapper run.
 		
-		map();
+		SparqlMap r2r = getSparqlMap();
+    
+	  
+    try {
+      r2r.getDumpExecution().streamDump(new FileOutputStream(new File(param.getOutputLocation())));
+    } catch (QueryParserException e) {
+      Assume.assumeNoException(e);
+    }
+    r2r.close();
 	
 		
 		assertAreEqual(param.getOutputLocation(),param.getReferenceOutput());
@@ -128,12 +138,6 @@ public abstract class R2RMLTest {
 	  
 	
 
-	private void map() throws SQLException, FileNotFoundException {
-
-		SparqlMap r2r = getSparqlMap();
-		r2r.getDumpExecution().streamDump(new FileOutputStream(new File(param.getOutputLocation())));
-		r2r.close();
-	}
 	
 	
 	
@@ -152,7 +156,7 @@ public abstract class R2RMLTest {
 		    ";",
 		    null);
 		
-		Model mapping = db2r2rml.generateMapping(getDatacontext());
+		Model mapping = db2r2rml.generateMapping(SchemaTranslator.translate(getDatacontext().getDefaultSchema()));
 		mapping.write(new FileOutputStream(new File(wheretowrite)), "TTL", null);
 		
 		
@@ -218,6 +222,9 @@ public abstract class R2RMLTest {
 		if(fileSuffixout.equals("NQ")){
 			DatasetGraph dsgout = RDFDataMgr.loadDatasetGraph(outputLocation);
 			DatasetGraph dsdref = RDFDataMgr.loadDatasetGraph(referenceOutput);
+			
+			
+			
 			
 			Assert.assertFalse("Empty result, should have been:"+ Files.toString(new File(referenceOutput), Charsets.UTF_8) ,dsgout.isEmpty() && !dsdref .isEmpty());
 

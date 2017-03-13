@@ -1,4 +1,0 @@
-_:BBobX5FSmithX5F30 <http://example.com/amount> "3.0E1"^^<http://www.w3.org/2001/XMLSchema#double> .
-_:BSueX5FJonesX5F20 <http://example.com/amount> "2.0E1"^^<http://www.w3.org/2001/XMLSchema#double> .
-_:BBobX5FSmithX5F30 <http://xmlns.com/foaf/0.1/name> "Bob Smith" .
-_:BSueX5FJonesX5F20 <http://xmlns.com/foaf/0.1/name> "Sue Jones" .

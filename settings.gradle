@@ -17,7 +17,7 @@ include 'services:webservice'
 */
 
 rootProject.name = 'sparqlmap'
-include 'sparqlmap-core', 'sparqlmap-client', 'sparqlmap-test', 'sparqlmap-metamodel', 'sparqlmap-mapping', 'sparqlmap-jdbc'
+include 'sparqlmap-core', 'sparqlmap-client', 'sparqlmap-test', 'sparqlmap-metamodel', 'sparqlmap-mapping', 'sparqlmap-jdbc', 'sparqlmap-gui'
 rootProject.children.each { project -> 
 	project.buildFileName = project.name + '.gradle' - 'sparqlmap-'
 

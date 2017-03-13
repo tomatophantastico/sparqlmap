@@ -1,10 +1,13 @@
 package org.aksw.sparqlmap;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -22,9 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.jdbc.datasource.init.ScriptException;
 import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 
 
 /**
@@ -74,15 +80,33 @@ public class DBHelper {
     }
   }
   
-  public static void loadSqlFile(Connection conn, String file) throws SQLException{
+  public static void loadSqlFile(Connection conn, String file) throws SQLException, ScriptException, IOException{
     
-    ResourceDatabasePopulator rdp = new ResourceDatabasePopulator();
-    rdp.addScript(new FileSystemResource(file));
-    conn.setAutoCommit(true);
-    try{
-    rdp.populate(conn);
-    }catch(ScriptStatementFailedException e){
-        Assume.assumeNoException("Unable to load sql file: " + file, e);
+    
+    List<String> stmts = Lists.newArrayList();
+    
+    ScriptUtils.splitSqlScript(Files.toString(new File(file), Charset.defaultCharset()), ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, stmts);
+    stmts.stream().filter(cmd -> !cmd.startsWith("INSERT INTO")).forEach(cmd -> {
+      try(Statement st = conn.createStatement()){
+        st.execute(cmd);
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      
+    });
+    
+    try(Statement bulkinsert =  conn.createStatement()){
+      stmts.stream().filter(cmd -> cmd.startsWith("INSERT INTO")).forEach(cmd -> {
+        try {
+          bulkinsert.addBatch(cmd);
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        
+      });
+      bulkinsert.executeBatch();
     }
   }
   
@@ -162,7 +186,7 @@ public class DBHelper {
 
         }
       }
-    } catch (SQLException e1) {
+    } catch (Exception e1) {
       e1.printStackTrace();
       return false;
     }

@@ -1,0 +1,3 @@
+
+SELECT distinct ?s ?p ?o 
+WHERE { GRAPH ?g {?s ?p ?o}  FILTER (?g = <http://thesimpsons.com/GraphLisa>)} ORDER BY ?s ?p ?o

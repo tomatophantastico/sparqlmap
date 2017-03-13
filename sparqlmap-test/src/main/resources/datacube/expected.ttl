@@ -1,0 +1,138 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sdmx-subject: <http://purl.org/linked-data/sdmx/2009/subject#> .
+@prefix sdmx-metadata: <http://purl.org/linked-data/sdmx/2009/metadata#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix ex: <http://example.com/> .
+@prefix sdmx-measure: <http://purl.org/linked-data/sdmx/2009/measure#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sdmx-code: <http://purl.org/linked-data/sdmx/2009/code#> .
+@prefix sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#> .
+@prefix sdmx-attribute: <http://purl.org/linked-data/sdmx/2009/attribute#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
+
+<http://example.com/Jahr>
+    a qb:DimensionProperty, rdf:Property ;
+    rdfs:label "Jahr" ;
+    rdfs:range ex:Range .
+
+<http://example.com/Stadt>
+    a qb:DimensionProperty, rdf:Property ;
+    rdfs:label "Stadt" ;
+    rdfs:range ex:Range .
+
+<http://example.com/Teapots>
+    dct:generatedBy "SparqlMap" ;
+    dct:issued "2017-03-02"^^xsd:date ;
+    dct:title "Teapots" ;
+    qb:structure <http://example.com/teapots-dc> ;
+    a qb:DataSet, qb:MeasureProperty, rdf:Property ;
+    rdfs:subPropertyOf sdmx-measure:obsValue .
+
+<http://example.com/observation/Berlin/1900>
+    <http://example.com/Jahr> 1900 ;
+    <http://example.com/Stadt> "Berlin" ;
+    <http://example.com/teapots> "10" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Berlin/1901>
+    <http://example.com/Jahr> 1901 ;
+    <http://example.com/Stadt> "Berlin" ;
+    <http://example.com/teapots> "20" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Berlin/1902>
+    <http://example.com/Jahr> 1902 ;
+    <http://example.com/Stadt> "Berlin" ;
+    <http://example.com/teapots> "30" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Paris/1900>
+    <http://example.com/Jahr> 1900 ;
+    <http://example.com/Stadt> "Paris" ;
+    <http://example.com/teapots> "30" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Paris/1901>
+    <http://example.com/Jahr> 1901 ;
+    <http://example.com/Stadt> "Paris" ;
+    <http://example.com/teapots> "20" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Paris/1902>
+    <http://example.com/Jahr> 1902 ;
+    <http://example.com/Stadt> "Paris" ;
+    <http://example.com/teapots> "10" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Delmenhörst/1900>
+    <http://example.com/Jahr> 1900 ;
+    <http://example.com/Stadt> "Delmenhörst" ;
+    <http://example.com/teapots> "1" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Delmenhörst/1901>
+    <http://example.com/Jahr> 1901 ;
+    <http://example.com/Stadt> "Delmenhörst" ;
+    <http://example.com/teapots> "1" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Delmenhörst/1902>
+    <http://example.com/Jahr> 1902 ;
+    <http://example.com/Stadt> "Delmenhörst" ;
+    <http://example.com/teapots> "1" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Total/1900>
+    <http://example.com/Jahr> 1900 ;
+    <http://example.com/Stadt> "Total" ;
+    <http://example.com/teapots> "41" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Total/1901>
+    <http://example.com/Jahr> 1901 ;
+    <http://example.com/Stadt> "Total" ;
+    <http://example.com/teapots> "41" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+<http://example.com/observation/Total/1902>
+    <http://example.com/Jahr> 1902 ;
+    <http://example.com/Stadt> "Total" ;
+    <http://example.com/teapots> "41" ;
+    qb:dataSet <http://example.com/Teapots> ;
+    a qb:observation .
+
+
+<http://example.com/component1>
+    qb:componentProperty <http://example.com/Jahr> ;
+    qb:dimension <http://example.com/Jahr> ;
+    a qb:ComponentSpecification .
+
+<http://example.com/component2>
+    qb:componentProperty <http://example.com/Stadt> ;
+    qb:dimension <http://example.com/Stadt> ;
+    a qb:ComponentSpecification .
+
+<http://example.com/component3>
+    qb:componentProperty <http://example.com/teapots> ;
+    qb:componentRequired true ;
+    qb:measure <http://example.com/teapots> ;
+    a qb:ComponentSpecification .
+
+<http://example.com/teapots-dc>
+    qb:attribute sdmx-attribute:unitMeasure ;
+    qb:component <http://example.com/component1>, <http://example.com/component2>, <http://example.com/component3> ;
+    qb:componentAttachment qb:DataSet ;
+    a qb:DataStructureDefinition .

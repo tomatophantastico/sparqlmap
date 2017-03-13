@@ -1,3 +1,0 @@
-_:BhttpX3AX2FX2FexampleX2EcomX2FbaseX2FStudentX2FIDX3D10X3BNameX3DVenus <http://example.com/base/Student#ID> "10"^^<http://www.w3.org/2001/XMLSchema#integer> .
-_:BhttpX3AX2FX2FexampleX2EcomX2FbaseX2FStudentX2FIDX3D10X3BNameX3DVenus <http://example.com/base/Student#Name> "Venus" .
-_:BhttpX3AX2FX2FexampleX2EcomX2FbaseX2FStudentX2FIDX3D10X3BNameX3DVenus <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/base/Student> .
