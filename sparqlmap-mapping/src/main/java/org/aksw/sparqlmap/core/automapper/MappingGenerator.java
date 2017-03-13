@@ -1,36 +1,26 @@
 package org.aksw.sparqlmap.core.automapper;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.r2rml.R2RML;
 import org.aksw.sparqlmap.core.schema.LogicalColumn;
 import org.aksw.sparqlmap.core.schema.LogicalSchema;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
-import org.apache.commons.collections.MultiHashMap;
-import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.jena.atlas.lib.IRILib;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDFS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
-import avro.shaded.com.google.common.collect.Sets;
 
 
 /**
