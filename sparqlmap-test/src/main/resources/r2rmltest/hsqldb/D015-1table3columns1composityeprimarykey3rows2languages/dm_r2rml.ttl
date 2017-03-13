@@ -15,5 +15,5 @@
                                  rr:predicate  <http://example.com/base/Country#Code>
                                ] ;
         rr:subjectMap          [ rr:class     inst:Country ;
-                                 rr:template  "http://example.com/base/Country/Code={\"Code\"}+Lan={\"Lan\"}"
+                                 rr:template  "http://example.com/base/Country/Code={\"Code\"};Lan={\"Lan\"}"
                                ] .
