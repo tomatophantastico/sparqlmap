@@ -4,11 +4,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,11 +21,13 @@ import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.graph.impl.CollectionGraph;
+import org.apache.jena.sparql.core.DatasetDescription;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphFactory;
 import org.apache.jena.sparql.core.DatasetGraphMap;
 import org.apache.jena.sparql.core.DatasetGraphMapLink;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.sparql.core.assembler.DatasetDescriptionAssembler;
 import org.apache.jena.sparql.graph.GraphFactory;
 import org.apache.metamodel.DataContext;
 
@@ -32,7 +36,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
+
 
 /**
  * ignores the joins and fetches data based on the tables of the quad maps
@@ -46,13 +52,7 @@ public class MetaModelQueryDump {
   
   
 
-  public static DatasetGraph assembleDs(TranslationContext tcontext, DataContext context, boolean rowwiseBlanks) {
 
-    Collection<Node> dgraphs = tcontext.getQuery().getGraphURIs().stream().map(graphname-> NodeFactory.createURI(graphname)).collect(Collectors.toList());
-    
-   return assembleDs(tcontext.getQueryBinding().getBindingMap().values(), context,dgraphs, rowwiseBlanks);
-
-  }
   
   public static Stream<Multimap<Node,Triple>> streamFast(Collection<QuadMap> quadmaps, DataContext context, ExecutorService exec, boolean rowwiseBlanks){
     Multimap<LogicalTable,QuadMap> bucketedMaps = bucketFilterNonNullMaps(new HashSet<QuadMap>(quadmaps));
@@ -72,51 +72,36 @@ public class MetaModelQueryDump {
   }
   
   
+  public static DatasetGraph assembleDs(TranslationContext tcontext, DataContext context, boolean rowwiseBlanks) {
+
+   return assembleDs(tcontext.getQueryBinding().getBindingMap().values(), context, rowwiseBlanks, tcontext.getQuery().getDatasetDescription());
+
+  }
+  
+  
   public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context) {
-    return assembleDs(quadmaps, context, Lists.newArrayList(Quad.defaultGraphNodeGenerated),false);
+    
+    
+    return assembleDs(quadmaps, context, false, new DatasetDescription());
   }
   
-  public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context, Collection<Node> defaultGraphs, boolean rowwiseBlanks) {
-    final Multimap<Node,Triple> graphs = HashMultimap.create();
-
-    Stream<Multimap<Node,Triple>> stream = streamFast(quadmaps, context,Executors.newWorkStealingPool(),rowwiseBlanks);
-    stream.forEach(iresult-> 
-      graphs.putAll(iresult));
+  public static DatasetGraph assembleDs(Collection<QuadMap> quadmaps, DataContext context, boolean rowwiseBlanks, DatasetDescription dsd) {
+    if(dsd==null){
+      dsd = new DatasetDescription();
+    }
+   
     
-    DatasetGraph dsgml = convert(graphs,defaultGraphs);
+    return streamFast(quadmaps, context,Executors.newWorkStealingPool(),rowwiseBlanks)
+    .map(TripleStreamUtils.setGraphNames(dsd))
+    .collect(TripleStreamUtils.collectToListDatasetGraphMap());
     
-
-    
-    
-    return dsgml;
   }
   
   
   
-  public static DatasetGraph convert(final Multimap<Node, Triple> graphs){
-    return convert(graphs, Sets.newHashSet(Quad.defaultGraphNodeGenerated));
-  }
-
-  public static DatasetGraph convert(final Multimap<Node, Triple> graphs, Collection<Node> defaultGraphs) {
-    DatasetGraphMap  dsgml = new DatasetGraphMap();
-    
-    List<Triple> defaultGraphTriples = Lists.newArrayList();
-    
-    graphs.asMap().forEach((g,triples)-> {
-      if(defaultGraphs.contains(g)){
-        defaultGraphTriples.addAll(triples);
-      }else{
-        dsgml.addGraph(g, new CollectionGraph(triples));
-      }
-    });
-    dsgml.setDefaultGraph(new CollectionGraph(defaultGraphTriples));
-    
-    
-    
   
-    return dsgml;
-  }
   
+ 
   
   
   private static Multimap<LogicalTable, QuadMap> bucketFilterNonNullMaps(Collection<QuadMap> quadmaps ){
@@ -128,5 +113,8 @@ public class MetaModelQueryDump {
     }
     return bucketedMaps;
   }
+  
+  
+
 
 }

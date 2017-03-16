@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryDump;
+import org.aksw.sparqlmap.backend.metamodel.translate.TripleStreamUtils;
 import org.aksw.sparqlmap.core.Dumper;
 import org.aksw.sparqlmap.core.errors.SystemInitializationError;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
@@ -117,7 +118,7 @@ public class DumperMetaModel implements Dumper{
     }else if(Lang.TRIG.equals(lang)){
       TriGWriterBlocks writer = new TriGWriterBlocks();
       
-      dump(null,true).map(MetaModelQueryDump::convert).forEach(dsg -> {
+      dump(null,true).map(TripleStreamUtils.mapToDatasetGraphMap()).forEach(dsg -> {
         writer.write(out, dsg, null, null, new Context());
 
       });

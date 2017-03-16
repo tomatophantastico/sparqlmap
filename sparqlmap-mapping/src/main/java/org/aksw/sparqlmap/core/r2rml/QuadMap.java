@@ -40,8 +40,16 @@ public class QuadMap {
     return Lists.newArrayList(graph,subject,predicate,object);
   }
 
+  public List<String> getCols(){ 
+    List<String> cols = Lists.newArrayList();
+    for(QuadPosition pos: QuadPosition.values()){
   
-
+      TermMap tm = this.get(pos);
+      cols.addAll(TermMap.getCols(tm));
+    } 
+    
+    return cols;
+  }
   
   
   public static QuadMap NULLQUADMAP = QuadMap.builder().graph(TermMap.NULLTERMMAP).subject(TermMap.NULLTERMMAP).predicate(TermMap.NULLTERMMAP).object(TermMap.NULLTERMMAP).triplesMapUri(SM.NULLQUADMAPSTRING).logicalTable(LogicalTable.NULLTABLE).build(); 
