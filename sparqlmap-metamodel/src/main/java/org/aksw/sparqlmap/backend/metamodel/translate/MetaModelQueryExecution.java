@@ -21,7 +21,7 @@ import org.apache.metamodel.DataContext;
 public class MetaModelQueryExecution implements QueryExecution{
   
 
-  
+ 
   
   
   public MetaModelQueryExecution(TranslationContextMetaModel tc, DataContext dcontext, boolean rowwiseBlanks) {

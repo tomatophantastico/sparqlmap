@@ -2,11 +2,15 @@ language: java
 jdk:
 - oraclejdk8
 
-before_install:
-  - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout 4ef1aa2f4dacc4e1c20d6560422d04a895ca3791 && mvn install
+cache:
+  directories:
+  - $HOME/.m2
+
+#before_install:
+#  - git clone https://github.com/tomatophantastico/metamodel.git && cd metamodel && git checkout 4ef1aa2f4dacc4e1c20d6560422d04a895ca3791 && mvn install -DskipTests
 
 script:
-  ./gradlew distZip
+  gradle installDist
 
 deploy:
   provider: releases
@@ -15,6 +19,6 @@ deploy:
   file: build/distributions/sparqlmap.zip
   on:
     repo: tomatophantastico/sparqlmap
-    branch: develop
+    branch: master
     tags: true
   skip_cleanup: true

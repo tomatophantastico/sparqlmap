@@ -3,7 +3,9 @@ package org.aksw.sparqlmap.backend.metamodel.translate;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,7 +35,9 @@ import org.apache.metamodel.data.DataSet;
 import org.apache.metamodel.data.Row;
 import org.apache.metamodel.query.FromItem;
 import org.apache.metamodel.query.Query;
+import org.apache.metamodel.query.SelectItem;
 import org.apache.metamodel.query.parser.QueryParser;
+import org.apache.metamodel.query.parser.QueryParserException;
 import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.MutableColumn;
@@ -70,7 +74,7 @@ public class MetaModelSelectiveDump implements Runnable{
     this.queue = queue;
     this.threadCount = threadCount;
     this.rowwiseBlanks = rowwiseBlanks;
-    prepare();
+    createQuery();
   }
 
 
@@ -82,94 +86,81 @@ public class MetaModelSelectiveDump implements Runnable{
   private Query query;
   
   
-  private Map<String,Column> colnameSelectItem = Maps.newHashMap();
+  private Map<String,SelectItem> _colnameSelectItem = Maps.newHashMap();
   
-
-  
-  
-
-  
-  
-  
-  private void prepare(){
-     
-    query = new Query();
-    
-    Table table = null;
-    if(ltable.getTablename()==null){
-      
-      QueryParser qp = new QueryParser(dcontext, ltable.getQuery().replaceAll("\"", ""));
-      Query subQuery = qp.parse();
-      FromItem fi = new FromItem( subQuery);
-      fi.setAlias("sq");  
-      query.from(fi);
-    }else{
-      table = dcontext.getTableByQualifiedLabel(ltable.getTablename());
-      query.from(table);
-    }
-    Set<String> cols = Sets.newHashSet();
-    
-    for(QuadMap qm: quadmaps){
-      if(!qm.getLogicalTable().equals(ltable)){
-        throw new IllegalArgumentException("QuadMap not of supplied logical table");
-      }
-      
-      for(QuadPosition pos: QuadPosition.values()){
-        TermMap tm = qm.get(pos);
-        cols.addAll(TermMap.getCols(tm));
-      }
-    }
-    
-    if(cols.size()>0){
-      for(String col:cols){
-        Column column;
-        if(ltable.getTablename()==null){
-          
-          MutableColumn mcolumn = new MutableColumn(col);
-          
-          // remove dependecy on metamodel-jdbc via reflection
-          
-          Lists.newArrayList(dcontext.getClass().getMethods()).stream()
-          .filter(m -> m.getName().equals("getIdentifierQuoteString") && m.getParameterTypes().length ==0)
-          .forEach(m -> {
-            try {
-                mcolumn.setQuote( (String) m.invoke(dcontext));
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-          });
-          
-        
-          column = mcolumn;
-        }else{
-          column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumnByName(col);
-          
-          //check if the columname is actually a number
-          
-          if(column == null && col.startsWith("#")){
-            int colNo = Integer.valueOf(col.substring(1));
-            column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumn(colNo);
-          }
-          
-        }
-        
-        
-        
-        colnameSelectItem.put(col, column);
-        query.select(column);
-      }
-    }else{
-      // in case cols is emtpy, for example if the quad maps have only constant term maps, we shorten the querying:
-      
-      query.selectAll();
-      query.setMaxRows(1);
-    }
-    
-    
-    
+  private void putColNameSelectItem(String name, SelectItem si){
+    _colnameSelectItem.put(name.toUpperCase(), si);
   }
   
+  private SelectItem getColNameSelectItem(String name){
+    return _colnameSelectItem.get(name.toUpperCase());
+  }
+  
+
+  
+  
+
+  
+  
+  /**
+   * creates the query to be executed
+   */
+  private void createQuery(){
+
+    if(ltable.getTablename()==null){
+
+      try {
+        QueryParser qp = new QueryParser(dcontext, ltable.getQuery().replaceAll("\"", ""));
+        this.query = qp.parse();
+       
+               
+      } catch (QueryParserException e) {
+        createQueryUsingUnparsableQuery(ltable.getQuery(), quadmaps);
+      }
+
+    }else{
+      createQueryUsingTable(this.dcontext.getTableByQualifiedLabel(ltable.getName()), quadmaps);
+    }
+    query.getSelectClause().getItems().forEach(si -> putColNameSelectItem(si.getAlias()!=null?si.getAlias():si.getColumn().getName(), si));
+
+  }
+  
+  
+  
+  private void createQueryUsingUnparsableQuery(String queryString, Collection<QuadMap> quadmaps){
+    Query query = new Query();
+    FromItem fi = new FromItem(String.format("(%s)", queryString));
+    fi.setAlias("subquery");
+    query.from(fi);
+    
+    quadmaps.stream().flatMap(qm -> qm.getCols().stream()).distinct().forEach(col -> {
+      MutableColumn mcol = new  MutableColumn(col);
+      mcol.setQuote("\"");
+      SelectItem si = new SelectItem(mcol, fi);
+      query.select(si);
+      
+    });
+    this.query = query;
+  }
+  
+  
+  private void createQueryUsingTable(Table table, Collection<QuadMap> quadmaps){
+    Query query = new Query();
+    query.from(new FromItem(table));
+    quadmaps.stream().flatMap(qm -> qm.getCols().stream()).forEach(col->{
+      Column column =  table.getColumnByName(col);
+      
+      //check if the columname is actually a number
+      if(column == null && col.startsWith("#")){
+        int colNo = Integer.valueOf(col.substring(1));
+        column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumn(colNo);
+      }
+      query.select(column);
+    });
+    this.query = query;
+  }
+  
+
   
   
   public void dump(){
@@ -257,7 +248,9 @@ public class MetaModelSelectiveDump implements Runnable{
   private XSDDatatype getNaturalDatatype(Row row, TermMap tm) {
     XSDDatatype dt = null;
     if(tm instanceof TermMapColumn){
-      ColumnType ct = colnameSelectItem.get(((TermMapColumn) tm).getColumn()).getType();
+      
+      
+      ColumnType ct = getColNameSelectItem(((TermMapColumn) tm).getColumn()).getColumn().getType();
       dt = SchemaTranslator.getXSDDataType(ct).orElse(null);
     }
       
@@ -283,7 +276,7 @@ public class MetaModelSelectiveDump implements Runnable{
           sb.append(tmtt.getPrefix());
         }
         if(tmtt.getColumn()!=null){
-          Object val = row.getValue(colnameSelectItem.get(tmtt.getColumn()));
+          Object val = row.getValue(getColNameSelectItem(tmtt.getColumn().toUpperCase()));
           if(val!=null){
             sb.append(IRILib.encodeUriComponent(val.toString()));
           }else{
@@ -298,7 +291,7 @@ public class MetaModelSelectiveDump implements Runnable{
       }
     } else if(tm instanceof TermMapColumn){
       String colname = ((TermMapColumn) tm).getColumn();
-      Object val = row.getValue(colnameSelectItem.get(colname));
+      Object val = row.getValue(getColNameSelectItem(colname));
 
       if( val!=null){
         if(dt==null){
