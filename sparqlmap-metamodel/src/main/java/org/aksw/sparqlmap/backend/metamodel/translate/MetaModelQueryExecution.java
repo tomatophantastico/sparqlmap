@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.aksw.sparqlmap.backend.metamodel.TranslationContextMetaModel;
 import org.aksw.sparqlmap.core.errors.ImplementationException;
+import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.Query;
@@ -13,8 +14,13 @@ import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.sparql.core.DatasetImpl;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.sparql.graph.GraphFactory;
 import org.apache.jena.sparql.util.Context;
 import org.apache.metamodel.DataContext;
 
@@ -104,21 +110,30 @@ public class MetaModelQueryExecution implements QueryExecution{
 
   @Override
   public Model execDescribe() {
-    return QueryExecutionFactory.create(query, dataset).execDescribe();
+    
+    // as the query is rewritten to a construct query, we execture the construct here
+    return QueryExecutionFactory.create(query, dataset).execConstruct();
+  
 
   }
 
   @Override
   public Model execDescribe(Model model) {
-    return QueryExecutionFactory.create(query, dataset).execDescribe(model);
+    // as the query is rewritten to a construct query, we execture the construct here
+    return QueryExecutionFactory.create(query, dataset).execConstruct(model);
+
 
   }
 
   @Override
   public Iterator<Triple> execDescribeTriples() {
-    return QueryExecutionFactory.create(query, dataset).execDescribeTriples();
+    // as the query is rewritten to a construct query, we execture the construct here
+    return  QueryExecutionFactory.create(query, dataset).execConstructTriples();
 
   }
+  
+  
+
 
   @Override
   public boolean execAsk() {

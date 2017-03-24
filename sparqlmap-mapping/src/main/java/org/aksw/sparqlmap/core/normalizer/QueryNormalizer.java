@@ -32,7 +32,12 @@ public class QueryNormalizer {
   
   public static void normalize(TranslationContext context){
     
+    //rewrite describe queries as construct queries
+    DescribeRewriter.rewriteDescribe(context);
+    
     Query sparqlQuery = context.getQuery();
+    
+   
     
     Op query  = agen.compile(sparqlQuery);
     LOGGER.debug("Qp before rewriting is: {}",query );
@@ -57,7 +62,7 @@ public class QueryNormalizer {
     
 
       
-   LOGGER.debug("Op after property path rewriting is {}", query);
+    LOGGER.debug("Op after property path rewriting is {}", query);
 
     
     
