@@ -1,0 +1,5 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+prefix owl: <http://www.w3.org/2002/07/owl#> 
+select  DISTINCT ?g 
+FROM NAMED <http://thesimpsons.com/GraphPublic>
+where { GRAPH ?g {?s a ?class}}
