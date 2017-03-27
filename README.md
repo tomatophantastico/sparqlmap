@@ -38,7 +38,7 @@ which will create a distribution in `build/install/sparqlmap`.
 
 
 
-##Quick Start
+## Quick Start
 
 Most of the time, dump creation will take place on the command line.
 In the binary distributions use the sparqlmap command. 
@@ -219,7 +219,7 @@ Optional parameters and their defaults
 --ds.multilineValues=false allows multiline values
 ```
 
-##Excel-Files
+## Excel-Files
 ```
 --ds.type=EXCEL  Mandatory
 --ds.url=<path> required  The path to the file
@@ -237,7 +237,7 @@ Besides the type, only the file location needs to be provided
 --ds.type=ACCESS  Mandatory
 --ds.url=<path>
 ```
-##CouchDB
+## CouchDB
 ```
 --ds.type=COUCHDB  Mandatory
 --ds.url=<httpurl> required  The url of the couchdbserver (using ektorp)
