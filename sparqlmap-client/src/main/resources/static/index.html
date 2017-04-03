@@ -25,7 +25,7 @@
 
   YASGUI.YASQE.defaults.sparql.endpoint
 	var yasgui = YASGUI(document.getElementById("showcase"),{
-    yasqe : { sparql: {endpoint: '/sparql'}} ,
+    yasqe : { sparql: {endpoint: '/api/sparql'}} ,
     //catalogueEndpoints: [{ endpoint: '/sparql', title: 'local sparqlmap'} ] 
     catalogueEndpoints : function(yasgui, callback ){
       getEndpoints().done(function (endpoints){
