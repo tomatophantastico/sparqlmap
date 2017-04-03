@@ -1,4 +1,4 @@
-#SparqlMap - Client
+# SparqlMap
 
 
 SparqlMap - A SPARQL to SQL rewriter based on [R2RML](http://www.w3.org/TR/r2rml/) specification.
@@ -38,7 +38,7 @@ which will create a distribution in `build/install/sparqlmap`.
 
 
 
-##Quick Start
+## Quick Start
 
 Most of the time, dump creation will take place on the command line.
 In the binary distributions use the sparqlmap command. 
@@ -61,9 +61,9 @@ Or if you do not have a R2RML mapping, you can create a dump based on a Direct M
 ## R2RML Mappings
 
 ### Re-use an Existing Mapping
-Is quite simple, just provide the ```-r2rml.file```parameter: 
+Is quite simple, just provide the ```--r2rml.file```parameter: 
 ```
--r2rml.file=<fileLocation>
+--r2rml.file=<fileLocation>
 ```
 
 ### Creation of a Mapping
@@ -71,7 +71,7 @@ Is quite simple, just provide the ```-r2rml.file```parameter:
 Creating a R2RML representation of a default mapping is as easy as this, just change the action:
 
 ```shell
-./bin/sparqlmap --action=directmapping --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" -ds.username=sparqlmap  --ds.password=sparqlmap  
+./bin/sparqlmap --action=directmapping --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" --ds.username=sparqlmap  --ds.password=sparqlmap  
 ```
 
 ## Direct Mapping options
