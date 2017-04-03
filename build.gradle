@@ -88,9 +88,9 @@ configure (subprojects.findAll {it.name != 'sparqlmap-gui'}) {
 
             }
             dependency ("org.apache.metamodel:MetaModel-core:4.5.4")
-            dependency ("org.apache.jena:jena-arq:3.1.1")
-            dependency ("org.apache.jena:jena-tdb:3.1.1")
-            dependency ("com.zaxxer:HikariCP:2.4.7")
+            dependency ("org.apache.jena:jena-arq:3.2.0")
+            dependency ("org.apache.jena:jena-tdb:3.2.0")
+            dependency ("com.zaxxer:HikariCP:2.6.1")
             dependency ("com.google.guava:guava:21.0")
 
 

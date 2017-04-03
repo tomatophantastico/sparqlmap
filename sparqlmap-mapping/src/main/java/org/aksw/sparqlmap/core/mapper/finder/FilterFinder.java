@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.aksw.sparqlmap.core.algebra.QuadVisitorBase;
+import org.aksw.sparqlmap.core.mapper.RightFirstWalker;
 import org.apache.jena.sparql.algebra.Op;
-import org.apache.jena.sparql.algebra.OpWalker;
 import org.apache.jena.sparql.algebra.op.OpDistinct;
 import org.apache.jena.sparql.algebra.op.OpFilter;
 import org.apache.jena.sparql.algebra.op.OpOrder;
@@ -36,7 +36,7 @@ public class FilterFinder{
 
 		final Multiset<Expr> filterStack = HashMultiset.create();
 
-		OpWalker.walk(op,new Putter(filterStack, qi), new Pusher(filterStack), 
+		RightFirstWalker.walk(op,new Putter(filterStack, qi), new Pusher(filterStack), 
 				new Popper(filterStack));
 
 		return qi;
