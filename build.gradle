@@ -253,7 +253,8 @@ project(':sparqlmap-client'){
         compile ('org.eobjects.metamodel-extras:MetaModel-extras:4.4.0') 
         compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0') 
 
-        compile("org.springframework.boot:spring-boot-devtools")
+        compile ("org.springframework.boot:spring-boot-devtools")
+        compile ('com.beust:jcommander:1.64')
 
 
         testCompile project(':sparqlmap-test')

@@ -1,0 +1,26 @@
+<http://localhost/baseiri/mapping/mapping/dataset.csv>
+        <http://www.w3.org/ns/r2rml#logicalTable>
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"dataset.csv\"" ] ;
+        <http://www.w3.org/ns/r2rml#predicateObjectMap>
+                [ <http://www.w3.org/ns/r2rml#objectMap>
+                          [ <http://www.w3.org/ns/r2rml#column>
+                                    "\"name\"" ] ;
+                  <http://www.w3.org/ns/r2rml#predicate>
+                          <http://localhost/baseiri/vocab/dataset.csv#name>
+                ] ;
+        <http://www.w3.org/ns/r2rml#predicateObjectMap>
+                [ <http://www.w3.org/ns/r2rml#objectMap>
+                          [ <http://www.w3.org/ns/r2rml#column>
+                                    "\"no\"" ] ;
+                  <http://www.w3.org/ns/r2rml#predicate>
+                          <http://localhost/baseiri/vocab/dataset.csv#no>
+                ] ;
+        <http://www.w3.org/ns/r2rml#subjectMap>
+                [ <http://www.w3.org/ns/r2rml#class>
+                          <http://localhost/baseiri/vocab/dataset.csv> ;
+                  <http://www.w3.org/ns/r2rml#template>
+                          "http://localhost/baseiri/instance/dataset.csv/name={\"name\"}+no={\"no\"}" ;
+                  <http://www.w3.org/ns/r2rml#termType>
+                          <http://www.w3.org/ns/r2rml#BlankNode>
+                ] .

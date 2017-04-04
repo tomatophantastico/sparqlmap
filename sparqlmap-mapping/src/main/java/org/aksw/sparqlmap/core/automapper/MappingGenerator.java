@@ -63,9 +63,9 @@ public class MappingGenerator {
       baseprefix = "http://localhost/baseiri/";
     }
     this.mappingPrefix = mappingPrefix!=null?mappingPrefix:baseprefix + "mapping/";
-    this.instancePrefix = instancePrefix!=null?mappingPrefix:baseprefix + "instance/";
-    this.vocabularyPrefix = vocabularyPrefix!=null?mappingPrefix:baseprefix + "vocab/";
-    this.primaryKeySeparator = primaryKeySeparator!=null?mappingPrefix:";";
+    this.instancePrefix = instancePrefix!=null?instancePrefix:baseprefix + "instance/";
+    this.vocabularyPrefix = vocabularyPrefix!=null?vocabularyPrefix:baseprefix + "vocab/";
+    this.primaryKeySeparator = primaryKeySeparator!=null?primaryKeySeparator:";";
   }
   
   public MappingGenerator(String prefix){

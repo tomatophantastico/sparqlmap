@@ -1,0 +1,24 @@
+<http://example.com/mappingtest/mapping/Person>
+        <http://www.w3.org/ns/r2rml#logicalTable>
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"dataset.csv\"" ] ;
+        <http://www.w3.org/ns/r2rml#predicateObjectMap>
+                [ <http://www.w3.org/ns/r2rml#objectMap>
+                          [ <http://www.w3.org/ns/r2rml#column>
+                                    "\"no\"" ] ;
+                  <http://www.w3.org/ns/r2rml#predicate>
+                          <http://example.com/mappingtest/vocab/dataset.csv#no>
+                ] ;
+        <http://www.w3.org/ns/r2rml#predicateObjectMap>
+                [ <http://www.w3.org/ns/r2rml#objectMap>
+                          [ <http://www.w3.org/ns/r2rml#column>
+                                    "\"name\"" ] ;
+                  <http://www.w3.org/ns/r2rml#predicate>
+                          <http://example.com/mappingtest/vocab/dataset.csv#name>
+                ] ;
+        <http://www.w3.org/ns/r2rml#subjectMap>
+                [ <http://www.w3.org/ns/r2rml#class>
+                          <http://example.com/mappingtest/vocab/Person> ;
+                  <http://www.w3.org/ns/r2rml#template>
+                          "http://example.com/mappingtest/instance/Person/{\"no\"}" ;
+                ] .

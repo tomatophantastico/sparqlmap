@@ -1,0 +1,19 @@
+<#t1> <http://www.w3.org/ns/r2rml#tableName> "BioTabelle1".
+
+
+<#TriplesMap1>
+
+<http://www.w3.org/ns/r2rml#logicalTable> <#t1>;
+	<http://www.w3.org/ns/r2rml#subjectMap> [
+		<http://www.w3.org/ns/r2rml#template> "http://pfarrerbuch/person/{\"id\"}";	];
+  <http://www.w3.org/ns/r2rml#predicateObjectMap>
+			[ 
+				<http://www.w3.org/ns/r2rml#objectMap>
+				[  
+					<http://www.w3.org/ns/r2rml#template> "{Nachname}, {Vornamen}" ;
+					<http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#Literal>
+				] ;
+				<http://www.w3.org/ns/r2rml#predicate> <http://www.w3.org/2000/01/rdf-schema#label>
+			] ;
+
+.

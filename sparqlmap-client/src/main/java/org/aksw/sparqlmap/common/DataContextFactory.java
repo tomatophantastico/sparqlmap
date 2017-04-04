@@ -3,6 +3,7 @@ package org.aksw.sparqlmap.common;
 import java.net.MalformedURLException;
 import java.util.Map;
 
+import org.aksw.sparqlmap.config.ConfigBeanDataSource;
 import org.aksw.sparqlmap.core.errors.ImplementationException;
 import org.aksw.sparqlmap.core.errors.SparqlMapException;
 import org.apache.metamodel.DataContext;
@@ -40,7 +41,7 @@ public class DataContextFactory {
   private static final Logger LOGGER = LoggerFactory.getLogger(DataContextFactory.class);
   
   @Autowired
-  DataSourceConfig dsconf;
+  ConfigBeanDataSource dsconf;
   
   @Bean
   public DataContext create(){
@@ -99,9 +100,9 @@ public class DataContextFactory {
       CsvConfiguration csvconf = new CsvConfiguration(
           dsconf.getColumnNameLineNumber(), 
           dsconf.getEncoding(), 
-          dsconf.getSeparatorChar(), 
-          dsconf.getQuoteChar(), 
-          dsconf.getEscapeChar(), 
+          dsconf.getSeparatorChar().charAt(0), 
+          dsconf.getQuoteChar().charAt(0), 
+          dsconf.getEscapeChar().charAt(0), 
           dsconf.getFailOnInconsistentRowLength());
       
       dc = new CsvDataContext(csvFile,csvconf);
@@ -136,7 +137,7 @@ public class DataContextFactory {
   }
   
   
-  private static MongoClient getMongo(DataSourceConfig dcprops){ 
+  private static MongoClient getMongo(ConfigBeanDataSource dcprops){ 
     MongoClient mc;
     ServerAddress saddr = new ServerAddress(dcprops.getUrl());
     
@@ -153,7 +154,7 @@ public class DataContextFactory {
     
   }
   
-  private static Resource getResource(DataSourceConfig dsc){
+  private static Resource getResource(ConfigBeanDataSource dsc){
     Map<String,Object> resvalues = Maps.newHashMap();
     if(dsc.getUsername()!=null){
       resvalues.put("username", dsc.getUsername());

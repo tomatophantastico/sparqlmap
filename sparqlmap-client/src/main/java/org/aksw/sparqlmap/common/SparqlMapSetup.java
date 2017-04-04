@@ -1,32 +1,22 @@
 package org.aksw.sparqlmap.common;
 
-import java.io.File;
-
+import org.aksw.sparqlmap.config.ConfigBeanBase;
+import org.aksw.sparqlmap.config.ConfigBeanDataSource;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
 import org.apache.metamodel.DataContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
 public class SparqlMapSetup {
-  
-  
-  private static final Logger log = LoggerFactory.getLogger(SparqlMapSetup.class);
+ 
+  @Autowired
+  ConfigBeanBase conf;
   
   @Autowired
-  BaseConfig conf;
-  
-  @Autowired
-  DataSourceConfig dsconf;
+  ConfigBeanDataSource dsconf;
   
   @Autowired
   DataContext dc;
@@ -38,14 +28,9 @@ public class SparqlMapSetup {
     //create the datacontext
    
     SparqlMapBuilder.SparqlMapMappingBuilder smb = null;
-    
-    
-    
-    
     smb = SparqlMapBuilder.newSparqlMap(baseIri).connectTo(dc);
     
-    
-    if(conf.getR2rmlfile()==null){
+    if(conf.getR2rmlFile()==null){
       //use direct mapping
       smb.mappedByDefaultMapping(
           conf.getDmBaseUriPrefix(), 
@@ -53,24 +38,9 @@ public class SparqlMapSetup {
           conf.getDmInstanceUriPrefix(), 
           conf.getDmVocabUriPrefix(), 
           conf.getDmSeparatorChar());
-      
-      
     }else{
-      smb.mappedBy(conf.getR2rmlfile());
+      smb.mappedBy(conf.getR2rmlFile());
     }
     return smb.create();    
   }
-  
-  /**
-   * 
-   * @return the exact same String
-   */
-  private String warnEmptyFile(String fileLocation){
-    File dsFile = new File(fileLocation); 
-    if(!dsFile.exists() || dsFile.length()<=0){
-      log.warn("empty datasource file: " + fileLocation);
-    }
-    return fileLocation;
-  }
-
 }

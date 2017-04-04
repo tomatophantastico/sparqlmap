@@ -51,7 +51,7 @@ public class TestHelper {
     assertModelAreEqual(result, expectedResult);
   }
   
-  static public void assertModelAreEqual( Model result, Model expectedresultRaw) throws SQLException{
+  static public void assertModelAreEqual( Model result, Model expectedresultRaw) {
    
     Model cleanedExpected = ModelFactory.createDefaultModel();
     expectedresultRaw.listStatements().mapWith(stmt -> {

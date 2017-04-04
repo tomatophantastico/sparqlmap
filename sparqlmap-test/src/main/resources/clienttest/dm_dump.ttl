@@ -1,0 +1,6 @@
+[ a       <http://localhost/baseiri/vocab/dataset.csv> ;
+  <http://localhost/baseiri/vocab/dataset.csv#name>
+          "Peter" ;
+  <http://localhost/baseiri/vocab/dataset.csv#no>
+          "1"
+] .
