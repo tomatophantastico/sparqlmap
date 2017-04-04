@@ -36,9 +36,7 @@ public class TermMapLoader {
       String template = LoaderHelper.getSingleLiteralObjectValue(
           r2rmlmodel.listStatements(termMap, R2RML.HASTEMPLATE, (RDFNode) null));
       
-      if(template != null && !template.contains(":")){
-        template = baseIri + template;
-      }
+  
       
       RDFNode constant = LoaderHelper.getSingleRDFNode(
           r2rmlmodel.listStatements(termMap, R2RML.HASCONSTANT, (RDFNode) null));
@@ -67,6 +65,12 @@ public class TermMapLoader {
           termType = R2RML.IRI_STRING;
 
         }
+      }
+      
+      //if the termmap produces an iri, we prefix it, if a prefix is not there.
+      
+      if(template != null && !template.contains(":") && R2RML.IRI_STRING.equals(termType)){
+        template = baseIri + template;
       }
 
       

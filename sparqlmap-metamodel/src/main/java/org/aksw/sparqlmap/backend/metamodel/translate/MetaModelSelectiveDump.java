@@ -278,7 +278,11 @@ public class MetaModelSelectiveDump implements Runnable{
         if(tmtt.getColumn()!=null){
           Object val = row.getValue(getColNameSelectItem(tmtt.getColumn().toUpperCase()));
           if(val!=null){
-            sb.append(IRILib.encodeUriComponent(val.toString()));
+            if(tm.isIRI()){
+              sb.append(IRILib.encodeUriComponent(val.toString()));
+            }else{
+              sb.append(val.toString());
+            }
           }else{
             sb = new StringBuffer();
             break;
