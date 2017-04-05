@@ -149,12 +149,12 @@ public abstract class R2RMLTest {
 		
 		
 		
-		MappingGenerator db2r2rml = new MappingGenerator( "http://example.com/base/", 
+		MappingGenerator db2r2rml = new MappingGenerator( 
 		    "http://example.com/base/", 
-		    
 		    "http://example.com/base/", 
-		    ";",
-		    null);
+        "http://example.com/base/", 
+		    "http://example.com/base/", 
+		    ";");
 		
 		Model mapping = db2r2rml.generateMapping(SchemaTranslator.translate(getDatacontext().getDefaultSchema()));
 		mapping.write(new FileOutputStream(new File(wheretowrite)), "TTL", null);

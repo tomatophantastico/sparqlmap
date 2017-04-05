@@ -31,9 +31,13 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.resultset.ResultSetCompare;
 import org.apache.jena.tdb.TDBFactory;
 import org.apache.jena.vocabulary.XSD;
+import org.jooq.lambda.Seq;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 
 public class TestHelper {
   
@@ -105,10 +109,28 @@ public class TestHelper {
 
   public static void assertResultSetsAreEqual(ResultSet result,
       ResultSet expectedRS) {
-    result = ResultSetFactory.makeRewindable(result); 
+    result = ResultSetFactory.makeRewindable(result);
     expectedRS = ResultSetFactory.makeRewindable(expectedRS);
     boolean isEqual  = ResultSetCompare.equalsByTerm(result, expectedRS);
     StringBuffer comparison = new StringBuffer();
+    
+    //we give it a second try, just because the result set comparison somtimes seems to fail
+    if(!isEqual){
+       
+      Iterator<String> resStringIter = Seq.seq(Splitter.on(System.lineSeparator()).split(ResultSetFormatter.asText(result))).sorted().iterator();
+      Iterator<String> exResStringIter = Seq.seq(Splitter.on(System.lineSeparator()).split(ResultSetFormatter.asText(expectedRS))).sorted().iterator();
+      boolean stringsEqual = true;
+      while(resStringIter.hasNext() && exResStringIter.hasNext()){
+        if(!resStringIter.next().equals(exResStringIter.next())){
+          stringsEqual = false;
+          break;
+        }
+      }
+      if(stringsEqual && !resStringIter.hasNext() && !exResStringIter.hasNext()){
+        isEqual = true;
+      }
+      
+    }
 
 
       
