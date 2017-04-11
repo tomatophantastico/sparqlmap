@@ -30,7 +30,7 @@ public class SparqlMapStarter {
     if(bc.isHelp()){
       jc.usage();
     }else{
-      startSparqlMap(bc,cc,dc);
+      startSparqlMap(bc,cc,dc, args);
     }
   
 
@@ -41,7 +41,7 @@ public class SparqlMapStarter {
   }
  
  
- private static void startSparqlMap(ConfigBeanBase bc, ConfigBeanCli cc, ConfigBeanDataSource dc){
+ private static void startSparqlMap(ConfigBeanBase bc, ConfigBeanCli cc, ConfigBeanDataSource dc, String[] args){
    ApplicationContextInitializer<AnnotationConfigApplicationContext> confInject = new ApplicationContextInitializer<AnnotationConfigApplicationContext>() {
      @Override
      public void initialize(AnnotationConfigApplicationContext applicationContext) {
@@ -59,13 +59,15 @@ public class SparqlMapStarter {
    if(SparqlMapAction.WEB.equals(cc.getAction())){
      springApp = new SpringApplication(SparqlMapWebSpringConfig.class);
      springApp.addInitializers(confInject);
-     springApp.run();
+     springApp.setMainApplicationClass(null);
+     springApp.run(args);
    }else{
      springApp = new SpringApplication(SparqlMapCli.class);
      springApp.addInitializers(confInject);
      springApp.setWebEnvironment(false);
      springApp.setBannerMode(Mode.OFF);
-     springApp.run().close();
+     springApp.setMainApplicationClass(null);
+     springApp.run(args).close();
    }
  }
 }

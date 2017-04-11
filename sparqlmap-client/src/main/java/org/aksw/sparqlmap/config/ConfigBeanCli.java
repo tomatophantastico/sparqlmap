@@ -34,7 +34,7 @@ public class ConfigBeanCli {
   @Parameter(names={"--queryformat"}, converter=ResultFormatConverter.class,description="Select queries will return this format, for example: csv, xml, json, tsv")
   private ResultsFormat queryFormat = ResultsFormat.FMT_RS_JSON;
   
-  @Parameter(names={"-o", "--out"}, description="A query to be executed against the virtual datastore")
+  @Parameter(names={"-o", "--out"}, description="The location of the dump result file.")
   private String dumpLocation;
   
   
