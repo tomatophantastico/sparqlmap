@@ -7,11 +7,16 @@ public abstract class SM {
 
   
 
-  public static final  String SM_STRING = "http://aksw.org/Projects/SparqlMap/vocab#";
+    public static final  String SM_STRING = "http://aksw.org/Projects/SparqlMap/vocab#";
 
     public static final String NULLQUADMAPSTRING = SM_STRING + "NullQuadMap";
 
     public static final String NULLRESOURCE_STRING = SM_STRING + "Null";
+    
+    public static final String REQUIRED_PATTERN_STRING = SM_STRING + "requiredPattern";
+    public static final Property REQUIRED_PATTERN = ResourceFactory.createProperty(REQUIRED_PATTERN_STRING);
+    public static final String TRANSFORM_PATTERN_STRING = SM_STRING + "transformPattern";
+    public static final Property transformPattern = ResourceFactory.createProperty(TRANSFORM_PATTERN_STRING);
 
 
 
