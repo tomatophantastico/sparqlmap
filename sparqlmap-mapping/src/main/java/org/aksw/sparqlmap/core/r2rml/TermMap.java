@@ -17,8 +17,11 @@ public abstract class TermMap {
   private Optional<String> lang;
   private Optional<String> datatypIRI;
   private String termTypeIRI;
+  private Optional<String> condition;
+  private Optional<String> transform;
   
-  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI) {
+  
+  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, Optional<String> condition, Optional<String> transform) {
     super();
     if(termTypeIRI==null){
       throw new ImplementationException("provide termtype");
@@ -26,6 +29,8 @@ public abstract class TermMap {
     this.lang = lang;
     this.datatypIRI = datatypIRI;
     this.termTypeIRI = termTypeIRI;
+    this.transform = transform;
+    this.condition = condition;
   }
   
   
@@ -49,7 +54,7 @@ public abstract class TermMap {
  
 
  
-  public final static  TermMap NULLTERMMAP = new TermMap(null,null,SM.NULLRESOURCE_STRING) {
+  public final static  TermMap NULLTERMMAP = new TermMap(null,null,SMAP.NULLRESOURCE_STRING,null,null) {
     
     @Override
     public boolean isTemplate() {

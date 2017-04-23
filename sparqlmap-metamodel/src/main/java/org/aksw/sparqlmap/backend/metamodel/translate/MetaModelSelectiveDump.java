@@ -290,39 +290,65 @@ public class MetaModelSelectiveDump implements Runnable{
         }
       }
       String sbString = sb.toString();
-      if(!sbString.isEmpty()){
-        result = sb.toString();
+      if(!sbString.isEmpty() && tm.getCondition().isPresent() 
+          // and check if it matches the condition
+          && sbString.matches( tm.getCondition().get())){
+        if(tm.getTransform().isPresent()){
+          result = sbString.replaceAll(tm.getCondition().orElseGet(()->".*"), tm.getTransform().get());
+        }else{
+          result = sbString;
+        }
+      }else{
+        result = sbString;
       }
     } else if(tm instanceof TermMapColumn){
       String colname = ((TermMapColumn) tm).getColumn();
       Object val = row.getValue(getColNameSelectItem(colname));
+      String colRes = null;
 
       if( val!=null){
         if(dt==null){
           // no datatype, just convert to string
-          result = val.toString();
+          colRes = val.toString();
         }else if(dt.getURI().equals(XSDDatatype.XSDdateTime.getURI())){
           if(val instanceof Timestamp){
             SimpleDateFormat xsdfmttr = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             
-            result = xsdfmttr.format(val);
+            colRes = xsdfmttr.format(val);
           }else {
-            result = val.toString().replaceAll("\\s", "T");
+            colRes = val.toString().replaceAll("\\s", "T");
             
           }
         } else if(dt.getURI().equals(XSDDatatype.XSDboolean.getURI())){
-          result = val.toString().toLowerCase();
+          colRes = val.toString().toLowerCase();
         }else if(dt.getURI().equals(XSDDatatype.XSDhexBinary.getURI())){
           
           if(val instanceof byte[]){
-            result = DatatypeConverter.printHexBinary((byte[]) val);
+            colRes = DatatypeConverter.printHexBinary((byte[]) val);
           }else{
-            result = DatatypeConverter.printHexBinary(val.toString().getBytes());
+            colRes = DatatypeConverter.printHexBinary(val.toString().getBytes());
           }      
         }else{
           // fallback
-          result = val.toString();
+          colRes = val.toString();
         }
+        //do the conditional check  and transformation
+        
+        if(tm.getCondition().isPresent()){
+          if(colRes.matches(tm.getCondition().get())){
+            if(tm.getTransform().isPresent()){
+              result = colRes.replaceAll(tm.getCondition().orElseGet(()->".*"), tm.getTransform().get());
+            }else{
+              result = colRes;
+            }
+          }
+        }else{
+          result = colRes;
+
+        }
+        
+        
+        
       }
     }
     return result;

@@ -14,6 +14,7 @@ import org.junit.Test;
 public class R2RMLModelLoaderTest {
   
   static Model r2rml;
+  static Model smap;
   static Model bsbm_all;
   static Model bsbm;
   static Model r2rml_test_9;
@@ -21,6 +22,9 @@ public class R2RMLModelLoaderTest {
   {
     r2rml = ModelFactory.createDefaultModel();
     r2rml.read(ClassLoader.getSystemResourceAsStream("./vocabularies/r2rml.ttl"),null,"TTL");
+    
+    smap = ModelFactory.createDefaultModel();
+    smap.read(ClassLoader.getSystemResourceAsStream("./vocabularies/smap.ttl"),null,"TTL");
     
     bsbm_all = ModelFactory.createDefaultModel();
     RDFDataMgr.read(bsbm_all, ClassLoader.getSystemResourceAsStream("./query-test/bsbm-all/mapping.ttl"), null, Lang.TURTLE);
@@ -45,7 +49,7 @@ public class R2RMLModelLoaderTest {
    
 
     
-    R2RMLMapping mapping =  R2RMLModelLoader.loadModel(bsbm_all, r2rml, "http://localhost/default/");
+    R2RMLMapping mapping =  R2RMLModelLoader.loadModel(bsbm_all, r2rml, smap, "http://localhost/default/");
     
     assertTrue( mapping.getQuadMaps().keySet().size()==13);
     

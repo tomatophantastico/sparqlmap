@@ -1,0 +1,3 @@
+<http://localhost/baseiri/instance/id=1> <http://www.w3.org/2001/XMLSchema#datewithdot> "10.10.2016" .
+<http://localhost/baseiri/instance/id=2> <http://www.w3.org/2001/XMLSchema#date> "12-10-2016"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://localhost/baseiri/instance/id=3> <http://www.w3.org/2001/XMLSchema#dateString> "2016 (exact date unknown)" .

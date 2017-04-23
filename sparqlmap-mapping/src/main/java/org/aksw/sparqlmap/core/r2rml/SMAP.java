@@ -3,7 +3,7 @@ package org.aksw.sparqlmap.core.r2rml;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-public abstract class SM {
+public abstract class SMAP {
 
   
 
@@ -16,7 +16,7 @@ public abstract class SM {
     public static final String REQUIRED_PATTERN_STRING = SM_STRING + "requiredPattern";
     public static final Property REQUIRED_PATTERN = ResourceFactory.createProperty(REQUIRED_PATTERN_STRING);
     public static final String TRANSFORM_PATTERN_STRING = SM_STRING + "transformPattern";
-    public static final Property transformPattern = ResourceFactory.createProperty(TRANSFORM_PATTERN_STRING);
+    public static final Property TRANSFORM_PATTERN = ResourceFactory.createProperty(TRANSFORM_PATTERN_STRING);
 
 
 

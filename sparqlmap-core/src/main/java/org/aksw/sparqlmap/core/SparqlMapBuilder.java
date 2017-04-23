@@ -151,10 +151,13 @@ public class SparqlMapBuilder {
     
     private R2RMLMapping loadMapping(Model model){
       Model r2rmlspec = ModelFactory.createDefaultModel();
-      
+      Model smapspec = ModelFactory.createDefaultModel();
+
       FileManager.get().readModel(r2rmlspec, "vocabularies/r2rml.ttl");
+      FileManager.get().readModel(r2rmlspec, "vocabularies/smap.ttl");
+
       
-      R2RMLMapping r2rmlMappig =  R2RMLModelLoader.loadModel(model, r2rmlspec,baseIri);
+      R2RMLMapping r2rmlMappig =  R2RMLModelLoader.loadModel(model, r2rmlspec, smapspec, baseIri);
       
       return r2rmlMappig;
       

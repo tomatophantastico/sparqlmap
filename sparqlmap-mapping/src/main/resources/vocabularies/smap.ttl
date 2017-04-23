@@ -1,0 +1,117 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix smap:  <http://aksw.org/Projects/SparqlMap/vocab#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+
+#PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+#PREFIX auth: <http://www.example.org/auth#> 
+#PREFIX ex: <http://www.example.org/vocabulary#> 
+#PREFIX : <http://www.example.org/data#> 
+#PREFIX smap: <http://aksw.org/Projects/SparqlMap/vocab#>
+#construct {?sms rdfs:subPropertyOf ?s } { 
+#   { ?s a  <http://www.w3.org/2002/07/owl#ObjectProperty>
+#  }UNION {
+#       ?s a  <http://www.w3.org/2002/07/owl#DatatypeProperty>}
+#    FILTER (strstarts(str(?s),"http://www.w3.org/ns/r2rml#"))
+#  	BIND ( uri(replace(str(?s),"http://www.w3.org/ns/r2rml#","http://aksw.org/Projects/SparqlMap/vocab#" )) as ?sms)
+#}
+#
+#
+
+
+smap:objectMap  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#objectMap> .
+
+smap:graph  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#graph> .
+
+smap:column  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#column> .
+
+smap:termType  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#termType> .
+
+smap:predicateObjectMap rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#predicateObjectMap> .
+
+smap:parentTriplesMap rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#parentTriplesMap> .
+
+smap:subject  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#subject> .
+
+smap:predicateMap  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#predicateMap> .
+
+smap:predicate  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#predicate> .
+
+smap:class  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#class> .
+
+smap:logicalTable  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#logicalTable> .
+
+smap:joinCondition  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#joinCondition> .
+
+smap:inverseExpression rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#inverseExpression> .
+
+smap:datatype  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#datatype> .
+
+smap:sqlQuery  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#sqlQuery> .
+
+smap:template  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#template> .
+
+smap:tableName  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#tableName> .
+
+smap:child  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#child> .
+
+smap:language  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#language> .
+
+smap:subjectMap  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#subjectMap> .
+
+smap:constant  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#constant> .
+
+smap:sqlVersion  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#sqlVersion> .
+
+smap:parent  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#parent> .
+
+smap:graphMap  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#graphMap> .
+
+smap:object  rdfs:subPropertyOf  <http://www.w3.org/ns/r2rml#object> .
+
+
+#PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+#PREFIX auth: <http://www.example.org/auth#> 
+#PREFIX ex: <http://www.example.org/vocabulary#> 
+#PREFIX : <http://www.example.org/data#> 
+#PREFIX smap: <http://aksw.org/Projects/SparqlMap/vocab#>
+#construct {?sms rdfs:subPropertyOf ?s } { 
+#   { ?s a  <http://www.w3.org/2002/07/owl#Class>
+#  }
+#    FILTER (strstarts(str(?s),"http://www.w3.org/ns/r2rml#"))
+#  	BIND ( uri(replace(str(?s),"http://www.w3.org/ns/r2rml#","http://aksw.org/Projects/SparqlMap/vocab#" )) as ?sms)
+#}
+#
+#
+
+
+
+smap:TermMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#TermMap> .
+
+smap:BaseTableOrView  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#BaseTableOrView> .
+
+smap:LogicalTable  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#LogicalTable> .
+
+smap:GraphMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#GraphMap> .
+
+smap:Join  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#Join> .
+
+smap:IRI  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#IRI> .
+
+smap:SubjectMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#SubjectMap> .
+
+smap:TriplesMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#TriplesMap> .
+
+smap:PredicateMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#PredicateMap> .
+
+smap:BlankNode  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#BlankNode> .
+
+smap:RefObjectMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#RefObjectMap> .
+
+smap:ObjectMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#ObjectMap> .
+
+smap:Literal  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#Literal> .
+
+smap:R2RMLView  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#R2RMLView> .
+
+smap:PredicateObjectMap  rdfs:subClassOf  <http://www.w3.org/ns/r2rml#PredicateObjectMap> .

@@ -19,8 +19,8 @@ public class TermMapReferencing extends TermMap {
   
   @Builder
   public TermMapReferencing(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI,  QuadMap parent,
-      String parentMapUri, List<JoinOn> conditions) {
-    super(lang, datatypIRI, termTypeIRI);
+      String parentMapUri, List<JoinOn> conditions, Optional<String> condition, Optional<String> transform) {
+    super(lang, datatypIRI, termTypeIRI, condition, transform);
     this.parent = parent;
     this.parentMapUri = parentMapUri;
     this.conditions = conditions;

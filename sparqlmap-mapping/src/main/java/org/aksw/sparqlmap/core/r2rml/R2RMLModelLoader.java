@@ -34,7 +34,7 @@ public class R2RMLModelLoader {
     
   public static final String BNODE_RESOLV_PREFIX = "http://aksw.org/Projects/SparqlMap/bnodeResolv/";
   
-  public static R2RMLMapping loadModel(Model toLoad, Model r2rmlspec, String baseIri){
+  public static R2RMLMapping loadModel(Model toLoad, Model r2rmlspec, Model smapspec ,String baseIri){
     Model original = ModelFactory.createDefaultModel();
     original.add(toLoad.listStatements().toList());
     
