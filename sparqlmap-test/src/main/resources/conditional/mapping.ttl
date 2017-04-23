@@ -1,0 +1,44 @@
+@prefix smap:  <http://aksw.org/Projects/SparqlMap/vocab#> .
+@prefix r2rml: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vocab: <http://example.org/vocab#> .
+
+<ConditionalMapping>
+        r2rml:logicalTable
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"dataset.csv\"" ] ;
+        r2rml:predicateObjectMap
+                [ r2rml:objectMap
+                          [ r2rml:column
+                                    "\"date\"";
+                            smap:requiredPattern """^(.*)[a-zA-Z](.*)$"""] ;
+                  r2rml:predicate
+                          vocab:dateString;
+
+                ] ;
+         smap:predicateObjectMap
+                [ smap:objectMap
+                          [ smap:column
+                                    "\"date\""; 
+                            smap:requiredPattern """^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{2,4})$"""
+                          ] ;
+                  smap:predicate
+                          vocab:datewithdot;
+
+                ] ;
+        smap:predicateObjectMap
+                [ smap:objectMap
+                          [ smap:column
+                                    "\"date\""; 
+                            smap:requiredPattern """^([0-9]{1,2})\\/([0-9]{1,2})\\/([0-9]{2,4})$""";
+                            smap:transformPattern """$1-$2-$3""";
+                            r2rml:datatype xsd:date;
+                          ] ;
+                  smap:predicate
+                          vocab:date ;
+
+                ] ;
+        r2rml:subjectMap
+                [ r2rml:template
+                          "http://example.org/data/thing/id={\"id\"}" ;           
+                ] .

@@ -46,7 +46,13 @@ public class TermMapLoader {
       
       Optional<String> datatype = Optional.ofNullable(termMap.getProperty(R2RML.HASDATATYPE)).map(Statement::getResource).map(Resource::getURI);
       
-
+      Optional<String> condition_pattern = Optional.ofNullable(termMap.getProperty(SMAP.REQUIRED_PATTERN)).map(Statement::getString);
+      
+      Optional<String> transform_pattern = Optional.ofNullable(termMap.getProperty(SMAP.TRANSFORM_PATTERN)).map(Statement::getString);
+      
+      //check if a tramsform
+      
+      
       Resource parentMap = LoaderHelper.getSingleResourceObject(
           r2rmlmodel.listStatements(termMap, R2RML.HASPARENTTRIPLESMAP, (RDFNode) null));
       
@@ -83,6 +89,8 @@ public class TermMapLoader {
             .termTypeIRI(termType)
             .datatypIRI(datatype)
             .lang(language)
+            .condition(condition_pattern)
+            .transform(transform_pattern)
             .build();
         
        
@@ -95,6 +103,8 @@ public class TermMapLoader {
             .termTypeIRI(termType)
             .datatypIRI(datatype)
             .lang(language)
+            .condition(condition_pattern)
+            .transform(transform_pattern)
             .build();
         
         
@@ -152,7 +162,7 @@ public class TermMapLoader {
       
         
       }else{  
-        throw new R2RMLValidationException("Check termmap definition for multiple or lacking definitons of rr:constant, rr:template or rr:column");
+        throw new R2RMLValidationException("Check termap definition for multiple or lacking definitons of rr:constant, rr:template or rr:column");
       }
       
 

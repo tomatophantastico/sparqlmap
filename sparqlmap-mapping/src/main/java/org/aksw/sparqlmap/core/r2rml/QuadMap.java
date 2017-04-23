@@ -52,7 +52,7 @@ public class QuadMap {
   }
   
   
-  public static QuadMap NULLQUADMAP = QuadMap.builder().graph(TermMap.NULLTERMMAP).subject(TermMap.NULLTERMMAP).predicate(TermMap.NULLTERMMAP).object(TermMap.NULLTERMMAP).triplesMapUri(SM.NULLQUADMAPSTRING).logicalTable(LogicalTable.NULLTABLE).build(); 
+  public static QuadMap NULLQUADMAP = QuadMap.builder().graph(TermMap.NULLTERMMAP).subject(TermMap.NULLTERMMAP).predicate(TermMap.NULLTERMMAP).object(TermMap.NULLTERMMAP).triplesMapUri(SMAP.NULLQUADMAPSTRING).logicalTable(LogicalTable.NULLTABLE).build(); 
   
   
 }

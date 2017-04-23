@@ -15,9 +15,9 @@ public class TermMapConstant  extends TermMap{
   
   @Builder
   public TermMapConstant(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI,  String constantLiteral,
-      String constantIRI) {
+      String constantIRI,Optional<String> condition, Optional<String> transform) {
     
-    super(lang, datatypIRI, termTypeIRI);
+    super(lang, datatypIRI, termTypeIRI, condition, transform);
     
     this.constantLiteral = constantLiteral;
     this.constantIRI = constantIRI;
