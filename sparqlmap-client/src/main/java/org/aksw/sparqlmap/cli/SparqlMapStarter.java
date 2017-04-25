@@ -10,6 +10,8 @@ import org.aksw.sparqlmap.web.SparqlMapWebSpringConfig;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -24,6 +26,8 @@ public class SparqlMapStarter {
    ConfigBeanDataSource dc = new ConfigBeanDataSource();
    ConfigBeanCli cc = new ConfigBeanCli();
    JCommander jc = new JCommander(new Object[] {bc,dc,cc});
+   jc.setCaseSensitiveOptions(false);
+   jc.setProgramName("SparqlMap");
    try {
     jc.parse(args);
     
@@ -42,28 +46,39 @@ public class SparqlMapStarter {
  
  
  private static void startSparqlMap(ConfigBeanBase bc, ConfigBeanCli cc, ConfigBeanDataSource dc, String[] args){
-   ApplicationContextInitializer<AnnotationConfigApplicationContext> confInject = new ApplicationContextInitializer<AnnotationConfigApplicationContext>() {
-     @Override
-     public void initialize(AnnotationConfigApplicationContext applicationContext) {
-       
-       ConfigurableListableBeanFactory bf =  applicationContext.getBeanFactory(); 
-       bf.registerSingleton(bc.getClass().getCanonicalName(), bc);
-       bf.registerSingleton(cc.getClass().getCanonicalName(), cc);
-       bf.registerSingleton(dc.getClass().getCanonicalName(), dc);
-       applicationContext.register(SparqlMapSetup.class,SparqlMapCli.class);
-     }
-     
-   };
   
    SpringApplication springApp = null;
    if(SparqlMapAction.WEB.equals(cc.getAction())){
-     springApp = new SpringApplication(SparqlMapWebSpringConfig.class);
-     springApp.addInitializers(confInject);
-     springApp.setMainApplicationClass(null);
-     springApp.run(args);
+    springApp = new SpringApplicationBuilder(SparqlMapWebSpringConfig.class)
+         .initializers(new ApplicationContextInitializer<AnnotationConfigEmbeddedWebApplicationContext>(){
+
+          @Override
+          public void initialize(AnnotationConfigEmbeddedWebApplicationContext applicationContext) {
+            ConfigurableListableBeanFactory bf =  applicationContext.getBeanFactory(); 
+            bf.registerSingleton(bc.getClass().getCanonicalName(), bc);
+            bf.registerSingleton(cc.getClass().getCanonicalName(), cc);
+            bf.registerSingleton(dc.getClass().getCanonicalName(), dc);
+            applicationContext.register(SparqlMapSetup.class,SparqlMapCli.class);
+            
+          }})
+         .main(null)
+         .application();
+    springApp.run(args);
+
    }else{
      springApp = new SpringApplication(SparqlMapCli.class);
-     springApp.addInitializers(confInject);
+     springApp.addInitializers(new ApplicationContextInitializer<AnnotationConfigApplicationContext>() {
+       @Override
+       public void initialize(AnnotationConfigApplicationContext applicationContext) {
+         
+         ConfigurableListableBeanFactory bf =  applicationContext.getBeanFactory(); 
+         bf.registerSingleton(bc.getClass().getCanonicalName(), bc);
+         bf.registerSingleton(cc.getClass().getCanonicalName(), cc);
+         bf.registerSingleton(dc.getClass().getCanonicalName(), dc);
+         applicationContext.register(SparqlMapSetup.class,SparqlMapCli.class);
+       }
+       
+     });
      springApp.setWebEnvironment(false);
      springApp.setBannerMode(Mode.OFF);
      springApp.setMainApplicationClass(null);
