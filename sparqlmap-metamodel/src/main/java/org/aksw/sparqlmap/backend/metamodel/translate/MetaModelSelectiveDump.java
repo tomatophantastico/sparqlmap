@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.DatatypeConverter;
@@ -266,6 +269,10 @@ public class MetaModelSelectiveDump implements Runnable{
    * @return the canonical representation or null if any of the referenced columns is null.
    */
   private String assembleString(TermMap tm, Row row, BaseDatatype dt){
+    Optional<Pattern> requiredPattern = tm.getConditionPattern();
+    Optional<String> transformPattern = Optional.ofNullable(tm.getTransform());
+    
+    
     String result = null;
     if(tm instanceof TermMapConstant){
       result = ((TermMapConstant) tm).getConstant();
@@ -290,16 +297,22 @@ public class MetaModelSelectiveDump implements Runnable{
         }
       }
       String sbString = sb.toString();
-      if(!sbString.isEmpty() && tm.getCondition().isPresent() 
-          // and check if it matches the condition
-          && sbString.matches( tm.getCondition().get())){
-        if(tm.getTransform().isPresent()){
-          result = sbString.replaceAll(tm.getCondition().orElseGet(()->".*"), tm.getTransform().get());
+      if(!sbString.isEmpty()){
+        if(requiredPattern.isPresent()){
+          Matcher matcher = requiredPattern.get().matcher(sbString);
+          if(matcher.matches()){
+            if(transformPattern.isPresent()){
+              //transformation required
+              result = matcher.replaceAll(transformPattern.get());
+            }else{
+              //no transformation
+              result = sbString;
+            }
+          }
         }else{
+          // no pattern required
           result = sbString;
         }
-      }else{
-        result = sbString;
       }
     } else if(tm instanceof TermMapColumn){
       String colname = ((TermMapColumn) tm).getColumn();
@@ -334,21 +347,18 @@ public class MetaModelSelectiveDump implements Runnable{
         }
         //do the conditional check  and transformation
         
-        if(tm.getCondition().isPresent()){
-          if(colRes.matches(tm.getCondition().get())){
-            if(tm.getTransform().isPresent()){
-              result = colRes.replaceAll(tm.getCondition().orElseGet(()->".*"), tm.getTransform().get());
+        if(requiredPattern.isPresent()){
+          Matcher matcher = requiredPattern.get().matcher(colRes);
+          if( matcher.matches()){
+            if(transformPattern.isPresent()){
+              result = matcher.replaceAll(transformPattern.get());
             }else{
               result = colRes;
             }
           }
         }else{
           result = colRes;
-
         }
-        
-        
-        
       }
     }
     return result;

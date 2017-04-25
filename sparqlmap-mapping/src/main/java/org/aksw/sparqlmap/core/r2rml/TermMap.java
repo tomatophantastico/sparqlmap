@@ -3,12 +3,15 @@ package org.aksw.sparqlmap.core.r2rml;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.aksw.sparqlmap.core.errors.ImplementationException;
 
 import com.google.common.collect.Lists;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 //@AllArgsConstructor
@@ -17,11 +20,14 @@ public abstract class TermMap {
   private Optional<String> lang;
   private Optional<String> datatypIRI;
   private String termTypeIRI;
-  private Optional<String> condition;
-  private Optional<String> transform;
+  private String condition;
+  private String transform;
+  
+  @Setter(value = AccessLevel.NONE)  
+  private Optional<Pattern> conditionPattern;
   
   
-  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, Optional<String> condition, Optional<String> transform) {
+  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, String condition, String transform) {
     super();
     if(termTypeIRI==null){
       throw new ImplementationException("provide termtype");
@@ -31,6 +37,7 @@ public abstract class TermMap {
     this.termTypeIRI = termTypeIRI;
     this.transform = transform;
     this.condition = condition;
+    this.conditionPattern = Optional.ofNullable(condition).map(Pattern::compile);
   }
   
   
@@ -50,6 +57,11 @@ public abstract class TermMap {
   public abstract boolean isTemplate();
   public abstract boolean isReferencing();
 
+  public void setCondition(String condition){
+    this.condition = condition;
+    this.conditionPattern = Optional.ofNullable(condition).map(Pattern::compile);
+    
+  }
   
  
 

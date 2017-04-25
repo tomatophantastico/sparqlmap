@@ -13,7 +13,7 @@ public class TermMapColumn extends TermMap {
   private String column;
 
   @Builder
-  public TermMapColumn(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, String column, Optional<String> condition, Optional<String> transform) {
+  public TermMapColumn(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, String column, String condition, String transform) {
     super(lang, datatypIRI, termTypeIRI, condition, transform);
     this.column = column;
   }

@@ -2,46 +2,44 @@ package org.aksw.sparqlmap.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
+import org.aksw.sparqlmap.core.TranslationContext;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.schema.LogicalSchema;
-import org.apache.jena.atlas.lib.tuple.Tuple;
-
+import org.apache.jena.atlas.web.ContentType;
 import org.apache.jena.ext.com.google.common.collect.Maps;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.riot.Lang;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.WebContent;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.resultset.ResultsFormat;
-import org.apache.metamodel.schema.Schema;
-import org.apache.metamodel.schema.Table;
 import org.jooq.lambda.Seq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 
@@ -72,68 +70,58 @@ public class SparqlMapWebController {
 	}
 	
 	@RequestMapping(method= {RequestMethod.GET,RequestMethod.POST}, value = "/sparql")
-	public void executeSparqlQuery(@RequestParam(value="query") String queryString, @RequestParam(required=false) String defaultgraph, @RequestParam(required=false) String format, WebRequest req, HttpServletResponse resp){
-		executeSparqlQuery(queryString, defaultgraph, format, req, resp, SparqlMapContextManager.ROOT);
+	public void executeSparqlQuery(@RequestParam(value="query") String queryString, @RequestParam Optional<String> defaultgraph, @RequestParam Optional<String> format, @RequestHeader HttpHeaders headers, HttpServletResponse resp){
+		executeSparqlQuery(queryString, defaultgraph, format, headers, resp, SparqlMapContextManager.ROOT);
 	}
 	
 	@RequestMapping(method= {RequestMethod.GET,RequestMethod.POST}, value = "/{context}/sparql")
-	public void executeSparqlQuery(@RequestParam(value="query") String queryString, @RequestParam(required=false) String defaultgraph, @RequestParam(required=false) String format, WebRequest req, HttpServletResponse resp, @PathVariable String context){
+	public void executeSparqlQuery(@RequestParam(value="query") String queryString, @RequestParam Optional<String> defaultgraph, @RequestParam Optional<String> format, @RequestHeader HttpHeaders headers, HttpServletResponse resp, @PathVariable String context){
 	
+	  
+	  List<ContentType> targetLangs = headers.getAccept().stream()
+	      .map(mediaType -> mediaType.getType())
+	      .map(WebContent::contentTypeCanonical)
+	      .map(ContentType::create)
+	      .collect(Collectors.toCollection(()-> new java.util.ArrayList<ContentType>()));
+	  
+	  format.map(formatString -> RDFLanguages.nameToLang(formatString))
+	    .ifPresent(lang -> targetLangs.add(lang.getContentType()));
+	  
 		try {
 			
-			String query = req.getParameter("query");
-			String outputformat = req.getParameter("output");
-			List<String> acceptHeaders = Arrays.asList(req.getHeaderValues("accept"));
-			
-			
-			//determine the return type of the application
-			Object resultsFormat = null;
-			if(!acceptHeaders.isEmpty()){
-				for(String acceptHeader: acceptHeaders){
-					Lang rdflang =  RDFLanguages.nameToLang(acceptHeader);
-					if(rdflang!=null){
-						resultsFormat = rdflang;
-						break;
-					}else if(acceptHeader.contains("+")){
-						
-						String lookupString = acceptHeader.substring(acceptHeader.indexOf("+")+1);
-						if(lookupString.contains(",")){
-							lookupString = lookupString.substring(0,lookupString.indexOf(","));
-						}
-						
-						ResultsFormat rs =  ResultsFormat.lookup(lookupString);
-						if(rs!=null&&!ResultsFormat.isRDFGraphSyntax(rs)){
-							resultsFormat = rs;
-							break;
-						}
-					}
-					
-				}
-			} 
-			// reutrn type might still be null, but is determined according to the query type later on.
-			
-			
-			log.debug("Receveived query: " + query);
-			try {
-				
-				
-					resp.setContentType(WebContent.contentTypeRDFXML);
-					smManager.getSparqlMap(context).executeSparql(query,resultsFormat, resp.getOutputStream());
-					
-			} catch (SQLException e) {
-				
-				resp.getOutputStream().write(e.getMessage().getBytes());
-				log.error("Error for query \n" + query + "\n",e);
-			}
-		} catch (IOException e) {
-			log.error("Error:",e);
-		} catch (Throwable t){
+			    TranslationContext tc = new TranslationContext();
+			    tc.setQueryString(queryString);
+			    Query query = QueryFactory.create(queryString);
+			    tc.setQuery(query);
+          QueryExecution qexec = smManager.getSparqlMap(context).execute(tc);
+
+			    if(query.isSelectType()){
+		         ResultSet rs = qexec.execSelect();
+		         
+		         for(ContentType langCandidate: targetLangs){
+		           Consumer<ResultSet> resultSetSender = null;
+		           
+		           if(RDFLanguages.TEXT.equals(langCandidate)){
+		             resultSetSender = ((qres) -> ResultSetFormatter.asText(qres));		             
+		           } else if(WebContent.contentTypeResultsXML.equals(langCandidate)){
+		             
+		           }
+		           
+		           if(resultSetSender!=null){
+		             resultSetSender.accept(rs);
+		             break;
+		           }
+		         
+		         }
+		         
+
+			      
+			    }
+
+		} catch (Exception t){
 			log.error("Throwable caught: ", t);
-		
+			throw t;
 		}
-		
-		
-		
 	}
 	
 	

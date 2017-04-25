@@ -15,7 +15,7 @@ public class TermMapTemplate  extends TermMap{
 
   @Builder 
   private TermMapTemplate(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, 
-      List<TermMapTemplateTuple> template, Optional<String> condition, Optional<String> transform) {
+      List<TermMapTemplateTuple> template, String condition, String transform) {
     super(lang, datatypIRI, termTypeIRI, condition, transform);
     this.template = template;
   }

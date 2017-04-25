@@ -46,11 +46,15 @@ public class TermMapLoader {
       
       Optional<String> datatype = Optional.ofNullable(termMap.getProperty(R2RML.HASDATATYPE)).map(Statement::getResource).map(Resource::getURI);
       
-      Optional<String> condition_pattern = Optional.ofNullable(termMap.getProperty(SMAP.REQUIRED_PATTERN)).map(Statement::getString);
+      String condition_pattern = Optional.ofNullable(termMap.getProperty(SMAP.REQUIRED_PATTERN)).map(Statement::getString).orElse(null);
       
-      Optional<String> transform_pattern = Optional.ofNullable(termMap.getProperty(SMAP.TRANSFORM_PATTERN)).map(Statement::getString);
+      String transform_pattern = Optional.ofNullable(termMap.getProperty(SMAP.TRANSFORM_PATTERN)).map(Statement::getString).orElse(null);
       
-      //check if a tramsform
+      //check for given transform pattern,that a condition is present
+      if(transform_pattern!=null && condition_pattern == null){
+        throw new R2RMLValidationException("transform pattern \"" +transform_pattern+ "\" found, but no condition given.");
+      }
+      
       
       
       Resource parentMap = LoaderHelper.getSingleResourceObject(

@@ -1,3 +1,12 @@
-<http://localhost/baseiri/instance/id=1> <http://www.w3.org/2001/XMLSchema#datewithdot> "10.10.2016" .
-<http://localhost/baseiri/instance/id=2> <http://www.w3.org/2001/XMLSchema#date> "12-10-2016"^^<http://www.w3.org/2001/XMLSchema#date> .
-<http://localhost/baseiri/instance/id=3> <http://www.w3.org/2001/XMLSchema#dateString> "2016 (exact date unknown)" .
+<http://example.org/data/thing/id=3> <http://example.org/vocab#website> <http://event.example.org/event%203> .
+<http://example.org/data/thing/id=3> <http://example.org/vocab#label> "event 3 (2016 (exact date unknown))" .
+<http://example.org/data/thing/id=3> <http://example.org/vocab#dateString> "2016 (exact date unknown)" .
+<http://example.org/data/thing/id=1> <http://example.org/vocab#label> "event1 (10.10.16)" .
+<http://example.org/data/thing/id=1> <http://example.org/vocab#datewithdot> "10.10.16" .
+<http://example.org/data/thing/id=1> <http://example.org/vocab#website> <http://event.example.org/event1> .
+<http://example.org/data/thing/id=4> <http://example.org/vocab#website> <http://event.example.org/event%204> .
+<http://example.org/data/thing/id=2> <http://example.org/vocab#website> <http://event.example.org/event2> .
+<http://example.org/data/thing/id=2> <http://example.org/vocab#date> "2016-10-12"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://example.org/data/thing/id=2> <http://example.org/vocab#label> "event2 (12/10/2016)" .
+<http://example.org/data/thing/id=5> <http://example.org/vocab#date> "2016-10-13"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://example.org/data/thing/id=5> <http://example.org/vocab#label> "XXX (13/10/2016)" .
