@@ -61,9 +61,9 @@ Or if you do not have a R2RML mapping, you can create a dump based on a Direct M
 ## R2RML Mappings
 
 ### Re-use an Existing Mapping
-Is quite simple, just provide the ```--r2rml.file```parameter: 
+Is quite simple, just provide the ```--r2rmlFile```parameter: 
 ```
---r2rml.file=<fileLocation>
+--r2rmlFile=<fileLocation>
 ```
 
 ### Creation of a Mapping
@@ -163,7 +163,7 @@ Currently, a number of limitations apply:
 
 
 # Mapping Options
-Existing mapping files can be provided via the r2rmlfile-parameter:
+Existing mapping files can be provided via the r2rmlFile-parameter:
 ```
 --r2rmlFile=<filename>
 ```
