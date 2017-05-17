@@ -1,0 +1,98 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix bsbm-inst:      <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bsbm-vocab:    <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mapping: <http://aksw.org/Projects/sparqlmap/mappings/bsbm/>.
+@prefix rev:     <http://purl.org/stuff/rev#>.
+
+		                        
+mapping:Review
+   	rr:logicalTable
+              [ 
+                rr:tableName "dataset.csv"
+              ] ;
+              
+      rr:subjectMap
+              [ rr:class rev:Review ;
+                rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{publisher}/Review{nr}"
+              ] ;
+              
+      rr:predicateObjectMap [
+    		rr:predicate bsbm-vocab:reviewFor;
+    		rr:objectMap [
+        		rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{producer}/Product{product}"
+    		];
+    	];
+      rr:predicateObjectMap [
+    		rr:predicate rev:reviewer;
+    		rr:objectMap [
+        		rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{publisher}/Reviewer{person}"
+        	];
+    	];
+    	rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{publisher}/RatingSite{publisher}"
+                        ] ;
+                rr:predicate dc:publisher 
+              ] ;
+    	rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "reviewDate";
+                          rr:datatype xsd:dateTime
+                        ] ;
+                rr:predicate bsbm-vocab:reviewDate 
+              ] ;
+    	rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "title"
+                        ] ;
+                rr:predicate dc:title
+              ] ; 
+    	rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "text" ;
+                     
+                        ] ;
+                rr:predicate rev:text 
+              ] ;                                 
+    	rr:predicateObjectMap
+              [ rr:objectMap
+                [ rr:column "rating1" ;
+                  rr:datatype xsd:integer ;
+                ] ;
+                rr:predicate bsbm-vocab:rating1
+              ] ;
+        rr:predicateObjectMap
+              [ rr:objectMap
+        				[   rr:column "rating2" ;
+                    rr:datatype xsd:integer ;
+
+                ] ;
+                rr:predicate bsbm-vocab:rating2
+              ] ;
+        rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "rating3";
+                          rr:datatype xsd:integer ;
+                        ] ;
+                rr:predicate bsbm-vocab:rating3
+              ] ;
+        rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "rating4";
+                          rr:datatype xsd:integer ;
+                        ] ;
+                rr:predicate bsbm-vocab:rating4
+              ]; 
+                      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "publishDate";
+                          rr:datatype xsd:date ;
+                        ] ;
+                rr:predicate dc:date
+              ]     .		                        
+		                        

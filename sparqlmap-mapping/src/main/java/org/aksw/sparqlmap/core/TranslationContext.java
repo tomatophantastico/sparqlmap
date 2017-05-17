@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.aksw.sparqlmap.core.mapper.finder.MappingBinding;
+import org.aksw.sparqlmap.core.mapper.finder.QueryBinding;
 import org.aksw.sparqlmap.core.mapper.finder.QueryInformation;
 import org.apache.jena.query.Query;
 import org.apache.jena.sparql.algebra.Op;
@@ -36,7 +36,7 @@ public class TranslationContext {
 	
 	private String queryName;
 	
-	private MappingBinding queryBinding;
+	private QueryBinding queryBinding;
 
 	private Query query;
 	

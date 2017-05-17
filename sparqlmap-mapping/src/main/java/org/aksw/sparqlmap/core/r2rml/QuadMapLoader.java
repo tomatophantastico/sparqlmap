@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.aksw.sparqlmap.core.r2rml.TermMapReferencing.JoinOn;
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 import org.apache.jena.rdf.model.Model;
@@ -171,17 +172,21 @@ public class QuadMapLoader {
           TermMapTemplate pst = (TermMapTemplate) tmr.getParent().getSubject();
 
           //we check, if all the columns mentioned in the on conditions are contained in the parent subject map
-          Set<String> pcols = Sets.newHashSet(TermMap.getCols(tmr.getParent().getSubject()));
+          Set<String> pcols = Sets.newHashSet(tmr.getParent().getSubject().getColumnNames());
           Map<String,String> parent2ChildCol = tmr.getConditions().stream().collect(Collectors.toMap(JoinOn::getParentColumn, JoinOn::getChildColumn));
               
               
           if(tmr.getConditions().stream().allMatch(on -> pcols.contains(on.getParentColumn()))){
             // all are in, so we replace the ref map with a regular one
             
-            List<TermMapTemplateTuple> tuples =   pst.getTemplate().stream().map(temptuple -> {
-              return TermMapTemplateTuple.builder().column(parent2ChildCol.get(temptuple.getColumn())).prefix(temptuple.getPrefix()).build();
-            
-            }).collect(Collectors.toList());
+            List<TermMapTemplateTuple> tuples = pst.getTemplate().stream()
+                .map(temptuple ->  
+                  TermMapTemplateTuple.builder()
+                    .column(LogicalColumn.builder(qm.getLogicalTable())
+                        .name(parent2ChildCol.get(temptuple.getColumn())).build())
+                    .prefix(temptuple.getPrefix()).build()
+                )
+                .collect(Collectors.toList());
             
             TermMapTemplate newTmtp = TermMapTemplate.builder().termTypeIRI(pst.getTermTypeIRI()).template(tuples).build();
             qm.setObject(newTmtp);

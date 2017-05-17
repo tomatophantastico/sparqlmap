@@ -31,12 +31,13 @@ public class SparqlMapCliTest {
   
   public static List<String> PARAMS = Collections.unmodifiableList(Lists.newArrayList(
       "--ds.url=" +TEST_LOCATION  + "dataset.csv",
-      "--ds.type=CSV",
-      "--ds.quoteChar=%",
       "--ds.separatorChar=+",
       "--ds.columnNameLineNumber=2",
       "-bi=http://localhost/baseiri/",
-      "--dmBaseUriPrefix=http://localhost/baseiri/"));
+      "--ds.quoteChar=%",
+      "--dmBaseUriPrefix=http://localhost/baseiri/",
+      "--ds.type=CSV"
+      ));
   
   
   public static String[] params(String...params){

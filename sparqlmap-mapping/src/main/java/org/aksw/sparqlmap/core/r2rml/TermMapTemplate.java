@@ -1,7 +1,12 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +19,7 @@ public class TermMapTemplate  extends TermMap{
   private List<TermMapTemplateTuple> template;
 
   @Builder 
-  private TermMapTemplate(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, 
+  private TermMapTemplate(String lang, String datatypIRI, String termTypeIRI, 
       List<TermMapTemplateTuple> template, String condition, String transform) {
     super(lang, datatypIRI, termTypeIRI, condition, transform);
     this.template = template;
@@ -39,13 +44,17 @@ public class TermMapTemplate  extends TermMap{
   public boolean isReferencing() {
     return false;
   }
-
   
-  public static class TermMapTemplateBuilder{
-    Optional<String> datatypIRI = Optional.empty();
-    Optional<String> lang = Optional.empty();
+  
+  @Override
+  public Collection<LogicalColumn> getColumns() {
+    return template.stream()
+        .map(ttt -> ttt.getColumn())
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
-  
+
+
   
 
   

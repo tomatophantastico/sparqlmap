@@ -1,6 +1,11 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import java.util.Collection;
 import java.util.Optional;
+
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
+
+import com.google.common.collect.Lists;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +19,7 @@ public class TermMapConstant  extends TermMap{
   private String constantIRI;
   
   @Builder
-  public TermMapConstant(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI,  String constantLiteral,
+  public TermMapConstant(String lang, String datatypIRI, String termTypeIRI,  String constantLiteral,
       String constantIRI,String condition, String transform) {
     
     super(lang, datatypIRI, termTypeIRI, condition, transform);
@@ -46,13 +51,13 @@ public class TermMapConstant  extends TermMap{
   public boolean isReferencing() {
     return false;
   }
-  
-  
-  public static class TermMapConstantBuilder{
-    Optional<String> datatypIRI = Optional.empty();
-    Optional<String> lang = Optional.empty();
-  }
 
+  @Override
+  public Collection<LogicalColumn> getColumns() {
+    return Lists.newArrayList();
+  }
+  
+ 
  
   
  

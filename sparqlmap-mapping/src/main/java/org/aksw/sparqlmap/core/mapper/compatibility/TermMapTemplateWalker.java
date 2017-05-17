@@ -1,56 +1,85 @@
 package org.aksw.sparqlmap.core.mapper.compatibility;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.aksw.sparqlmap.core.r2rml.TermMapTemplate;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplateTuple;
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
+import org.apache.jena.ext.com.google.common.collect.Lists;
 
 import com.google.common.collect.PeekingIterator;
-
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 
 class TermMapTemplateWalker{
   
+  TermMapTemplate tmt1;
+  TermMapTemplate tmt2;
   
-   TermMapTemplateIterator iTmTemp1;
-   TermMapTemplateIterator iTmTemp2;
    
    
-   public TermMapTemplateWalker(PeekingIterator<TermMapTemplateTuple> iTmTemp1, PeekingIterator<TermMapTemplateTuple> iTmTemp2) {
-    this.iTmTemp1 = new TermMapTemplateIterator(iTmTemp1);
-    this.iTmTemp2 = new TermMapTemplateIterator(iTmTemp2);
+  public TermMapTemplateWalker(TermMapTemplate tmt1, TermMapTemplate tmt2) {
+    this.tmt1 = tmt1;
+    this.tmt2 = tmt2;
+
   }
    
    
    
 
-  public boolean eval(){
-    return eval(true);
-  }
   
   
-  public boolean eval(boolean generateFilters){
+  
+  
+  public Optional<List<CompatibilityRequires>> eval(){
     
-    boolean result = true;
+    TermMapTemplateIterator iTmTemp1 =  new TermMapTemplateIterator(Iterators.peekingIterator(tmt1.getTemplate().iterator()));
+    TermMapTemplateIterator iTmTemp2 = new TermMapTemplateIterator(Iterators.peekingIterator(tmt2.getTemplate().iterator()));
+    
+    Optional<List<CompatibilityRequires>> result = Optional.of(Lists.newArrayList());
  
-    while(result&&!iTmTemp1.isConsumed()&&!iTmTemp2.isConsumed()){
+    while(result.isPresent()&&!iTmTemp1.isConsumed()&&!iTmTemp2.isConsumed()){
       
       //compare the prefixes first
       if(iTmTemp1.prefix!=null&&iTmTemp2.prefix!=null){
-        result = iTmTemp1.reducePrefix(iTmTemp2) 
-              |  iTmTemp2.reducePrefix(iTmTemp1);
+        if(!(iTmTemp1.reducePrefix(iTmTemp2) 
+              |  iTmTemp2.reducePrefix(iTmTemp1))){
+          //if the prefixes do not match, emtpy result;
+          result = Optional.empty();
+        }
       //  
       }else if(iTmTemp1.prefix==null && iTmTemp2.prefix!=null){
-        result = iTmTemp2.reducePrefixByColum(iTmTemp1, generateFilters);
+        
+        Optional<CompatibilityRequires> cres =  iTmTemp2.reducePrefixByColum(iTmTemp1);
+        if(cres.isPresent()){
+          result.get().add(cres.get());
+        }else{
+          result = Optional.empty();
+        }
+        
+        
       }else if(iTmTemp1.prefix!=null && iTmTemp2.prefix==null){
-        result = iTmTemp1.reducePrefixByColum(iTmTemp2, generateFilters);
+        Optional<CompatibilityRequires> cres =  iTmTemp1.reducePrefixByColum(iTmTemp2);
+        
+        if(cres.isPresent()){
+          result.get().add(cres.get());
+        }else{
+          result = Optional.empty();
+        }
+
       }else if(iTmTemp1.column != null && iTmTemp2.column != null ){
-        iTmTemp1.filterColEqCols.put(iTmTemp1.column, iTmTemp2.column);
+
+        result.get().add(CompatibilityRequires.builder()
+            .column(iTmTemp1.column)
+            .valueColumn(iTmTemp2.column).build());
         iTmTemp1.nullColumn();
-        iTmTemp2.filterColEqCols.put(iTmTemp2.column, iTmTemp1.column);
         iTmTemp2.nullColumn();
         
+        
       }else {
-        result = false;
+        result = Optional.empty();
       }
        
       
@@ -66,13 +95,9 @@ class TermMapTemplateWalker{
   private class TermMapTemplateIterator{
     
     private String prefix;
-    private String column;
+    private LogicalColumn column;
     private boolean encodeCol;
     private PeekingIterator<TermMapTemplateTuple> tmtmIter;
-
-    Map<String,String> filterColEqCols = Maps.newHashMap();
-    Map<String,String> filterColEqString = Maps.newHashMap();
-    
 
     
     public TermMapTemplateIterator(PeekingIterator<TermMapTemplateTuple> tmtmIter) {
@@ -127,8 +152,8 @@ class TermMapTemplateWalker{
       return compatible;
     }
     
-    public boolean reducePrefixByColum(TermMapTemplateIterator otheriter, boolean createFilter){
-      boolean compatible = false;
+    public Optional<CompatibilityRequires> reducePrefixByColum(TermMapTemplateIterator otheriter){
+      Optional<CompatibilityRequires> compatible = Optional.empty();
       if(prefix!=null && otheriter.column!=null){
         //check until where this column goes. peeking therefore behind the next column
         String peekPrefix = otheriter.peekAtPrefix();
@@ -136,14 +161,20 @@ class TermMapTemplateWalker{
           int indexPeekPrefix = prefix.indexOf(peekPrefix);
           if(indexPeekPrefix>=0){
             
-            if(createFilter){
-              String colvalue = prefix.substring(0, indexPeekPrefix);
-              otheriter.filterColEqString.put(otheriter.column, colvalue);
-            }
+            
+            String colvalue = prefix.substring(0, indexPeekPrefix);
+            
             
             prefix = prefix.substring(indexPeekPrefix);
+           
+            compatible = Optional.of(
+                CompatibilityRequires.builder()
+                  .column(otheriter.column)
+                  .value(colvalue).build());
+            
+            
             otheriter.nullColumn();
-            compatible = true;
+            
           }
        
         }else{
@@ -153,15 +184,16 @@ class TermMapTemplateWalker{
             
             for(int i = 0; i < prefixChars.length; i++){
               if(URIHelper.RESERVED.get(prefixChars[i])){
+                String colvalue = prefix.substring(0, i);
                 prefix = prefix.substring(i);
-                compatible = true;
+                compatible = Optional.of(CompatibilityRequires.builder().column(otheriter.column).value(colvalue).build());
                 break;
               }
             }
           }else{
             //not encoded, no suffix, we just take the whole prefix
+            compatible = Optional.of(CompatibilityRequires.builder().column(otheriter.column).value(prefix).build());
             prefix =null;
-            compatible = true;
           }
         }
         

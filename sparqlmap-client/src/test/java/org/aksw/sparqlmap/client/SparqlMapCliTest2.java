@@ -28,8 +28,8 @@ public class SparqlMapCliTest2 {
     PrintStream dmout = new PrintStream(baos);
     System.setOut(dmout);
     
-    
-    SparqlMapStarter.main(SparqlMapCliTest.params("--action=dump", "-f=" + SparqlMapCliTest.TEST_LOCATION + "mapping.ttl"));
+    String[] params = SparqlMapCliTest.params("--action=dump", "-f=" + SparqlMapCliTest.TEST_LOCATION + "mapping.ttl");
+    SparqlMapStarter.main(params);
     dmout.flush();
     System.setOut(sysout);
 

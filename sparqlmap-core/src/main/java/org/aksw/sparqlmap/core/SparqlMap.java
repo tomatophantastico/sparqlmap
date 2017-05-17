@@ -12,20 +12,21 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.sparqlmap.backend.metamodel.DumperMetaModel;
+import org.aksw.sparqlmap.backend.metamodel.MetamodelUpdateProcessor;
 import org.aksw.sparqlmap.backend.metamodel.TranslationContextMetaModel;
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryExecution;
 import org.aksw.sparqlmap.core.errors.SparqlMapException;
-import org.aksw.sparqlmap.core.mapper.finder.Binder;
 import org.aksw.sparqlmap.core.mapper.finder.FilterFinder;
-import org.aksw.sparqlmap.core.mapper.finder.MappingBinding;
 import org.aksw.sparqlmap.core.mapper.finder.QueryInformation;
+import org.aksw.sparqlmap.core.mapper.finder.StreamingBinder;
 import org.aksw.sparqlmap.core.normalizer.QueryNormalizer;
 import org.aksw.sparqlmap.core.r2rml.QuadMap;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
 import org.aksw.sparqlmap.core.r2rml.TermMap;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
+import org.apache.jena.atlas.lib.Sink;
 import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
@@ -39,11 +40,29 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.LangBuilder;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.engine.binding.Binding;
 import org.apache.jena.sparql.graph.GraphFactory;
+import org.apache.jena.sparql.modify.request.UpdateAdd;
+import org.apache.jena.sparql.modify.request.UpdateClear;
+import org.apache.jena.sparql.modify.request.UpdateCopy;
+import org.apache.jena.sparql.modify.request.UpdateCreate;
+import org.apache.jena.sparql.modify.request.UpdateDataDelete;
+import org.apache.jena.sparql.modify.request.UpdateDataInsert;
+import org.apache.jena.sparql.modify.request.UpdateDeleteWhere;
+import org.apache.jena.sparql.modify.request.UpdateDrop;
+import org.apache.jena.sparql.modify.request.UpdateLoad;
+import org.apache.jena.sparql.modify.request.UpdateModify;
+import org.apache.jena.sparql.modify.request.UpdateMove;
+import org.apache.jena.sparql.modify.request.UpdateVisitor;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.apache.jena.sparql.syntax.Template;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateProcessor;
+import org.apache.jena.update.UpdateRequest;
 import org.apache.metamodel.DataContext;
+import org.apache.metamodel.UpdateableDataContext;
 import org.apache.metamodel.query.Query;
 import org.apache.metamodel.query.parser.QueryParser;
 import org.apache.metamodel.schema.Table;
@@ -113,13 +132,34 @@ public class SparqlMap {
     this.closeable = closeable;
   }
   
+  
+
+  
+  public UpdateProcessor update(UpdateRequest request){
+    
+    if(dataContext instanceof UpdateableDataContext){
+      return new MetamodelUpdateProcessor((UpdateableDataContext) dataContext, mapping, request);
+
+    }else{
+      throw new UnsupportedOperationException("Data Context is not updateable");
+    }
+    
+    
+
+    
+    
+  }
+  
+  public UpdateProcessor update(String query){
+    
+    return new MetamodelUpdateProcessor((UpdateableDataContext) dataContext, mapping, query);
+  }
 
 
-  public org.apache.jena.query.QueryExecution execute(String query){
+  public QueryExecution execute(String query){
     TranslationContext tcontext = new  TranslationContext();
     tcontext.setQueryString(query);
     return execute(tcontext);
-    
   }
   
   public QueryExecution execute(TranslationContext tcontext){
@@ -151,9 +191,8 @@ public class SparqlMap {
     tcontext.setQueryInformation(qi);
     
     
-    Binder binder = new Binder(this.mapping);
-    MappingBinding mb = binder.bind(tcontext);
-    tcontext.setQueryBinding(mb);
+
+    tcontext.setQueryBinding(StreamingBinder.bind(tcontext, mapping));
     if(log.isDebugEnabled()){
       log.debug(tcontext.getQueryBinding().toString());
     }
@@ -469,7 +508,7 @@ public class SparqlMap {
     
     // now we check if every mapping col exists
     
-    for(QuadMap qm: mapping.getQuadMaps().values()){
+    for(QuadMap qm: mapping.getQuadMaps()){
       LogicalTable lt =  qm.getLogicalTable();
       Set<Table> tables = Sets.newHashSet();
       if(lt.getTablename()!=null ){
@@ -492,7 +531,7 @@ public class SparqlMap {
 
       for(QuadPosition pos: QuadPosition.values()){
         TermMap tm =  qm.get(pos);
-        TermMap.getCols(tm).stream().filter( 
+        tm.getColumnNames().stream().filter( 
             col-> tables.stream().noneMatch(
                 tab-> null != tab.getColumnByName(col)))
         .forEach(col->

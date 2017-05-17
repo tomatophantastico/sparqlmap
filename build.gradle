@@ -172,6 +172,9 @@ project(':sparqlmap-mapping'){
     dependencies {
         compile ("org.apache.jena:jena-arq")
         compile ("com.google.guava:guava")
+        compile ("com.aol.simplereact:cyclops-react:1.0.5") {
+            exclude module:  "slf4j-simple"
+        }
 
         testCompile project(':sparqlmap-test')
     }
@@ -189,9 +192,7 @@ project(':sparqlmap-core'){
 project(':sparqlmap-metamodel'){
     dependencies {
         compile project(':sparqlmap-mapping')
-        compile ("com.aol.simplereact:cyclops-react:1.0.5") {
-            exclude module:  "slf4j-simple"
-        }
+        
         compile ("org.apache.metamodel:MetaModel-core") {changing=true}
         testCompile project(':sparqlmap-test')
     }

@@ -26,8 +26,8 @@ public class SparqlMapStarter {
    ConfigBeanDataSource dc = new ConfigBeanDataSource();
    ConfigBeanCli cc = new ConfigBeanCli();
    JCommander jc = new JCommander(new Object[] {bc,dc,cc});
-   jc.setCaseSensitiveOptions(false);
-   jc.setProgramName("SparqlMap");
+   //jc.setCaseSensitiveOptions(false);
+   //jc.setProgramName("SparqlMap");
    try {
     jc.parse(args);
     

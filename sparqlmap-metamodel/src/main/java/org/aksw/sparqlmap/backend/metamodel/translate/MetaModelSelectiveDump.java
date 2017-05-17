@@ -137,7 +137,7 @@ public class MetaModelSelectiveDump implements Runnable{
     query.from(fi);
     
     quadmaps.stream().flatMap(qm -> qm.getCols().stream()).distinct().forEach(col -> {
-      MutableColumn mcol = new  MutableColumn(col);
+      MutableColumn mcol = new  MutableColumn(col.getName());
       mcol.setQuote("\"");
       SelectItem si = new SelectItem(mcol, fi);
       query.select(si);
@@ -151,11 +151,11 @@ public class MetaModelSelectiveDump implements Runnable{
     Query query = new Query();
     query.from(new FromItem(table));
     quadmaps.stream().flatMap(qm -> qm.getCols().stream()).forEach(col->{
-      Column column =  table.getColumnByName(col);
+      Column column =  table.getColumnByName(col.getName());
       
       //check if the columname is actually a number
-      if(column == null && col.startsWith("#")){
-        int colNo = Integer.valueOf(col.substring(1));
+      if(column == null && col.getName().startsWith("#")){
+        int colNo = Integer.valueOf(col.getName().substring(1));
         column = dcontext.getTableByQualifiedLabel(ltable.getTablename()).getColumn(colNo);
       }
       query.select(column);
@@ -212,8 +212,8 @@ public class MetaModelSelectiveDump implements Runnable{
   private Node materialize(Row row, TermMap tm){
     Node result = null;
     BaseDatatype dt = null;
-    if(tm.getDatatypIRI().isPresent()){
-      dt = new BaseDatatype(tm.getDatatypIRI().get());
+    if(tm.getDatatypIRI() != null){
+      dt = new BaseDatatype(tm.getDatatypIRI());
     }else{
       if(tm instanceof TermMapColumn){
         dt = getNaturalDatatype(row,tm);
@@ -230,8 +230,8 @@ public class MetaModelSelectiveDump implements Runnable{
       }else if(tm.getTermTypeIRI().equals(R2RML.BLANKNODE_STRING)){
         result = NodeFactory.createBlankNode(cfString);
       }else{
-        if(tm.getLang().isPresent()){
-          result = NodeFactory.createLiteral(cfString, tm.getLang().get());
+        if(tm.getLang()!= null){
+          result = NodeFactory.createLiteral(cfString, tm.getLang());
         }else if(dt!=null){
           result = NodeFactory.createLiteral(cfString, dt );
         }else{
@@ -253,7 +253,7 @@ public class MetaModelSelectiveDump implements Runnable{
     if(tm instanceof TermMapColumn){
       
       
-      ColumnType ct = getColNameSelectItem(((TermMapColumn) tm).getColumn()).getColumn().getType();
+      ColumnType ct = getColNameSelectItem(((TermMapColumn) tm).getColumn().getName()).getColumn().getType();
       dt = SchemaTranslator.getXSDDataType(ct).orElse(null);
     }
       
@@ -283,7 +283,7 @@ public class MetaModelSelectiveDump implements Runnable{
           sb.append(tmtt.getPrefix());
         }
         if(tmtt.getColumn()!=null){
-          Object val = row.getValue(getColNameSelectItem(tmtt.getColumn().toUpperCase()));
+          Object val = row.getValue(getColNameSelectItem(tmtt.getColumn().getName().toUpperCase()));
           if(val!=null){
             if(tm.isIRI()){
               sb.append(IRILib.encodeUriComponent(val.toString()));
@@ -315,7 +315,7 @@ public class MetaModelSelectiveDump implements Runnable{
         }
       }
     } else if(tm instanceof TermMapColumn){
-      String colname = ((TermMapColumn) tm).getColumn();
+      String colname = ((TermMapColumn) tm).getColumn().getName();
       Object val = row.getValue(getColNameSelectItem(colname));
       String colRes = null;
 

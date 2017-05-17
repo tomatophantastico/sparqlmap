@@ -11,7 +11,7 @@ import lombok.Data;
 public class TermMapTemplateTuple {
   
 
-    private String column;
+    private LogicalColumn column;
     private String prefix;
     private boolean colUrlEncoding = true;
 

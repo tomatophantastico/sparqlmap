@@ -84,9 +84,7 @@ public class QueryInformation {
 		this.reduced = reduced;
 	}
 
-	public Map<Quad, Map<String, Collection<Expr>>> getFiltersforvariables() {
-		return filtersforvariables;
-	}
+
 
 	public void setFiltersforvariables(
 			Map<Quad, Map<String, Collection<Expr>>> filtersforvariables) {

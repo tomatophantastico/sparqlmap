@@ -2,7 +2,6 @@ package org.aksw.sparqlmap.core;
 
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.apache.jena.graph.Node;
@@ -21,4 +20,6 @@ public interface Dumper {
   public void streamDump(OutputStream fos);
   public Stream<Multimap<Node, Triple>> dump(Collection<String> mappingfilters, boolean fast);
   public void dump(OutputStream out, Lang lang);
+  public void dump(OutputStream out, RDFFormat format);
+
 }

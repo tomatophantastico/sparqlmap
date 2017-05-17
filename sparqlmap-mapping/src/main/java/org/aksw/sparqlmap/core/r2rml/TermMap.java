@@ -4,8 +4,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.aksw.sparqlmap.core.errors.ImplementationException;
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 
 import com.google.common.collect.Lists;
 
@@ -17,8 +19,8 @@ import lombok.Setter;
 //@AllArgsConstructor
 public abstract class TermMap {
 
-  private Optional<String> lang;
-  private Optional<String> datatypIRI;
+  private String lang;
+  private String datatypIRI;
   private String termTypeIRI;
   private String condition;
   private String transform;
@@ -27,7 +29,7 @@ public abstract class TermMap {
   private Optional<Pattern> conditionPattern;
   
   
-  public TermMap(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, String condition, String transform) {
+  public TermMap(String lang, String datatypIRI, String termTypeIRI, String condition, String transform) {
     super();
     if(termTypeIRI==null){
       throw new ImplementationException("provide termtype");
@@ -87,23 +89,20 @@ public abstract class TermMap {
     public boolean isColumn() {
       return false;
     }
+
+    @Override
+    public Collection<LogicalColumn> getColumns() {
+      return Lists.newArrayList();
+    }
   };
   
-  public static Collection<String> getCols(TermMap tm){
- 
-    List<String> cols = Lists.newArrayList();
-    
-    if(tm instanceof TermMapColumn){
-      cols.add(((TermMapColumn) tm).getColumn());
-    }else if (tm instanceof TermMapTemplate){
-      for(TermMapTemplateTuple tmtt : ((TermMapTemplate) tm).getTemplate()){
-        if(tmtt.getColumn()!=null){
-          cols.add(tmtt.getColumn());
-        }
-       
-      }
-    }
-    
-    return cols;
+  public abstract Collection<LogicalColumn> getColumns();
+  
+  
+  public Collection<String> getColumnNames(){
+    return getColumns().stream().map(lcol -> lcol.getName()).collect(Collectors.toList());
   }
+  
+  
+  
 }

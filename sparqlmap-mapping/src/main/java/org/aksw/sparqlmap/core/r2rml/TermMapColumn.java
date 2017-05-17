@@ -1,6 +1,11 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import java.util.Collection;
 import java.util.Optional;
+
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
+
+import com.google.common.collect.Lists;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +15,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class TermMapColumn extends TermMap {
 
-  private String column;
+  private LogicalColumn column;
 
   @Builder
-  public TermMapColumn(Optional<String> lang, Optional<String> datatypIRI, String termTypeIRI, String column, String condition, String transform) {
+  public TermMapColumn(String lang, String datatypIRI, String termTypeIRI, LogicalColumn column, String condition, String transform) {
     super(lang, datatypIRI, termTypeIRI, condition, transform);
     this.column = column;
   }
@@ -38,11 +43,13 @@ public class TermMapColumn extends TermMap {
     return false;
   }
   
-  public static class TermMapColumnBuilder{
-    Optional<String> datatypIRI = Optional.empty();
-    Optional<String> lang = Optional.empty();
+  
+  @Override
+  public Collection<LogicalColumn> getColumns() {
+    return Lists.newArrayList(column);
   }
-
+  
+ 
 
   
 }

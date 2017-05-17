@@ -141,7 +141,7 @@ public class MappingGenerator {
         Resource objectMap = r2r.createResource();
         pomap.addProperty(R2RML.HASOBJECTMAP, objectMap);
         objectMap.addProperty(R2RML.HASCOLUMN, escapeName(column.getName()));
-        column.getXsdDataType().ifPresent(dtString -> 
+        Optional.ofNullable(column.getXsdDataType()).ifPresent(dtString -> 
         objectMap.addProperty(R2RML.HASDATATYPE, 
             r2r.createResource(dtString)));
 

@@ -74,7 +74,7 @@ public class MetaModelQueryDump {
   
   public static DatasetGraph assembleDs(TranslationContext tcontext, DataContext context, boolean rowwiseBlanks) {
 
-   return assembleDs(tcontext.getQueryBinding().getBindingMap().values(), context, rowwiseBlanks, tcontext.getQuery().getDatasetDescription());
+   return assembleDs(tcontext.getQueryBinding().getRows().stream().flatMap(list -> list.stream()).collect(Collectors.toList()), context, rowwiseBlanks, tcontext.getQuery().getDatasetDescription());
 
   }
   
@@ -104,7 +104,7 @@ public class MetaModelQueryDump {
  
   
   
-  private static Multimap<LogicalTable, QuadMap> bucketFilterNonNullMaps(Collection<QuadMap> quadmaps ){
+  public static Multimap<LogicalTable, QuadMap> bucketFilterNonNullMaps(Collection<QuadMap> quadmaps ){
     Multimap<LogicalTable, QuadMap> bucketedMaps = HashMultimap.create();
     for (QuadMap quadmap : quadmaps) {
       if(quadmap != QuadMap.NULLQUADMAP){

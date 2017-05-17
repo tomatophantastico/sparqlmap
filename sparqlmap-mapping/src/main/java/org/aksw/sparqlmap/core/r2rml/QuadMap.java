@@ -1,7 +1,11 @@
 package org.aksw.sparqlmap.core.r2rml;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.aksw.sparqlmap.core.util.QuadPosition;
 
@@ -40,15 +44,11 @@ public class QuadMap {
     return Lists.newArrayList(graph,subject,predicate,object);
   }
 
-  public List<String> getCols(){ 
-    List<String> cols = Lists.newArrayList();
-    for(QuadPosition pos: QuadPosition.values()){
-  
-      TermMap tm = this.get(pos);
-      cols.addAll(TermMap.getCols(tm));
-    } 
-    
-    return cols;
+  public Collection<LogicalColumn> getCols(){
+    return Stream.of(QuadPosition.values())
+        .map(pos -> get(pos))
+        .flatMap(tm -> tm.getColumns().stream())
+        .collect(Collectors.toList());
   }
   
   

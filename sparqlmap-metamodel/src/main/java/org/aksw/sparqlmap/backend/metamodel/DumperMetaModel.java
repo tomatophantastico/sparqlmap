@@ -23,6 +23,9 @@ import org.apache.jena.graph.impl.CollectionGraph;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.RDFWriterRegistry;
+import org.apache.jena.riot.WriterDatasetRIOT;
+import org.apache.jena.riot.WriterGraphRIOT;
 import org.apache.jena.riot.writer.NQuadsWriter;
 import org.apache.jena.riot.writer.NTriplesWriter;
 import org.apache.jena.riot.writer.TriGWriter;
@@ -58,7 +61,7 @@ public class DumperMetaModel implements Dumper{
 
 
   public DatasetGraph dumpDatasetGraph(){
-    DatasetGraph dsg = MetaModelQueryDump.assembleDs(r2rmlMapping.getQuadMaps().values(), mcontext.getDataContext());
+    DatasetGraph dsg = MetaModelQueryDump.assembleDs(r2rmlMapping.getQuadMaps(), mcontext.getDataContext());
     return dsg;
     
   }
@@ -99,32 +102,37 @@ public class DumperMetaModel implements Dumper{
   }
   
   
+  
+  @Override
+  public void dump(OutputStream out, Lang lang) {
+    dump(out, RDFWriterRegistry.defaultSerialization(lang));
+    
+  }
+  
   /**
    * @param out
    * @param format
    */
-  public void dump(OutputStream out, Lang lang){
+  public void dump(OutputStream out, RDFFormat lang){
     
-    if(lang.equals(Lang.NQUADS)){
-      NQuadsWriter.write(out, streamDump().iterator() );
-    }else if(Lang.TURTLE.equals(lang)){
-      TurtleWriter writer = new TurtleWriter();
+    // either 
+    WriterDatasetRIOT dsWriter = RDFWriterRegistry.getWriterDatasetFactory(lang).create(lang);
+    WriterGraphRIOT grWriter = RDFWriterRegistry.getWriterGraphFactory(lang).create(lang);
+    
+    if(grWriter!=null){
       dump(null, true).map(quads ->  new CollectionGraph(quads.values()) ).forEach(graph -> {
-        writer.write(out, graph,null,null,new Context());
+        grWriter.write(out, graph,null,null,new Context());
       });
-
-    }else if(Lang.NTRIPLES.equals(lang)){ 
-      NTriplesWriter.write(out, streamDump().map(quad -> quad.asTriple()).iterator());
-    }else if(Lang.TRIG.equals(lang)){
-      TriGWriterBlocks writer = new TriGWriterBlocks();
-      
+    }else if(dsWriter!=null){
       dump(null,true).map(TripleStreamUtils.mapToDatasetGraphMap()).forEach(dsg -> {
-        writer.write(out, dsg, null, null, new Context());
+        dsWriter.write(out, dsg, null, null, new Context());
 
       });
     }else{
       throw new SystemInitializationError(String.format("Unupported output format, currently supported is: NTRIPELS,NQUADS, TURTLE, TRIG", lang));
     }
+    
+
   }
   
   /**
@@ -147,12 +155,12 @@ public class DumperMetaModel implements Dumper{
     
     Collection<QuadMap> qms;
     if(mappingfilters!=null){
-      qms = r2rmlMapping.getQuadMaps().values().stream().filter(
+      qms = r2rmlMapping.getQuadMaps().stream().filter(
           qm-> mappingfilters.stream().anyMatch(
               filterString->qm.getTriplesMapUri().contains(filterString))
           ).collect(Collectors.toList());
     }else{
-      qms = r2rmlMapping.getQuadMaps().values();
+      qms = r2rmlMapping.getQuadMaps();
     }
     
      

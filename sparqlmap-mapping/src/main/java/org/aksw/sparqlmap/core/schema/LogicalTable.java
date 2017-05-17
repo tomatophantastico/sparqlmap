@@ -1,13 +1,11 @@
 package org.aksw.sparqlmap.core.schema;
 
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.ext.com.google.common.collect.Lists;
 
 import com.google.common.base.Charsets;
-import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 
 import lombok.Builder;
@@ -78,9 +76,10 @@ public class LogicalTable {
     public String getPath(){
       return String.format("%s/%s", schema.getPath(),getName() );
     }
-    
-    
-    
+
+
+
+
     public static class LogicalTableBuilder{
       private List<LogicalRelation> fkRelations = Lists.newArrayList();
       private List<LogicalRelation> pRelations = Lists.newArrayList();

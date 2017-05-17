@@ -22,7 +22,7 @@ public class LogicalColumn {
   private String name;
   
   
-  private Optional<String> xsdDataType; 
+  private String xsdDataType; 
   
 
   

@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.aksw.sparqlmap.core.r2rml.TermMapReferencing.JoinOn;
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
+import org.apache.jena.graph.Node_Literal;
+import org.apache.jena.graph.Node_URI;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
@@ -42,9 +45,9 @@ public class TermMapLoader {
           r2rmlmodel.listStatements(termMap, R2RML.HASCONSTANT, (RDFNode) null));
       
       
-      Optional<String> language = Optional.ofNullable(termMap.getProperty(R2RML.HASLANGUAGE)).map(Statement::getString);
+      String language = Optional.ofNullable(termMap.getProperty(R2RML.HASLANGUAGE)).map(Statement::getString).orElse(null);
       
-      Optional<String> datatype = Optional.ofNullable(termMap.getProperty(R2RML.HASDATATYPE)).map(Statement::getResource).map(Resource::getURI);
+      String datatype = Optional.ofNullable(termMap.getProperty(R2RML.HASDATATYPE)).map(stmt -> stmt.getObject().asResource().getURI() ).orElse(null);
       
       String condition_pattern = Optional.ofNullable(termMap.getProperty(SMAP.REQUIRED_PATTERN)).map(Statement::getString).orElse(null);
       
@@ -65,7 +68,7 @@ public class TermMapLoader {
       if(termType==null){
         //if used as object and has literal properties, it is a literal
         if(r2rmlmodel.contains(null, R2RML.HASOBJECTMAP, termMap)){
-          if(column.isPresent() || language.isPresent() || datatype.isPresent()){
+          if(column.isPresent() || language != null || datatype != null){
             termType = R2RML.LITERAL_STRING;
           }else{
             termType = R2RML.IRI_STRING;
@@ -89,7 +92,7 @@ public class TermMapLoader {
         String colString = column.get();
         
         result = TermMapColumn.builder()
-            .column(R2RMLHelper.unescape(colString))
+            .column(LogicalColumn.builder(ltab).name( R2RMLHelper.unescape(colString)).build())
             .termTypeIRI(termType)
             .datatypIRI(datatype)
             .lang(language)
@@ -99,7 +102,7 @@ public class TermMapLoader {
         
        
       }else if(!column.isPresent() && template!=null&&constant==null&&parentMap==null){
-        List<TermMapTemplateTuple> templateTuples =  R2RMLHelper.splitTemplate(template);
+        List<TermMapTemplateTuple> templateTuples =  R2RMLHelper.splitTemplate(template,ltab);
         // expand the template with the base prefix
         
         result = TermMapTemplate.builder()
@@ -115,18 +118,13 @@ public class TermMapLoader {
       }else if(!column.isPresent()&&template==null&&constant!=null&&parentMap==null){
         TermMapConstant tmConst = null;
         if(constant.isURIResource()){
-          tmConst = TermMapConstant.builder().termTypeIRI(R2RML.IRI_STRING).constantIRI(constant.asResource().getURI()).build();
+          tmConst = termMapFromNodeUri(constant.asResource());
         }else if(constant.isLiteral()){
           
-          language = Optional.ofNullable("".equals(constant.asLiteral().getLanguage())?null:constant.asLiteral().getLanguage());
-          datatype = Optional.ofNullable(constant.asLiteral().getDatatypeURI()).filter(dt -> !dt.equals(XSD.xstring.getURI()));
+          //set empty 
           
-          tmConst = TermMapConstant.builder()
-                .constantLiteral(constant.asLiteral().getLexicalForm())
-                .datatypIRI(datatype)
-                .lang(language)
-                .termTypeIRI(R2RML.LITERAL_STRING)
-                .build();
+          
+          tmConst = termMapFromLiteralNode(constant);
 
         }else{
           throw new R2RMLValidationException("Blank node is not valid constant value for term map");
@@ -172,6 +170,44 @@ public class TermMapLoader {
 
       
       return result;
+    }
+
+
+    public static TermMapConstant termMapFromNodeUri(String constant) {
+      return TermMapConstant.builder().termTypeIRI(R2RML.IRI_STRING).constantIRI(constant).build();
+    }
+    public static TermMapConstant termMapFromNodeUri(Resource constant) {
+      return termMapFromNodeUri(constant.getURI());
+    }
+
+
+    public static TermMapConstant termMapFromLiteralNode(RDFNode constant) {
+
+      String language = "".equals(constant.asLiteral().getLanguage())?null:constant.asLiteral().getLanguage();
+      String datatype = constant.asLiteral().getDatatypeURI().equals(XSD.xstring.getURI())? null : constant.asLiteral().getDatatypeURI();
+      
+      return TermMapConstant.builder()
+            .constantLiteral(constant.asLiteral().getLexicalForm())
+            .datatypIRI(datatype)
+            .lang(language)
+            .termTypeIRI(R2RML.LITERAL_STRING)
+            .build();
+      
+    }
+    
+    
+    public static TermMapConstant termMapFromLiteralNode(Node_Literal constant) {
+
+      String language = "".equals(constant.getLiteralLanguage())?null:constant.getLiteralLanguage();
+      String datatype = constant.getLiteralDatatypeURI().equals(XSD.xstring.getURI())? null : constant.getLiteralDatatypeURI();
+      
+      return TermMapConstant.builder()
+            .constantLiteral(constant.getLiteralLexicalForm())
+            .datatypIRI(datatype)
+            .lang(language)
+            .termTypeIRI(R2RML.LITERAL_STRING)
+            .build();
+      
     }
     
     

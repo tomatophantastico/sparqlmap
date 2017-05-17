@@ -41,7 +41,7 @@ public class SchemaTranslator {
       LogicalTable ltab = LogicalTable.builder(lschema).tablename(table.getName()).build();
       List<LogicalColumn> lcols = Arrays.stream(table.getColumns()).map(col -> {
         
-        LogicalColumn lcol = LogicalColumn.builder(ltab).xsdDataType(getDataType(col.getType()))
+        LogicalColumn lcol = LogicalColumn.builder(ltab).xsdDataType(getDataType(col.getType()).orElse(null))
           .name(col.getName())
           .build();
 

@@ -60,8 +60,11 @@ public class R2RMLModelLoader {
     //load the triples maps
     Multimap<String,QuadMap> quadmaps = QuadMapLoader.load(toLoad, baseIri);
     
-    R2RMLMapping mapping = new R2RMLMapping(quadmaps,original,desc);
-
+    
+    R2RMLMapping mapping = new R2RMLMapping();
+    mapping.addQuadMaps(quadmaps);
+    mapping.setDescription(desc);
+    mapping.setR2rmlMapping(original);
     
       
     return mapping;

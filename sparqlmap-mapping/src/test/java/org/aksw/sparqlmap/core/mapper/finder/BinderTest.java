@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.aksw.sparqlmap.core.TranslationContext;
 import org.aksw.sparqlmap.core.normalizer.QueryNormalizer;
@@ -15,6 +16,7 @@ import org.aksw.sparqlmap.core.r2rml.TermMapColumn;
 import org.aksw.sparqlmap.core.r2rml.TermMapConstant;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplate;
 import org.aksw.sparqlmap.core.r2rml.TermMapTemplateTuple;
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
 import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -38,28 +40,38 @@ public class BinderTest {
   
   private static Query querypersonName = QueryFactory.create("PREFIX : <http://example.org/> \n SELECT * {?s :name ?name} ");
   private static Query querypersonIdName = QueryFactory.create("PREFIX : <http://example.org/> \n SELECT * {?s :name ?name.?s :id ?id} ");
-
-  private static List<QuadMap> personMap;
+  private static Query getFathers =  QueryFactory.create("PREFIX : <http://example.org/> \n SELECT ?name ?fathername {?s ?p ?father. ?s :name ?name.  ?father :name ?fathername} ");
+  public static List<QuadMap> personMap;
       
   {
+    LogicalTable persontable = LogicalTable.builder().tablename("person").build();
+
     TermMap personSubject = TermMapTemplate.builder()
         .template(
-            Lists.newArrayList(TermMapTemplateTuple.builder().prefix(prefix + "person/").column("id").build()))
+            Lists.newArrayList(TermMapTemplateTuple.builder().prefix(prefix + "person/").column(LogicalColumn.builder(persontable).name("id").build()).build()))
         .termTypeIRI(R2RML.IRI_STRING) 
         .build();
     TermMap hasName = TermMapConstant.builder().constantIRI(prefix+"name").termTypeIRI(R2RML.IRI_STRING).build();
-    TermMap name = TermMapColumn.builder().column("name").termTypeIRI(R2RML.LITERAL_STRING) .build();
+    TermMap name = TermMapColumn.builder().column(LogicalColumn.builder(persontable).name("name").build()).termTypeIRI(R2RML.LITERAL_STRING) .build();
     
     TermMap hasId = TermMapConstant.builder().constantIRI(prefix + "id").termTypeIRI(R2RML.IRI_STRING).build();
-    TermMap id = TermMapColumn.builder().column("id").termTypeIRI(R2RML.LITERAL_STRING).build() ;
+    TermMap id = TermMapColumn.builder().column(LogicalColumn.builder(persontable).name("id").build()).termTypeIRI(R2RML.LITERAL_STRING).build() ;
     TermMap graph = TermMapConstant.builder().constantIRI(Quad.defaultGraphNodeGenerated.getURI()).termTypeIRI(R2RML.IRI_STRING).build();
     
-    LogicalTable persontable = LogicalTable.builder().tablename("person").build();
+    TermMap hasFather = TermMapConstant.builder().constantIRI(prefix + "hasFather").termTypeIRI(R2RML.IRI_STRING).build();
+    TermMap father = TermMapTemplate.builder()
+        .template(
+            Lists.newArrayList(TermMapTemplateTuple.builder().prefix(prefix + "person/").column(LogicalColumn.builder(persontable).name("father").build()).build()))
+        .termTypeIRI(R2RML.IRI_STRING) 
+        .build();
     
     personMap = Lists.newArrayList(
         QuadMap.builder().logicalTable(persontable).subject(personSubject).predicate(hasName).object(name).graph(graph).build(),
-        QuadMap.builder().logicalTable(persontable).subject(personSubject).predicate(hasId).object(id).graph(graph).build()
+        QuadMap.builder().logicalTable(persontable).subject(personSubject).predicate(hasId).object(id).graph(graph).build(),
+        QuadMap.builder().logicalTable(persontable).subject(personSubject).predicate(hasFather).object(father).graph(graph).build()
         );
+    
+    
     
     
   }
@@ -73,26 +85,42 @@ public class BinderTest {
   @Test
   public void test() {
     
-    R2RMLMapping r2rmapping = new R2RMLMapping(HashMultimap.create(),null,null);
+    R2RMLMapping r2rmapping = new R2RMLMapping();
     r2rmapping.addQuadMaps(personMap);
     
     
     TranslationContext tc = new TranslationContext();
     tc.setQuery(querypersonName);
+    
+
+    tc.setBeautifiedQuery(new AlgebraGenerator().compile(tc.getQuery()));
     QueryNormalizer.normalize(tc);
     
-    tc.setQueryInformation(FilterFinder.getQueryInformation(tc.getBeautifiedQuery()));
+    //tc.setQueryInformation(FilterFinder.getQueryInformation(tc.getBeautifiedQuery()));
 
     
-    Binder binder = new Binder(r2rmapping);
-    MappingBinding binding = binder.bind(tc);
+    QueryBinding qbind = StreamingBinder.bind(tc, r2rmapping);
     
-    binding.getBindingMap().forEach((quad,quadmap)->assertNotNullQuadMap(quad, quadmap));
+    
+    Assert.assertEquals(1,qbind.rows.size());
+    
   }
   @Test
   public void testJoin(){
-    Multimap<Quad,QuadMap> binding = executePersonTest(querypersonIdName);
-    binding.forEach((quad,quadmap)->assertNotNullQuadMap(quad, quadmap));
+    QueryBinding binding = executePersonTest(querypersonIdName);
+    assertEquals(2, binding.head.size());
+    assertEquals(1,binding.rows.size());
+    
+    
+  }
+  
+  
+  @Test
+  public void testSUbObjJoin(){
+    QueryBinding binding  =executePersonTest(getFathers);
+    
+    assertEquals(3, binding.head.size());
+    assertEquals(1,binding.rows.size());
     
   }
   
@@ -102,11 +130,9 @@ public class BinderTest {
   
   
   
-  
-  
-  private Multimap<Quad,QuadMap> executePersonTest(Query query){
+  private QueryBinding executePersonTest(Query query){
     
-    R2RMLMapping r2rmapping = new R2RMLMapping(HashMultimap.create(),null,null);
+    R2RMLMapping r2rmapping = new R2RMLMapping();
     r2rmapping.addQuadMaps(personMap);
     
     
@@ -114,13 +140,12 @@ public class BinderTest {
     tc.setQuery(query);
     QueryNormalizer.normalize(tc);
     
-    tc.setQueryInformation(FilterFinder.getQueryInformation(tc.getBeautifiedQuery()));
+    //tc.setQueryInformation(FilterFinder.getQueryInformation(tc.getBeautifiedQuery()));
 
     
-    Binder binder = new Binder(r2rmapping);
-    MappingBinding binding = binder.bind(tc);
+   
     
-    return  binding.getBindingMap();
+    return StreamingBinder.bind(tc, r2rmapping);
    
   }
   private void assertNotNullQuadMap(Quad quad, QuadMap quadmap){

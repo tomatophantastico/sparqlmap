@@ -5,7 +5,9 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
+import org.apache.jena.riot.RDFWriterRegistry;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +40,8 @@ public class ConfigBeanCli {
   private String dumpLocation;
   
   
-  @Parameter(names={"--format"},converter=LangConverter.class, description="When creating RDF, use this serialization")
-  private Lang format = Lang.TTL;
+  @Parameter(names={"--format"},converter=RDFFormatConverter.class, description="When creating RDF, use this serialization. Uses jena naming for RDF Formats (see RDFFormat.java)")
+  private RDFFormat format = RDFFormat.TURTLE_PRETTY;
   
 
    
@@ -69,14 +71,14 @@ public class ConfigBeanCli {
     
   }
   
-  public static class LangConverter implements IStringConverter<Lang>{
+  public static class RDFFormatConverter implements IStringConverter<RDFFormat>{
 
     @Override
-    public Lang convert(String value) {
+    public RDFFormat convert(String value) {
       
-      Lang result =  RDFLanguages.nameToLang(value);
+      RDFFormat result =  RDFWriterRegistry.getFormatForJenaWriter(value);
           if(result==null){
-            throw new ParameterException("Unknown lang: " + value);
+            throw new ParameterException("Unknown RDF Format: " + value);
           }
       return result;
     }

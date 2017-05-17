@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -51,11 +53,11 @@ public class R2RMLModelLoaderTest {
     
     R2RMLMapping mapping =  R2RMLModelLoader.loadModel(bsbm_all, r2rml, smap, "http://localhost/default/");
     
-    assertTrue( mapping.getQuadMaps().keySet().size()==13);
+    assertTrue( mapping.getQuadMaps().stream().map(QuadMap::getTriplesMapUri).distinct().count() ==13);
     
     //check some maps out
     
-    Collection<QuadMap> pt_hierarchies = mapping.getQuadMaps().get(bsbmPrefix + "ProductTypeHierarchy_ref"); 
+    Collection<QuadMap> pt_hierarchies = mapping.getQuadMaps().stream().filter(qm -> qm.getTriplesMapUri().equals(bsbmPrefix + "ProductTypeHierarchy_ref")).collect(Collectors.toList()); 
     assertNotNull(pt_hierarchies);
     assertTrue(pt_hierarchies.size()==1);
     QuadMap pt_hierarchy = pt_hierarchies.iterator().next();

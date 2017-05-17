@@ -125,58 +125,6 @@ public class FilterFinder{
 		@Override
 		public void visit(OpSlice opSlice) {
 			qi.setSlice(opSlice);
-		}
-		
-		
-		
-		
-		
-		
-
-		@Override
-		public void visit(OpQuadPattern opQuadPattern) {
-			
-			for(Quad quad: opQuadPattern.getPattern().getList()){
-				
-				Map<String,Collection<Expr>> var2expr = new HashMap<String, Collection<Expr>>();	
-				Collection<Expr> sExprs = new HashSet<Expr>();
-				Collection<Expr> pExprs = new HashSet<Expr>();
-				Collection<Expr> oExprs = new HashSet<Expr>(); 
-				Collection<Expr> gExprs = new HashSet<Expr>();
-				
-				for(Expr expr: filterStack){
-					if(expr.getVarsMentioned().contains(Var.alloc(quad.getSubject().getName()))){
-						sExprs.add(expr);
-					}
-					if(expr.getVarsMentioned().contains(Var.alloc(quad.getPredicate().getName()))){
-						pExprs.add(expr);
-					}
-					if(expr.getVarsMentioned().contains(Var.alloc(quad.getObject().getName()))){
-						oExprs.add(expr);
-					}
-					if(expr.getVarsMentioned().contains(Var.alloc(quad.getGraph().getName()))){
-						gExprs.add(expr);
-					}
-				}
-				
-				var2expr.put(quad.getSubject().getName(), sExprs);
-				var2expr.put(quad.getPredicate().getName(), pExprs);
-				var2expr.put(quad.getObject().getName(), oExprs);
-				var2expr.put(quad.getGraph().getName(), gExprs);
-				
-				qi.getFiltersforvariables().put(quad, var2expr);
-				
-				
-			}
-			
-
-		}
-		
-		
+		}		
 	}
-	
-
-	
-	
-	
 }

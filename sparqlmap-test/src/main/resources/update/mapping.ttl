@@ -1,0 +1,64 @@
+@prefix smap:  <http://aksw.org/Projects/SparqlMap/vocab#> .
+@prefix r2rml: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vocab: <http://example.org/vocab#> .
+
+<EventMapping>
+      r2rml:logicalTable
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"EVENT\"" ] ;
+      smap:predicateObjectMap
+                [ smap:objectMap
+                          [ smap:column
+                                    "\"NAME\"";
+                            r2rml:termType r2rml:Literal;
+ 
+                          ] ;
+                  smap:predicate
+                          vocab:label;
+
+                ] ;                
+        r2rml:subjectMap
+                [ r2rml:template
+                          "http://example.org/data/event/id={\"ID\"}" ;           
+                ] .
+
+<ArtistMapping>
+      r2rml:logicalTable
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"ARTIST\"" ] ;
+      smap:predicateObjectMap
+                [ smap:objectMap
+                          [ smap:template
+                                    "*{\"NAME\"}*";
+                            r2rml:termType r2rml:Literal;
+ 
+                          ] ;
+                  smap:predicate
+                          vocab:label;
+
+                ] ;                
+        r2rml:subjectMap
+                [ r2rml:template
+                          "http://example.org/data/artist/id={\"ID\"}" ;           
+                ] .
+
+<ArtistEventMapping>
+      r2rml:logicalTable
+                [ <http://www.w3.org/ns/r2rml#tableName>
+                          "\"ARTIST_EVENT\"" ] ;
+      smap:predicateObjectMap
+                [ smap:objectMap
+                          [ smap:template
+                                    "http://example.org/data/event/id={\"E_ID\"}";
+                            r2rml:termType r2rml:IRI;
+ 
+                          ] ;
+                  smap:predicate
+                          vocab:featuredIn;
+
+                ] ;                
+        r2rml:subjectMap
+                [ r2rml:template
+                          "http://example.org/data/artist/id={\"A_ID\"}" ;           
+                ] .

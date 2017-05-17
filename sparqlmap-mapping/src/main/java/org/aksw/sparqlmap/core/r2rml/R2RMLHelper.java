@@ -3,6 +3,8 @@ package org.aksw.sparqlmap.core.r2rml;
 import java.util.Arrays;
 import java.util.List;
 
+import org.aksw.sparqlmap.core.schema.LogicalColumn;
+import org.aksw.sparqlmap.core.schema.LogicalTable;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
@@ -15,7 +17,7 @@ import com.google.common.collect.Lists;
  */
 public class R2RMLHelper {
   
- public static List<TermMapTemplateTuple> splitTemplate(String template) {
+ public static List<TermMapTemplateTuple> splitTemplate(String template, LogicalTable table) {
     
     List<TermMapTemplateTuple> templateSplits = Lists.newArrayList();
     
@@ -27,7 +29,7 @@ public class R2RMLHelper {
       String value  = altSeq.get(i);
       if (i % 2 == 1) {
         String colname = unescape(value);
-        templateSplits.get(templateSplits.size()-1).setColumn(colname);
+        templateSplits.get(templateSplits.size()-1).setColumn(LogicalColumn.builder(table).name(colname).build() );
 
       } else {
         // static part, no need to change anything, just remove the

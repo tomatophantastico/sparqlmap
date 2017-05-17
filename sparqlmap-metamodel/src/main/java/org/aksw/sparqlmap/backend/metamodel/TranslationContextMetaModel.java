@@ -22,11 +22,9 @@ public class TranslationContextMetaModel {
   public TranslationContextMetaModel(TranslationContext tcontext) {
     super();
     this.tcontext = tcontext;
-    flatBindings = tcontext.getQueryBinding().asMaps();
     
   }
 
-  Set<Map<Quad,QuadMap>> flatBindings;
   
   DatasetGraph materialization;
 

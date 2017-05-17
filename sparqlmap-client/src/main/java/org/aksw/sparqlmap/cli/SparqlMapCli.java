@@ -68,14 +68,14 @@ public class SparqlMapCli implements ApplicationRunner{
     }
     switch(cliConf.getAction()){
       case DIRECTMAPPING:
-        RDFFormat dmtargetLang =  new RDFFormat(cliConf.getFormat());
+        RDFFormat dmtargetLang =  cliConf.getFormat();
         RDFDataMgr.write(
             out, 
             sm.getMapping().getR2rmlMapping(), 
             dmtargetLang.getLang());
         break;
       case DUMP:
-        Lang dtargetLang =  cliConf.getFormat();
+        RDFFormat dtargetLang =  cliConf.getFormat();
         sm.getDumpExecution().dump(out, dtargetLang);
         break;
       case QUERY:
@@ -92,12 +92,12 @@ public class SparqlMapCli implements ApplicationRunner{
           ResultSetFormatter.output(out, qexec.execSelect(), selectoutputFormat);
         } 
         if(Query.QueryTypeDescribe == queryType){
-          RDFFormat descTargetLang = new RDFFormat(cliConf.getFormat());
+          RDFFormat descTargetLang = cliConf.getFormat();
           RDFDataMgr.write(out, qexec.execDescribe(), descTargetLang);
           
         }
         if(Query.QueryTypeConstruct == queryType){
-          RDFFormat constTargetLang =  new RDFFormat(cliConf.getFormat());
+          RDFFormat constTargetLang =  cliConf.getFormat();
           RDFDataMgr.write(out, qexec.execConstruct(), constTargetLang);
         }
       }

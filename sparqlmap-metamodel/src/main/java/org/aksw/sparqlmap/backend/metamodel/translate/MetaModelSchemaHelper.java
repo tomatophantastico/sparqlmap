@@ -61,7 +61,7 @@ public class MetaModelSchemaHelper {
     if (termMap instanceof TermMapColumn) {
       TermMapColumn tmc = (TermMapColumn) termMap;
       
-      result.add(getSelectItem(alias, fi, tmc.getColumn()));
+      result.add(getSelectItem(alias, fi, tmc.getColumn().getName()));
       
       
     }else if(termMap instanceof TermMapTemplate){
@@ -69,7 +69,7 @@ public class MetaModelSchemaHelper {
       ListIterator<TermMapTemplateTuple> tmtIter = tmt.getTemplate().listIterator();
       while(tmtIter.hasNext()){
         TermMapTemplateTuple tmtsc = tmtIter.next();
-        result.add(getSelectItem(alias + "_" + tmtIter.previousIndex(), fi, tmtsc.getColumn()));
+        result.add(getSelectItem(alias + "_" + tmtIter.previousIndex(), fi, tmtsc.getColumn().getName()));
       }
       
     }
