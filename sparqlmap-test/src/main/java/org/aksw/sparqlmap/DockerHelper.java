@@ -23,7 +23,7 @@ import com.spotify.docker.client.messages.ContainerInfo;
 import com.spotify.docker.client.messages.HostConfig;
 import com.spotify.docker.client.messages.PortBinding;
 
-import jersey.repackaged.com.google.common.collect.Sets;
+import com.google.common.collect.Sets;
 
 /**
  * This class contains all methods and configuration options to start Docker containers in a static way.
