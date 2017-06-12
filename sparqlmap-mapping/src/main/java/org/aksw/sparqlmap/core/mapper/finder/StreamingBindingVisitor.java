@@ -25,8 +25,8 @@ import org.jooq.lambda.tuple.Tuple5;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
-import jersey.repackaged.com.google.common.collect.Sets;
 import lombok.Getter;
 
 public class StreamingBindingVisitor extends OpVisitorBase{
