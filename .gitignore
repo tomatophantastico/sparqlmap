@@ -15,3 +15,5 @@
 sparqlmap-gui/node_modules/.bin
 sparqlmap-gui/node_modules
 *.log
+.idea
+classes
