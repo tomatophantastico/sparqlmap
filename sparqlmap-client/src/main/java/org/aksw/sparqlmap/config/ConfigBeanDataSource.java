@@ -5,10 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import com.beust.jcommander.IStringConverter;
-import com.beust.jcommander.IValueValidator;
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
 import lombok.Data;
@@ -20,7 +17,7 @@ import lombok.Data;
 public class ConfigBeanDataSource {
   
   @NotNull
-  @Parameter(names={"-type","--ds.type"})
+  @Parameter(names={"-type","--ds.type"}, order = 2, required = true)
   private DataSourceType type;
   @NotNull
   @Parameter(names={"-url","--ds.url"},order=1,required=true,description="The location of the data source")
@@ -51,28 +48,5 @@ public class ConfigBeanDataSource {
   private Boolean skipEmptyLines = true;
   @Parameter(names={"--ds.skipEmptyColumns"}, description="CSV specific")
   private Boolean skipEmptyColumns = true;
-  
-  
-  public static class StringDatasoureTypeEnumConv implements IStringConverter<DataSourceType>{
-    @Override
-    public DataSourceType convert(String value) {
-      return DataSourceType.valueOf(value.toUpperCase());
-    }
-  }
-
-  
-  public static class CharVal implements IValueValidator<String>{
-
-    @Override
-    public void validate(String name, String value) throws ParameterException {
-      if(value == null || value.length()!=1){
-        throw new ParameterException("Character required, length of value is != 1");
-      }
-    }
-
-  
-  }
-  
-  
 
 }

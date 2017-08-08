@@ -1,0 +1,20 @@
+@prefix smap: <http://aksw.org/Projects/SparqlMap/vocab#> .
+@prefix r2rml: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix hp: <http://purl.org/voc/hp/> .
+
+<#TableView> r2rml:tableName "\"Tabelle1\"" .
+
+###########################
+# Stallen Mapping
+###########################
+
+<#VaterTriplesMap>
+	r2rml:logicalTable <#TableView>;
+	r2rml:subjectMap [
+		r2rml:template "http://pfarrerbuch.aksw.org/kps/stellen/{\"Ort\"}" ;
+		r2rml:class hp:Position 
+	];
+.

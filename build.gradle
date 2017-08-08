@@ -159,7 +159,10 @@ project(':sparqlmap-test'){
         compile ('junit:junit:4.11')
         compile ("com.spotify:docker-client:7.0.2")
         compile ('org.eobjects.metamodel-extras:MetaModel-extras:4.4.0') 
-        compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0') 
+        compile ('org.eobjects.metamodel-extras:MetaModel-extras-access:4.4.0')
+        compile ("com.aol.simplereact:cyclops-react:1.0.5") {
+            exclude module:  "slf4j-simple"
+        }
         compile ("org.apache.metamodel:MetaModel-full") {
             changing=true
         }

@@ -36,7 +36,7 @@ import org.springframework.validation.Validator;
 import com.google.common.collect.Lists;
 
 @Configuration
-@ComponentScan(basePackages={"org.aksw.sparqlmap.cli", " org.aksw.sparqlmap.common"})
+@ComponentScan(basePackages={"org.aksw.sparqlmap.cli", "org.aksw.sparqlmap.common"})
 @EnableAutoConfiguration(exclude={CassandraAutoConfiguration.class, DataSourceAutoConfiguration.class})
 public class SparqlMapCli implements ApplicationRunner{
   

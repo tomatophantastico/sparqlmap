@@ -1,0 +1,4 @@
+<http://pfarrerbuch.aksw.org/kps/stellen/Abbendorf>
+        a       <http://purl.org/voc/hp/Position> .
+<http://pfarrerbuch.aksw.org/kps/stellen/Abbenrode>
+        a       <http://purl.org/voc/hp/Position> .

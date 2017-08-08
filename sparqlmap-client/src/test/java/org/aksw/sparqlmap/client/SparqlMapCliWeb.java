@@ -1,17 +1,18 @@
 package org.aksw.sparqlmap.client;
 
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
+import com.aol.cyclops.data.MutableInt;
+import com.google.common.collect.Lists;
 import org.aksw.sparqlmap.cli.SparqlMapStarter;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.aol.cyclops.data.MutableInt;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Same as in SparqlMapCliTest but setting and unsetting of System.out seems to be a bit problematic
@@ -29,8 +30,10 @@ public class SparqlMapCliWeb {
     exec.execute(new Runnable() {
       @Override
       public void run() {
-        String[] params = SparqlMapCliTest.params("--action=web", "-f=" + SparqlMapCliTest.TEST_LOCATION + "mapping.ttl");
-        SparqlMapStarter.main(params);      
+        List<String> params = Lists.newArrayList(SparqlMapCliTest.PARAMS);
+        params.add("--action=web");
+        params.add("-f=" + SparqlMapCliTest.TEST_LOCATION + "mapping.ttl");
+        SparqlMapStarter.main(params.toArray(new String[0]));
       }
     });
     try {

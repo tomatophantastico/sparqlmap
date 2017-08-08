@@ -17,3 +17,4 @@ sparqlmap-gui/node_modules
 *.log
 .idea
 classes
+sparqlmap-test/out

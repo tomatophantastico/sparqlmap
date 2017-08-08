@@ -1,0 +1,2 @@
+SELECT ?p ?o
+WHERE { <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite1/Review1623> ?p ?o }

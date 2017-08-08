@@ -1,0 +1,4 @@
+SELECT ?hasValue
+WHERE
+  { <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor3/Offer5096> <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/product> ?hasValue }
+  
