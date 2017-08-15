@@ -1,14 +1,11 @@
 package org.aksw.sparqlmap.config;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
 import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
-import org.apache.jena.riot.RDFWriterRegistry;
-import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,15 +30,15 @@ public class ConfigBeanCli {
   private String query;
   
 
-  @Parameter(names={"--queryformat"}, converter=ResultFormatConverter.class,description="Select queries will return this format, for example: csv, xml, json, tsv")
-  private ResultsFormat queryFormat = ResultsFormat.FMT_RS_JSON;
+  @Parameter(names={"--queryformat"},description="Select queries will return this format")
+  private ResultSetSerialization queryFormat = ResultSetSerialization.JSON;
   
   @Parameter(names={"-o", "--out"}, description="The location of the dump result file.")
   private String dumpLocation;
   
   
-  @Parameter(names={"--format"},converter=RDFFormatConverter.class, description="When creating RDF, use this serialization. Uses jena naming for RDF Formats (see RDFFormat.java)")
-  private RDFFormat format = RDFFormat.TURTLE_PRETTY;
+  @Parameter(names={"--format"},converter=LangConverter.class, description="When creating RDF, use this serialization. Uses jena naming for RDF Formats (see RDFFormat.java)")
+  private Lang format = RDFLanguages.TURTLE;
   
 
    
@@ -56,29 +53,24 @@ public class ConfigBeanCli {
     }
     
   }
-  
-  public static class ResultFormatConverter implements IStringConverter<ResultsFormat>{
 
-    @Override
-    public ResultsFormat convert(String value) {
-      ResultsFormat result =  ResultsFormat.lookup(value);
-      if(result==null){
-        throw new ParameterException("Unknown resultsformat: "+ value);
-      }
-      
-      return result;
-    }
-    
+  public enum ResultSetSerialization{
+      JSON,XML,CSV
+
   }
   
-  public static class RDFFormatConverter implements IStringConverter<RDFFormat>{
+  public static class LangConverter implements IStringConverter<Lang>{
 
     @Override
-    public RDFFormat convert(String value) {
-      
-      RDFFormat result =  RDFWriterRegistry.getFormatForJenaWriter(value);
+    public Lang convert(String value) {
+
+      Lang result = RDFLanguages.nameToLang(value);
+
           if(result==null){
-            throw new ParameterException("Unknown RDF Format: " + value);
+
+            String options = RDFLanguages.getRegisteredLanguages().stream().map(lang -> lang.getName()).collect(Collectors.joining(", "));
+
+            throw new ParameterException("Unknown RDF Format: " + value + ", possible values ares:" + options);
           }
       return result;
     }

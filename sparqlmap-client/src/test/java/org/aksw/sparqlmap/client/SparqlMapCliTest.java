@@ -1,13 +1,13 @@
 package org.aksw.sparqlmap.client;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.aksw.sparqlmap.ResultHelper;
 import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.List;
 /**
  * This test checks if the parameters are processed correctly and the output is as expected.
  * Not so much about correctness, but more about usage
@@ -42,6 +42,7 @@ public class SparqlMapCliTest {
 
 
     ResultHelper.assertModelAreEqual(wrapper.outputAsModel(Lang.TTL), RDFDataMgr.loadModel(TEST_LOCATION + "dm.ttl"));
+
   }
   
  

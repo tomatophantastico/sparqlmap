@@ -1,14 +1,7 @@
 package org.aksw.sparqlmap.backend.metamodel;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.common.collect.Multimap;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
 import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelQueryDump;
 import org.aksw.sparqlmap.backend.metamodel.translate.TripleStreamUtils;
@@ -20,23 +13,20 @@ import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.graph.impl.CollectionGraph;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
-import org.apache.jena.riot.RDFWriterRegistry;
-import org.apache.jena.riot.WriterDatasetRIOT;
-import org.apache.jena.riot.WriterGraphRIOT;
+import org.apache.jena.riot.*;
 import org.apache.jena.riot.writer.NQuadsWriter;
-import org.apache.jena.riot.writer.NTriplesWriter;
-import org.apache.jena.riot.writer.TriGWriter;
-import org.apache.jena.riot.writer.TriGWriterBlocks;
-import org.apache.jena.riot.writer.TurtleWriter;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.util.Context;
 
-import com.google.common.collect.Multimap;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DumperMetaModel implements Dumper{
 
@@ -111,13 +101,13 @@ public class DumperMetaModel implements Dumper{
   
   /**
    * @param out
-   * @param format
+   * @param lang
    */
   public void dump(OutputStream out, RDFFormat lang){
     
     // either 
-    WriterDatasetRIOT dsWriter = RDFWriterRegistry.getWriterDatasetFactory(lang).create(lang);
-    WriterGraphRIOT grWriter = RDFWriterRegistry.getWriterGraphFactory(lang).create(lang);
+    WriterDatasetRIOT dsWriter = Optional.ofNullable(RDFWriterRegistry.getWriterDatasetFactory(lang)).map(fac -> fac.create(lang)).orElse(null);
+    WriterGraphRIOT grWriter = Optional.ofNullable(RDFWriterRegistry.getWriterGraphFactory(lang)).map(fac -> fac.create(lang)).orElse(null);
     
     if(grWriter!=null){
       dump(null, true).map(quads ->  new CollectionGraph(quads.values()) ).forEach(graph -> {
@@ -129,7 +119,7 @@ public class DumperMetaModel implements Dumper{
 
       });
     }else{
-      throw new SystemInitializationError(String.format("Unupported output format, currently supported is: NTRIPELS,NQUADS, TURTLE, TRIG", lang));
+      throw new SystemInitializationError(String.format("Unsupported output format, currently supported is: NTRIPELS,NQUADS, TURTLE, TRIG", lang));
     }
     
 

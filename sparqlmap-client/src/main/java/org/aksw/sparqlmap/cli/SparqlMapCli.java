@@ -68,14 +68,14 @@ public class SparqlMapCli implements ApplicationRunner{
     }
     switch(cliConf.getAction()){
       case DIRECTMAPPING:
-        RDFFormat dmtargetLang =  cliConf.getFormat();
+        Lang dmtargetLang =  cliConf.getFormat();
         RDFDataMgr.write(
             out, 
             sm.getMapping().getR2rmlMapping(), 
-            dmtargetLang.getLang());
+            dmtargetLang);
         break;
       case DUMP:
-        RDFFormat dtargetLang =  cliConf.getFormat();
+        Lang dtargetLang =  cliConf.getFormat();
         sm.getDumpExecution().dump(out, dtargetLang);
         break;
       case QUERY:
@@ -88,16 +88,28 @@ public class SparqlMapCli implements ApplicationRunner{
           ResultSetFormatter.out(out, qexec.execAsk());
         }
         if(Query.QueryTypeSelect == queryType){
-          ResultsFormat selectoutputFormat =  cliConf.getQueryFormat();
-          ResultSetFormatter.output(out, qexec.execSelect(), selectoutputFormat);
+
+          ConfigBeanCli.ResultSetSerialization ser = cliConf.getQueryFormat();
+          switch(ser){
+            case JSON:
+              ResultSetFormatter.outputAsXML(out,qexec.execSelect());
+              break;
+            case XML:
+              ResultSetFormatter.outputAsXML(out,qexec.execSelect());
+              break;
+            case CSV:
+              ResultSetFormatter.outputAsCSV(out,qexec.execSelect());
+
+          }
+
         } 
         if(Query.QueryTypeDescribe == queryType){
-          RDFFormat descTargetLang = cliConf.getFormat();
+          Lang descTargetLang = cliConf.getFormat();
           RDFDataMgr.write(out, qexec.execDescribe(), descTargetLang);
           
         }
         if(Query.QueryTypeConstruct == queryType){
-          RDFFormat constTargetLang =  cliConf.getFormat();
+          Lang constTargetLang =  cliConf.getFormat();
           RDFDataMgr.write(out, qexec.execConstruct(), constTargetLang);
         }
       }

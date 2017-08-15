@@ -1,6 +1,11 @@
 package org.aksw.sparqlmap.client;
 
-import com.google.common.base.Splitter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.aksw.sparqlmap.cli.SparqlMapStarter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -8,11 +13,7 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.jooq.lambda.Seq;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.google.common.base.Splitter;
 
 /**
  * Created by joerg on 01.08.17.
@@ -54,7 +55,11 @@ public class  CliTestWrapper {
 
     }
 
-    public List<String> errAsString(){
+    public  String errAsString(){
+        return boaerr.toString();
+    }
+
+    public List<String> errAsList(){
         return Seq.seq(Splitter.on(System.lineSeparator()).trimResults().omitEmptyStrings().split(boaerr.toString())).collect(Collectors.toList());
 
     }

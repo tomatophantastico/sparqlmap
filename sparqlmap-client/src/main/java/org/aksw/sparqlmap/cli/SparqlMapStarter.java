@@ -53,8 +53,7 @@ public class SparqlMapStarter {
                Throwable root = Throwables.getRootCause(e);
                if(root instanceof FileNotFoundException){
                    print("File not found: " + root.getMessage());
-               }else{
-
+               }  else{
                    //other type of exception, we go full stacktrace
                    print(e.getMessage());
 

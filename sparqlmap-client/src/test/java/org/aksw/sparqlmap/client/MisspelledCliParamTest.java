@@ -1,7 +1,5 @@
 package org.aksw.sparqlmap.client;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,11 +13,9 @@ public class MisspelledCliParamTest {
 
         wrap.test(Lists.newArrayList("--action=dump","--ds.url=../../notThere.csv","--ds.type=CSV", "--dm.vocoburiprefix=http://example.com/vocabPrefix"));
 
-        List<String> errors = wrap.errAsString();
+        String errors = wrap.errAsString();
 
-
-        Assert.assertFalse(errors.stream().anyMatch(errLine -> errLine.contains("Exception")));
-
-
+        Assert.assertFalse(errors, errors.contains("Exception"));
+        Assert.assertFalse(errors, errors.contains("null"));
     }
 }

@@ -17,10 +17,10 @@ import lombok.Data;
 public class ConfigBeanDataSource {
   
   @NotNull
-  @Parameter(names={"-type","--ds.type"}, order = 2, required = true)
+  @Parameter(names={"-type","--ds.type"}, order = 1, required = true)
   private DataSourceType type;
   @NotNull
-  @Parameter(names={"-url","--ds.url"},order=1,required=true,description="The location of the data source")
+  @Parameter(names={"-url","--ds.url"},order=2,required=true,description="The location of the data source")
   private String url;
   @Parameter(names={"-dbname","--ds.dbName"},description="Additional resources for connecting to a database, that cannot be encoded in the url. Highly endpoint sepcific")
   private String dbName;

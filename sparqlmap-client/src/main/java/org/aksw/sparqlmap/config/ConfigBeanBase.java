@@ -4,12 +4,9 @@ package org.aksw.sparqlmap.config;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFLanguages;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
@@ -42,7 +39,7 @@ public class ConfigBeanBase {
   @Parameter(names={"--baseiri","--baseuri","-bi"}, description="The uri prefix used, when incomplete iris are encountered during generation.")
   private String baseiri;
   
-  @Parameter(names={"--r2rmlfile","-f"}, description="Path to the R2RML mapping file. The suffix MUST match its RDF serialization (.ttl for TURTLE serializations)", order=2)
+  @Parameter(names={"--r2rmlfile","-f"}, description="Path to the R2RML mapping file. The suffix MUST match its RDF serialization (.ttl for TURTLE serializations)", order=3)
   private String r2rmlFile;
   
   @Parameter(names={"--dmBaseUriPrefix"}, description="The base iri (the prefix) used in the direct mapping (actually a R2RML representation of Direct Mapping instructions for a dataset)")

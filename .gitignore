@@ -18,3 +18,4 @@ sparqlmap-gui/node_modules
 .idea
 classes
 sparqlmap-test/out
+sparqlmap-client/out
