@@ -27,90 +27,48 @@ import lombok.Setter;
  * 
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TranslationContext {
-	
-	private String queryString;
-	
-	private String queryName;
-	
-	private QueryBinding queryBinding;
+  
+  private String queryString;
 
-	private Query query;
-	
-	private Op beautifiedQuery;
-	
-	private QueryInformation queryInformation;
-	 /*
+  private String queryName;
+
+  private QueryBinding queryBinding;
+
+  private Query query;
+
+  private Op beautifiedQuery;
+
+  private QueryInformation queryInformation;
+  /*
    * define if the result should be json/rdf, RDF/XML, turtle or else
    */
-  private Object target = null;
-  
+  private Object target;
+
   private Throwable problem;
-  
-  
-	
-	
-	@Setter(AccessLevel.NONE)
-	@Getter(AccessLevel.NONE)
+
+
+
+  @Setter(AccessLevel.NONE)
+  @Getter(AccessLevel.NONE)
   public int duplicatecounter = 0;
 
-  
+
   public int getAndIncrementDuplicateCounter() {
     return this.duplicatecounter++;
   }
-	
-  /*
-   * Simple profiler starts below
-   * 
-   * 
-   */
-  
-  public Map<String, Long> phaseDurations = new LinkedHashMap<String, Long>();
 
-	private Stopwatch sw;
-	private String currentPhase;
 
   private int propertypathsuffix = 0;
 
-  
-  
-	public void profileStartPhase(String phase) {
-		if(sw == null){
-			currentPhase = phase;
-			sw = Stopwatch.createStarted();
-			
-		}else{
-			sw.stop();
-			phaseDurations.put(currentPhase, sw.elapsed(TimeUnit.MICROSECONDS));
-			currentPhase = phase;
-			sw.reset();
-			sw.start();
-		}
-		
-	}
-	
-	public void profileStop(){
-//		if(sw==null){
-//			throw new UnsupportedOperationException("Has first to be started");
-//		}
-//		sw.stop();
-//		phaseDurations.put(currentPhase, sw.elapsed(TimeUnit.MICROSECONDS));
 
-	}
-	
-	
-	
 
- 
   public String getPropertyPathPrefix() {
-    return "sm_pp_" +  this.propertypathsuffix ++;
-   }
-	
-	
-	
-	
+    return "sm_pp_" + this.propertypathsuffix++;
+  }
+
+
 
 }

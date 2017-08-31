@@ -3,9 +3,11 @@ package org.aksw.sparqlmap.core;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Optional;
 
-import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
-import org.aksw.sparqlmap.core.automapper.MappingGenerator;
+import org.aksw.sparqlmap.backend.metamodel.MetaModelBackend;
+import org.aksw.sparqlmap.core.automapper.MappingPrefixes;
+import org.aksw.sparqlmap.core.errors.ImplementationException;
 import org.aksw.sparqlmap.core.errors.SystemInitializationError;
 import org.aksw.sparqlmap.core.r2rml.R2RMLMapping;
 import org.aksw.sparqlmap.core.r2rml.R2RMLModelLoader;
@@ -18,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
 /**
  * Create SparqlMap contexts with this Factory!
@@ -57,53 +60,52 @@ public class SparqlMapBuilder {
   }
   
 
-  public SparqlMapMappingBuilder connectTo(DataContext dcon){
-    sparqlMap.setDataContext(dcon);
+  public SparqlMapMappingBuilder connectTo(List<SparqlMapBackend> backends){
+    sparqlMap.setBackends(backends);
+    
+    return new SparqlMapMappingBuilder();
+    
+  }
+  public SparqlMapMappingBuilder connectTo(SparqlMapBackend backend){
+    sparqlMap.setBackends(Lists.newArrayList(backend));
     
     return new SparqlMapMappingBuilder();
     
   }
   
-  
+  public SparqlMapMappingBuilder connectTo(DataContext dcon) {
+    sparqlMap.setBackends(Lists.newArrayList(new MetaModelBackend(dcon)));
+    return new SparqlMapMappingBuilder();
+
+  }
+
  
-  
-  
 
   
   public class SparqlMapMappingBuilder{
-    
 
-    
     public SparqlMapMappingBuilder mappedByDefaultMapping(){
       
-      return mappedByDefaultMapping(baseIri);
+      return mappedByDefaultMapping(new MappingPrefixes(baseIri));
       
     }
    
     
-    public SparqlMapMappingBuilder mappedByDefaultMapping(String prefix){
-      MappingGenerator gen = new MappingGenerator(prefix);
+    public SparqlMapMappingBuilder mappedByDefaultMapping(MappingPrefixes prefixes){
+
+      Optional<SparqlMapBackend> mappingBackend =  sparqlMap.getBackends().stream().filter(backend -> backend.generateSchemaEnabled()).findFirst();
+      if(mappingBackend.isPresent()){
+        Model mapping = mappingBackend.get().generateDirectMapping(prefixes);
+        sparqlMap.setMapping(loadMapping(mapping));
+      }else{
+        throw new ImplementationException("No mapping generating backend present");
+      }
       
-      
-      Model mapping = gen.generateMapping( SchemaTranslator.translate(sparqlMap.getDataContext().getDefaultSchema()));
-      sparqlMap.setMapping(loadMapping(mapping));
+
 
       return this;
     }
-    
-    public SparqlMapMappingBuilder mappedByDefaultMapping(String prefix, String mappingPrefix,
-      String instancePrefix, String vocabularyPrefix, String primaryKeySeparator){
-    
-      MappingGenerator gen = new MappingGenerator(prefix,mappingPrefix,instancePrefix,vocabularyPrefix,primaryKeySeparator);
-      Model mapping = gen.generateMapping(SchemaTranslator.translate(sparqlMap.getDataContext().getDefaultSchema()));
 
-      sparqlMap.setMapping(loadMapping(mapping));
-      return this;
-    }
-    
-    
-    
-    
     
     
     public SparqlMapMappingBuilder mappedBy(String location){
@@ -130,11 +132,7 @@ public class SparqlMapBuilder {
         throw new SystemInitializationError("No mapping loaded");
       }
       
-    
-      if(sparqlMap.getContextConf()==null){
-        sparqlMap.setContextConf(new ContextConfiguration());
-      }
-      
+
       
       List<String> warnings = sparqlMap.validateMapping();
       
@@ -144,10 +142,7 @@ public class SparqlMapBuilder {
       
       return sparqlMap;
     }
-    
-    
-    
-    
+
     
     private R2RMLMapping loadMapping(Model model){
       Model r2rmlspec = ModelFactory.createDefaultModel();
@@ -155,19 +150,11 @@ public class SparqlMapBuilder {
 
       FileManager.get().readModel(r2rmlspec, "vocabularies/r2rml.ttl");
       FileManager.get().readModel(r2rmlspec, "vocabularies/smap.ttl");
-
       
       R2RMLMapping r2rmlMappig =  R2RMLModelLoader.loadModel(model, r2rmlspec, smapspec, baseIri);
       
       return r2rmlMappig;
-      
-      
     }
-   
-    
   }
-  
-  
-  
 
 }

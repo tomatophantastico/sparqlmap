@@ -2,6 +2,7 @@ package org.aksw.sparqlmap.core;
 
 import java.io.File;
 
+import org.aksw.sparqlmap.backend.metamodel.MetaModelBackend;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.csv.CsvDataContext;
@@ -13,7 +14,8 @@ public class BVLTest {
   @Test
   public void testDirectMapping(){
     DataContext dc = new CsvDataContext(new File("./src/test/resources/bvl/le-online-extracted-places.csv"));
-    SparqlMap sm = SparqlMapBuilder.newSparqlMap("http://example.org/test/").connectTo(dc).mappedByDefaultMapping().create();
+    MetaModelBackend mmBackend = new MetaModelBackend(dc);
+    SparqlMap sm = SparqlMapBuilder.newSparqlMap("http://example.org/test/").connectTo(mmBackend).mappedByDefaultMapping().create();
     
     DatasetGraph dsg =  sm.getDumpExecution().dumpDatasetGraph();
     

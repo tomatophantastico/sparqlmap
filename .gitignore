@@ -19,3 +19,5 @@ sparqlmap-gui/node_modules
 classes
 sparqlmap-test/out
 sparqlmap-client/out
+sparqlmap-core/out
+sparqlmap-mapping/out

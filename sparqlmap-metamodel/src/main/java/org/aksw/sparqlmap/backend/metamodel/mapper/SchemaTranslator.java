@@ -21,7 +21,7 @@ import org.apache.metamodel.schema.Schema;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public class SchemaTranslator {
+public abstract class SchemaTranslator {
   
   /*
   private static Set<ColumnType> intTypes = Sets.newHashSet(ColumnType.BIGINT,ColumnType.INTEGER,ColumnType.TINYINT);

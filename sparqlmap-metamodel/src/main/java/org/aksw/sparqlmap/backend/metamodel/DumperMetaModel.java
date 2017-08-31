@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 public class DumperMetaModel implements Dumper{
 
 
-  private R2RMLMapping r2rmlMapping;
+  private Collection<QuadMap> r2rmlMapping;
   
   private MetaModelContext mcontext;
  
@@ -40,7 +40,7 @@ public class DumperMetaModel implements Dumper{
   
   
   
-  public DumperMetaModel(MetaModelContext mcontext, R2RMLMapping r2rmlMapping) {
+  public DumperMetaModel(MetaModelContext mcontext, Collection<QuadMap> r2rmlMapping) {
     super();
     
     
@@ -51,7 +51,7 @@ public class DumperMetaModel implements Dumper{
 
 
   public DatasetGraph dumpDatasetGraph(){
-    DatasetGraph dsg = MetaModelQueryDump.assembleDs(r2rmlMapping.getQuadMaps(), mcontext.getDataContext());
+    DatasetGraph dsg = MetaModelQueryDump.assembleDs(r2rmlMapping, mcontext.getDataContext());
     return dsg;
     
   }
@@ -133,7 +133,6 @@ public class DumperMetaModel implements Dumper{
    */
   public Stream<Multimap<Node, Triple>> dump(Collection<String> mappingfilters, boolean fast){
     
-    this.r2rmlMapping.getQuadMaps();
     ExecutorService execService = null;
     if(fast){
       execService = Executors.newFixedThreadPool(
@@ -145,12 +144,12 @@ public class DumperMetaModel implements Dumper{
     
     Collection<QuadMap> qms;
     if(mappingfilters!=null){
-      qms = r2rmlMapping.getQuadMaps().stream().filter(
+      qms = r2rmlMapping.stream().filter(
           qm-> mappingfilters.stream().anyMatch(
               filterString->qm.getTriplesMapUri().contains(filterString))
           ).collect(Collectors.toList());
     }else{
-      qms = r2rmlMapping.getQuadMaps();
+      qms = r2rmlMapping;
     }
     
      

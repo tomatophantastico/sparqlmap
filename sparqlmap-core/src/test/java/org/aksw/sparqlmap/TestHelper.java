@@ -6,11 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.aksw.sparqlmap.core.SparqlMap;
-import org.apache.jena.datatypes.BaseDatatype;
-import org.apache.jena.datatypes.xsd.impl.XSDDouble;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -20,7 +17,6 @@ import org.apache.jena.query.ResultSetFactory;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFVisitor;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.impl.StatementImpl;
@@ -37,7 +33,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 
 public class TestHelper {
   
@@ -50,7 +45,10 @@ public class TestHelper {
   public void executeAndCompareConstruct(SparqlMap sm, String sparqlConstruct, String resultmodelLocation) throws SQLException{
     Model expectedResult = ModelFactory.createDefaultModel();
     expectedResult.read(resultmodelLocation);
-    Model result = sm.executeConstruct(sparqlConstruct);
+
+
+
+    Model result = sm.execute(sparqlConstruct).execConstruct();
     
     assertModelAreEqual(result, expectedResult);
   }
@@ -191,14 +189,14 @@ public class TestHelper {
       
       if(query.isSelectType()){
         ResultSet expected = QueryExecutionFactory.create(query,refDs).execSelect();
-        ResultSet acutal  = sm.executeSelect(sparql);
+        ResultSet acutal  = sm.execute(sparql).execSelect();
         
         assertResultSetsAreEqual(acutal, expected);
         
         
       }else if(query.isAskType()){
         boolean expected = QueryExecutionFactory.create(query,refDs).execAsk();
-        boolean actual = sm.executeAsk(sparql);
+        boolean actual = sm.execute(sparql).execAsk();
         
         Assert.assertTrue(actual == expected);
         
@@ -206,13 +204,13 @@ public class TestHelper {
       }else if (query.isConstructType()){
         //construct query
         assertModelAreEqual(
-            sm.executeConstruct(sparql), 
+            sm.execute(sparql).execConstruct(),
             QueryExecutionFactory.create(query,refDs).execConstruct());
         
       }else {
         //must be describe
         assertModelAreEqual(
-            sm.executeDescribe(sparql), 
+            sm.execute(sparql).execDescribe(),
             QueryExecutionFactory.create(query,refDs).execDescribe());
         
       }

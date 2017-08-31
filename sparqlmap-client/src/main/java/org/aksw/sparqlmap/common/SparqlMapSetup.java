@@ -4,6 +4,7 @@ import org.aksw.sparqlmap.config.ConfigBeanBase;
 import org.aksw.sparqlmap.config.ConfigBeanDataSource;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
+import org.aksw.sparqlmap.core.automapper.MappingPrefixes;
 import org.apache.metamodel.DataContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,12 +33,12 @@ public class SparqlMapSetup {
     
     if(conf.getR2rmlFile()==null){
       //use direct mapping
-      smb.mappedByDefaultMapping(
-          conf.getDmBaseUriPrefix(), 
+      smb.mappedByDefaultMapping(new MappingPrefixes(
           conf.getDmMappingUriPrefix(), 
           conf.getDmInstanceUriPrefix(), 
           conf.getDmVocabUriPrefix(), 
-          conf.getDmSeparatorChar());
+          conf.getDmSeparatorChar(),
+          null));
     }else{
       smb.mappedBy(conf.getR2rmlFile());
     }

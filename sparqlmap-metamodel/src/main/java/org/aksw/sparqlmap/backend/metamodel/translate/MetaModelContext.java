@@ -1,6 +1,5 @@
 package org.aksw.sparqlmap.backend.metamodel.translate;
 
-import org.aksw.sparqlmap.core.ContextConfiguration;
 import org.apache.metamodel.DataContext;
 
 import lombok.Data;
@@ -16,25 +15,17 @@ public class MetaModelContext {
   
   private DataContext dataContext;
   
-  private ContextConfiguration conConf;
-  
+
   private boolean rowwiseBlanks = true;
   
   
   private MetaModelSchemaHelper schemaHelper;
 
-  public MetaModelContext(DataContext dataContext, ContextConfiguration conConf) {
+  public MetaModelContext(DataContext dataContext) {
     super();
     this.dataContext = dataContext;
-    this.conConf = conConf;
     schemaHelper = new MetaModelSchemaHelper(dataContext);
   }
 
-  
-  
-  
-  
-  
-  
 
 }

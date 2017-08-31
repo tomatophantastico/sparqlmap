@@ -136,23 +136,23 @@ public class SparqlMapWebController {
                resp.setContentType(ctString);
                ResultSetFormatter.outputAsXML(out, answer);
                sent = true;
-             }else if(ResultsFormat.FMT_RS_JSON.equals(ctString)){
+             }else if(ResultsFormat.FMT_RS_JSON.getSymbol().equals(ctString)){
                resp.setContentType(ctString);
                ResultSetFormatter.outputAsJSON(out, answer);
                sent = true;
-             }else if(ResultsFormat.FMT_TEXT.equals(ctString)){
+             }else if(ResultsFormat.FMT_TEXT.getSymbol().equals(ctString)){
                resp.setContentType(ctString);
                ResultSetFormatter.out(out, answer);
                sent = true;
-             } else if(ResultsFormat.FMT_RS_CSV.equals(ctString)){
+             } else if(ResultsFormat.FMT_RS_CSV.getSymbol().equals(ctString)){
                resp.setContentType(ctString);
                ResultSetFormatter.outputAsCSV(out, answer);
                sent = true;
-             }else if(ResultsFormat.FMT_RS_TSV.equals(ctString)){
+             }else if(ResultsFormat.FMT_RS_TSV.getSymbol().equals(ctString)){
                resp.setContentType(ctString);
                ResultSetFormatter.outputAsTSV(out, answer);
                sent = true;
-             }else if(ResultsFormat.FMT_RS_SSE.equals(ctString)){
+             }else if(ResultsFormat.FMT_RS_SSE.getSymbol().equals(ctString)){
                resp.setContentType(ctString);
                ResultSetFormatter.outputAsSSE(out,answer);
                sent = true;
@@ -219,8 +219,7 @@ public class SparqlMapWebController {
   @GetMapping("/context/{context}/relation")
   public @ResponseBody LogicalSchema getContextLogicalTables(@PathVariable String context){
     
-    LogicalSchema schema  = SchemaTranslator.translate( smManager.getSparqlMap(context).getDataContext().getDefaultSchema());
-    return schema;
+   return  smManager.getSparqlMap(context).getDefaultSchema();
   }
 	
 	
@@ -230,41 +229,5 @@ public class SparqlMapWebController {
 		return "NTRIPLES";
 	}
 	
-	
 
-
-	 /* 
-  @RequestMapping("/error")
-  public  Map<String, Object> error(HttpServletRequest req) {
-    Map<String, Object> body = getErrorAttributes(req,getTraceParameter(req));
-    String trace = (String) body.get("trace");
-    if(trace != null){
-      String[] lines = trace.split("\n\t");
-      body.put("trace", lines);
-    }
-    return body;
-  }
-  
-  
-  private boolean getTraceParameter(HttpServletRequest request) {
-    String parameter = request.getParameter("trace");
-    if (parameter == null) {
-        return false;
-    }
-    return !"false".equals(parameter.toLowerCase());
-  }
-  
-  @Autowired
-  private ErrorAttributes errorAttributes;
-
-  private Map<String, Object> getErrorAttributes(HttpServletRequest aRequest, boolean includeStackTrace) {
-    RequestAttributes requestAttributes = new ServletRequestAttributes(aRequest);
-    return errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
-  }
-  @Override
-  public String getErrorPath() {
-    return "/api/error";
-  }
-	
-*/
 }

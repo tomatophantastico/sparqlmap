@@ -99,7 +99,8 @@ public class BinderTest {
     //tc.setQueryInformation(FilterFinder.getQueryInformation(tc.getBeautifiedQuery()));
 
     
-    QueryBinding qbind = StreamingBinder.bind(tc, r2rmapping);
+    
+    QueryBinding qbind = new StreamingBinder(r2rmapping).bind(tc);
     
     
     Assert.assertEquals(1,qbind.rows.size());
@@ -145,12 +146,9 @@ public class BinderTest {
     
    
     
-    return StreamingBinder.bind(tc, r2rmapping);
+    return new StreamingBinder(r2rmapping).bind(tc);
    
   }
-  private void assertNotNullQuadMap(Quad quad, QuadMap quadmap){
-    Assert.assertTrue(String.format("Triple: %s bound to null",quad),!quadmap.equals(QuadMap.NULLQUADMAP));
-  }
-  
 
+ 
 }

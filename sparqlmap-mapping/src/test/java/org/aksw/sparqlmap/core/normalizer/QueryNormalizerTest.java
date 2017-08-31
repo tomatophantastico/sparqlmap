@@ -46,7 +46,8 @@ public class QueryNormalizerTest {
   private void eval(int count, String query){
     AlgebraGenerator gen = new AlgebraGenerator();
     
-    TranslationContext qc = TranslationContext.builder().query(QueryFactory.create(query)).build();
+    TranslationContext qc = new TranslationContext();
+    qc.setQuery(QueryFactory.create(query));
     
     QueryNormalizer.normalize(qc);
     

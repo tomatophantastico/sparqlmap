@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.aksw.sparqlmap.TestHelper;
+import org.aksw.sparqlmap.backend.metamodel.MetaModelBackend;
+import org.aksw.sparqlmap.backend.metamodel.translate.MetaModelContext;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
 import org.apache.jena.rdf.model.Model;
@@ -33,9 +35,10 @@ public class DataCubeTest {
     
     
     DataContext csvContext = new CsvDataContext(new File(testcaselocation,"dataset.csv"), csvConf);
+    MetaModelBackend mmBackend = new MetaModelBackend(csvContext);
     
     
-    SparqlMap sm = SparqlMapBuilder.newSparqlMap(null).connectTo(csvContext).mappedBy(testcaselocation+"mapping.ttl").create();
+    SparqlMap sm = SparqlMapBuilder.newSparqlMap(null).connectTo(mmBackend).mappedBy(testcaselocation+"mapping.ttl").create();
     Model result = ModelFactory.createModelForGraph(sm.getDumpExecution().dumpDatasetGraph().getDefaultGraph());
     try(FileOutputStream fos = new FileOutputStream(testcaselocation + "result.ttl")){
       RDFDataMgr.write(fos, result, Lang.NTRIPLES);

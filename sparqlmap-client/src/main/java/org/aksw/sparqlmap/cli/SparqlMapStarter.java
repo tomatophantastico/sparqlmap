@@ -12,6 +12,7 @@ import org.aksw.sparqlmap.config.ConfigBeanBase;
 import org.aksw.sparqlmap.config.ConfigBeanCli;
 import org.aksw.sparqlmap.config.ConfigBeanDataSource;
 import org.aksw.sparqlmap.config.SparqlMapAction;
+import org.aksw.sparqlmap.core.errors.ImplementationException;
 import org.aksw.sparqlmap.web.SparqlMapWebSpringConfig;
 import org.apache.xmlbeans.impl.common.Levenshtein;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -53,7 +54,10 @@ public class SparqlMapStarter {
                Throwable root = Throwables.getRootCause(e);
                if(root instanceof FileNotFoundException){
                    print("File not found: " + root.getMessage());
-               }  else{
+               } else if( root instanceof ImplementationException ){
+                   print("Sorry, this not yet implemented. Either try a different method, or open a feature request on github. "  + root.getMessage() );
+
+               } else{
                    //other type of exception, we go full stacktrace
                    print(e.getMessage());
 
@@ -96,7 +100,7 @@ public class SparqlMapStarter {
        if(paramCandidates.isEmpty()){
            print("Error processing command line options: " + e.getMessage());
            jc.usage();
-       }else{
+       } else {
            print("Could not process option " + main + " did you mean: " +  paramCandidates.stream().collect(Collectors.joining(", ")));
            jc.usage();
        }

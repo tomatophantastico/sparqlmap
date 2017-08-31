@@ -1,9 +1,12 @@
 package org.aksw.sparqlmap.querytests;
 
+import org.aksw.sparqlmap.backend.metamodel.MetaModelBackend;
 import org.aksw.sparqlmap.backend.metamodel.mapper.SchemaTranslator;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
 import org.aksw.sparqlmap.core.automapper.MappingGenerator;
+import org.aksw.sparqlmap.core.automapper.MappingPrefixes;
+import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.metamodel.DataContext;
@@ -25,7 +28,7 @@ public class AccessQueryTest {
   
   @Test
   public void testPfarrerbuchSchemaGen(){
-    Model defaultMapping = new MappingGenerator("http://example.com/pfarrerbuch/").generateMapping(SchemaTranslator.translate(new AccessDataContext(PFARRERBUCHLOCATION).getDefaultSchema()));
+    Model defaultMapping = new MappingGenerator(new MappingPrefixes("http://example.com/pfarrerbuch/")).generateMapping(SchemaTranslator.translate(new AccessDataContext(PFARRERBUCHLOCATION).getDefaultSchema()));
     
     defaultMapping.write(System.out,"TTL");
     
@@ -60,7 +63,7 @@ public class AccessQueryTest {
   
   @Test
   public void testPfarrerbuch(){
-    SparqlMap sm = SparqlMapBuilder.newSparqlMap(null).connectTo(new AccessDataContext(PFARRERBUCHLOCATION)).mappedByDefaultMapping().create();
+    SparqlMap sm = SparqlMapBuilder.newSparqlMap(null).connectTo(Lists.newArrayList(new MetaModelBackend(new AccessDataContext(PFARRERBUCHLOCATION)))).mappedByDefaultMapping().create();
     
     DatasetGraph dsg = sm.getDumpExecution().dumpDatasetGraph();
     

@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.aksw.sparqlmap.DBHelper;
 import org.aksw.sparqlmap.TestHelper;
+import org.aksw.sparqlmap.backend.metamodel.MetaModelBackend;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.SparqlMapBuilder;
 import org.apache.jena.graph.NodeFactory;
@@ -53,7 +54,7 @@ public class GraphHandlingTest {
    
     sm.execute("select distinct ?g {GRAPH ?g {?s ?p ?o}}").execSelect().forEachRemaining(row -> {
       Assert.assertFalse("Named Graphs must not contain default graph", 
-          row.get("g").asResource().getURI().equals(Quad.defaultGraphNodeGenerated));
+          row.get("g").asResource().getURI().equals(Quad.defaultGraphNodeGenerated.getURI()));
       
     });
   }
@@ -68,7 +69,7 @@ public class GraphHandlingTest {
     rs.forEachRemaining(row -> {
           Optional.ofNullable(row.get("g"))
           .ifPresent((t -> Assert.assertFalse("Named Graphs must not contain default graph", 
-              t.asResource().getURI().equals(Quad.defaultGraphNodeGenerated))));
+              t.asResource().getURI().equals(Quad.defaultGraphNodeGenerated.getURI()))));
         });
   }
   
@@ -122,8 +123,9 @@ public class GraphHandlingTest {
     DBHelper.loadSqlFile(ds.getConnection(), testcaselocation + "dataset-hsqldb.sql");
     
     JdbcDataContext jdc = new JdbcDataContext(ds);
+    MetaModelBackend mmBackend = new MetaModelBackend(jdc).closeOnShutdown(cp);
     
-     sm =  SparqlMapBuilder.newSparqlMap("http://example.com/graphtest/").connectTo(jdc).mappedBy(testcaselocation + "mapping.ttl").create();
+     sm =  SparqlMapBuilder.newSparqlMap("http://example.com/graphtest/").connectTo(mmBackend).mappedBy(testcaselocation + "mapping.ttl").create();
     
       
   }

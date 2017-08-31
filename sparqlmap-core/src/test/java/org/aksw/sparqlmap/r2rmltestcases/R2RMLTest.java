@@ -22,6 +22,7 @@ import org.aksw.sparqlmap.R2RMLTestParameter;
 import org.aksw.sparqlmap.TestHelper;
 import org.aksw.sparqlmap.core.SparqlMap;
 import org.aksw.sparqlmap.core.automapper.MappingGenerator;
+import org.aksw.sparqlmap.core.automapper.MappingPrefixes;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -147,14 +148,13 @@ public abstract class R2RMLTest {
 	
 	public void createDM(String wheretowrite) throws ClassNotFoundException, SQLException, FileNotFoundException, UnsupportedEncodingException, MetaModelException{
 		
-		
+		String basePrefix = "http://example.com/base/";
 		
 		MappingGenerator db2r2rml = new MappingGenerator( 
-		    "http://example.com/base/", 
-		    "http://example.com/base/", 
-        "http://example.com/base/", 
-		    "http://example.com/base/", 
-		    ";");
+		    new MappingPrefixes(basePrefix)
+		      .withInstancePrefix(basePrefix)
+		      .withMappingPrefix(basePrefix)
+		      .withVocabularyPrefix(basePrefix));
 		
 		Model mapping = db2r2rml.generateMapping(SchemaTranslator.translate(getDatacontext().getDefaultSchema()));
 		mapping.write(new FileOutputStream(new File(wheretowrite)), "TTL", null);
