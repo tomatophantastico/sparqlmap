@@ -1,10 +1,7 @@
 @prefix rr:    <http://www.w3.org/ns/r2rml#> .
 @prefix mapping: <http://example.com/base/> .
-@prefix inst:  <http://example.com/base/> .
-@prefix vocab: <http://example.com/base/> .
 
-<http://example.com/base/mapping/Sport>
-        rr:logicalTable        [ rr:tableName  "\"Sport\"" ] ;
+mapping:Sport  rr:logicalTable  [ rr:tableName  "\"Sport\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"Name\"" ] ;
                                  rr:predicate  <http://example.com/base/Sport#Name>
                                ] ;
@@ -13,12 +10,11 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/Sport#ID>
                                ] ;
-        rr:subjectMap          [ rr:class     inst:Sport ;
+        rr:subjectMap          [ rr:class     mapping:Sport ;
                                  rr:template  "http://example.com/base/Sport/ID={\"ID\"}"
                                ] .
 
-<http://example.com/base/mapping/Student>
-        rr:logicalTable        [ rr:tableName  "\"Student\"" ] ;
+mapping:Student  rr:logicalTable  [ rr:tableName  "\"Student\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:template  "http://example.com/base/Sport/ID={\"Sport\"}" ] ;
                                  rr:predicate  <http://example.com/base/Student#ref-Sport>
                                ] ;
@@ -35,6 +31,6 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/Student#ID>
                                ] ;
-        rr:subjectMap          [ rr:class     inst:Student ;
+        rr:subjectMap          [ rr:class     mapping:Student ;
                                  rr:template  "http://example.com/base/Student/ID={\"ID\"}"
                                ] .

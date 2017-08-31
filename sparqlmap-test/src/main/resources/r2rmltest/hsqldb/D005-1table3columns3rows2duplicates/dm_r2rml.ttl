@@ -1,10 +1,7 @@
 @prefix rr:    <http://www.w3.org/ns/r2rml#> .
 @prefix mapping: <http://example.com/base/> .
-@prefix inst:  <http://example.com/base/> .
-@prefix vocab: <http://example.com/base/> .
 
-<http://example.com/base/mapping/IOUs>
-        rr:logicalTable        [ rr:tableName  "\"IOUs\"" ] ;
+mapping:IOUs  rr:logicalTable  [ rr:tableName  "\"IOUs\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"amount\"" ;
                                                  rr:datatype  <http://www.w3.org/2001/XMLSchema#double>
                                                ] ;
@@ -16,7 +13,7 @@
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"fname\"" ] ;
                                  rr:predicate  <http://example.com/base/IOUs#fname>
                                ] ;
-        rr:subjectMap          [ rr:class     inst:IOUs ;
+        rr:subjectMap          [ rr:class     mapping:IOUs ;
                                  rr:template  "http://example.com/base/IOUs/amount={\"amount\"};fname={\"fname\"};lname={\"lname\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .

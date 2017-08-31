@@ -33,52 +33,13 @@ public class MappingGenerator {
   
  
   
-  private String mappingPrefix;
-  private String instancePrefix;
-  private String vocabularyPrefix;
-  private String primaryKeySeparator;
-  private String rowidtemplate;
-  
-  /**
-   * 
-   * @param mappingPrefix
-   * @param instancePrefix
-   * @param vocabularyPrefix
-   * @param primaryKeySeparator
-   * @param rowidtemplate by convetion a query that yields the all the cols of a table plus a 
-   *                column "sm_rowid" which contains the rowid.
-   */
-  public MappingGenerator(String mappingPrefix, String instancePrefix,
-      String vocabularyPrefix, String primaryKeySeparator) {
-    super();
-    this.mappingPrefix = mappingPrefix;
-    this.instancePrefix = instancePrefix;
-    this.vocabularyPrefix = vocabularyPrefix;
-    this.primaryKeySeparator = primaryKeySeparator;
-  }
-  public MappingGenerator(String baseprefix, String mappingPrefix, String instancePrefix,
-      String vocabularyPrefix, String primaryKeySeparator) {
-    super();
-    if(baseprefix==null){
-      baseprefix = "http://localhost/baseiri/";
-    }
-    this.mappingPrefix = mappingPrefix!=null?mappingPrefix:baseprefix + "mapping/";
-    this.instancePrefix = instancePrefix!=null?instancePrefix:baseprefix + "instance/";
-    this.vocabularyPrefix = vocabularyPrefix!=null?vocabularyPrefix:baseprefix + "vocab/";
-    this.primaryKeySeparator = primaryKeySeparator!=null?primaryKeySeparator:";";
-  }
-  
-  public MappingGenerator(String prefix){
-    super();
-    this.mappingPrefix = prefix + "mapping/";
-    this.instancePrefix = prefix + "instance/";
-    this.vocabularyPrefix = prefix + "vocabulary/";
-    this.primaryKeySeparator = ";";
-    this.rowidtemplate = null;
-  }
+  MappingPrefixes prefixes;
   
 
-  
+
+  public MappingGenerator(MappingPrefixes prefixes){
+    this.prefixes = prefixes;
+  }
   
   
   public Model generateMapping(LogicalSchema schema){
@@ -87,7 +48,7 @@ public class MappingGenerator {
     Model r2r = initMappingModel();
 
     for(LogicalTable table: schema.getTables()){
-      Resource triplesMap = r2r.createResource(mappingPrefix + "mapping/" + ues(table.getTablename()));
+      Resource triplesMap = r2r.createResource(prefixes.getMappingPrefix() + ues(table.getTablename()));
       table2triplesMap.put(table.getName(), triplesMap);
       
       
@@ -113,12 +74,12 @@ public class MappingGenerator {
      
 
       //use the rowid template or not
-      if(table.getPrimaryKeys().isEmpty()&&rowidtemplate!=null){
+      if(table.getPrimaryKeys().isEmpty()&&prefixes.getRowidtemplate()!=null){
         //add the subquery statement
         Resource rrSqlQuery = r2r.createResource();
         r2r.add(triplesMap,R2RML.HASLOGICALTABLE,rrSqlQuery);
         r2r.add(triplesMap,RDFS.comment,"Added subquery for having acccess to rowid functionality.");
-        r2r.add(rrSqlQuery,R2RML.HASSQLQUERY,String.format(rowidtemplate, table.getTablename()));
+        r2r.add(rrSqlQuery,R2RML.HASSQLQUERY,String.format(prefixes.getRowidtemplate(), table.getTablename()));
 
 
       }else{
@@ -129,7 +90,7 @@ public class MappingGenerator {
       }
 
       // and the class statement
-      r2r.add(subjectMap,R2RML.HASCLASS,r2r.createResource(vocabularyPrefix + ues(table.getTablename())));
+      r2r.add(subjectMap,R2RML.HASCLASS,r2r.createResource(prefixes.getVocabularyPrefix() + ues(table.getTablename())));
 
      
 
@@ -137,7 +98,7 @@ public class MappingGenerator {
       for(LogicalColumn column : table.getColumns()){
         Resource pomap  = r2r.createResource();
         triplesMap.addProperty(R2RML.HASPREDICATEOBJECTMAP,pomap);
-        pomap.addProperty(R2RML.HASPREDICATE, r2r.createResource(vocabularyPrefix +ues(column.getTable().getTablename()) +"#"+ ues(column.getName())));       
+        pomap.addProperty(R2RML.HASPREDICATE, r2r.createResource(prefixes.getVocabularyPrefix() +ues(column.getTable().getTablename()) +"#"+ ues(column.getName())));
         Resource objectMap = r2r.createResource();
         pomap.addProperty(R2RML.HASOBJECTMAP, objectMap);
         objectMap.addProperty(R2RML.HASCOLUMN, escapeName(column.getName()));
@@ -180,10 +141,10 @@ public class MappingGenerator {
       childTriplesMap.addProperty(R2RML.HASPREDICATEOBJECTMAP,pomap);
       
       // generate the property
-      String refMapPropertySuffix =  relationship.getOns().stream().map(on -> on[1].getName()).map(colname -> ues(colname)).collect(Collectors.joining(primaryKeySeparator));
+      String refMapPropertySuffix =  relationship.getOns().stream().map(on -> on[1].getName()).map(colname -> ues(colname)).collect(Collectors.joining(prefixes.getPrimaryKeySeparator()));
 
 
-      pomap.addProperty(R2RML.HASPREDICATE, r2r.createResource(vocabularyPrefix +ues(relationship.getForeign().getTablename()) +"#ref-"+ refMapPropertySuffix));
+      pomap.addProperty(R2RML.HASPREDICATE, r2r.createResource(prefixes.getVocabularyPrefix() +ues(relationship.getForeign().getTablename()) +"#ref-"+ refMapPropertySuffix));
 
       
       //generate a template for the object 
@@ -203,11 +164,9 @@ public class MappingGenerator {
   
   Model initMappingModel(){
     Model r2rmlMapping = ModelFactory.createDefaultModel();
-    
-    r2rmlMapping.setNsPrefix("rr", R2RML.R2RML_STRING);
-    r2rmlMapping.setNsPrefix("vocab", vocabularyPrefix);
-    r2rmlMapping.setNsPrefix("mapping", mappingPrefix);
-    r2rmlMapping.setNsPrefix("inst", instancePrefix);
+    r2rmlMapping.setNsPrefixes(prefixes.asPrefixMap());
+
+
     return r2rmlMapping;
   }
 
@@ -235,10 +194,10 @@ public class MappingGenerator {
     
     String templateSuffix = colsOfSubject.stream().map(LogicalColumn::getName).map(name -> 
     String.format("%s=%s",ues(name), escapeAsTemplate(name))
-        ).collect(Collectors.joining(primaryKeySeparator));
+        ).collect(Collectors.joining(prefixes.getPrimaryKeySeparator()));
 
 
-    String template = this.instancePrefix + ues(tablename) +"/" + templateSuffix;
+    String template = prefixes.getInstancePrefix() + ues(tablename) +"/" + templateSuffix;
 
     return template;
   }

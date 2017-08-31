@@ -1,28 +1,7 @@
 @prefix rr:    <http://www.w3.org/ns/r2rml#> .
 @prefix mapping: <http://example.com/base/> .
-@prefix inst:  <http://example.com/base/> .
-@prefix vocab: <http://example.com/base/> .
 
-<http://example.com/base/mapping/LIKES>
-        rr:logicalTable        [ rr:tableName  "\"LIKES\"" ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"likedObj\"" ] ;
-                                 rr:predicate  <http://example.com/base/LIKES#likedObj>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"likeType\"" ] ;
-                                 rr:predicate  <http://example.com/base/LIKES#likeType>
-                               ] ;
-        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"id\"" ;
-                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
-                                               ] ;
-                                 rr:predicate  <http://example.com/base/LIKES#id>
-                               ] ;
-        rr:subjectMap          [ rr:class     inst:LIKES ;
-                                 rr:template  "http://example.com/base/LIKES/id={\"id\"};likeType={\"likeType\"};likedObj={\"likedObj\"}" ;
-                                 rr:termType  rr:BlankNode
-                               ] .
-
-<http://example.com/base/mapping/DEPT>
-        rr:logicalTable        [ rr:tableName  "\"DEPT\"" ] ;
+mapping:DEPT  rr:logicalTable  [ rr:tableName  "\"DEPT\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"loc\"" ] ;
                                  rr:predicate  <http://example.com/base/DEPT#loc>
                                ] ;
@@ -34,13 +13,29 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/DEPT#deptno>
                                ] ;
-        rr:subjectMap          [ rr:class     inst:DEPT ;
+        rr:subjectMap          [ rr:class     mapping:DEPT ;
                                  rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"}" ;
                                  rr:termType  rr:BlankNode
                                ] .
 
-<http://example.com/base/mapping/EMP>
-        rr:logicalTable        [ rr:tableName  "\"EMP\"" ] ;
+mapping:LIKES  rr:logicalTable  [ rr:tableName  "\"LIKES\"" ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"likedObj\"" ] ;
+                                 rr:predicate  <http://example.com/base/LIKES#likedObj>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"likeType\"" ] ;
+                                 rr:predicate  <http://example.com/base/LIKES#likeType>
+                               ] ;
+        rr:predicateObjectMap  [ rr:objectMap  [ rr:column    "\"id\"" ;
+                                                 rr:datatype  <http://www.w3.org/2001/XMLSchema#integer>
+                                               ] ;
+                                 rr:predicate  <http://example.com/base/LIKES#id>
+                               ] ;
+        rr:subjectMap          [ rr:class     mapping:LIKES ;
+                                 rr:template  "http://example.com/base/LIKES/id={\"id\"};likeType={\"likeType\"};likedObj={\"likedObj\"}" ;
+                                 rr:termType  rr:BlankNode
+                               ] .
+
+mapping:EMP  rr:logicalTable   [ rr:tableName  "\"EMP\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:template  "http://example.com/base/DEPT/deptno={\"deptno\"}" ;
                                                  rr:termType  rr:BlankNode
                                                ] ;
@@ -65,6 +60,6 @@
                                                ] ;
                                  rr:predicate  <http://example.com/base/EMP#empno>
                                ] ;
-        rr:subjectMap          [ rr:class     inst:EMP ;
+        rr:subjectMap          [ rr:class     mapping:EMP ;
                                  rr:template  "http://example.com/base/EMP/empno={\"empno\"}"
                                ] .

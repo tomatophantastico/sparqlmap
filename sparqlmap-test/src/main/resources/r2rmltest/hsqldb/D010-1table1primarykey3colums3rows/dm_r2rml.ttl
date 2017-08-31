@@ -1,9 +1,7 @@
 @prefix rr:    <http://www.w3.org/ns/r2rml#> .
 @prefix mapping: <http://example.com/base/> .
-@prefix inst:  <http://example.com/base/> .
-@prefix vocab: <http://example.com/base/> .
 
-<http://example.com/base/mapping/Country%20Info>
+<http://example.com/base/Country%20Info>
         rr:logicalTable        [ rr:tableName  "\"Country Info\"" ] ;
         rr:predicateObjectMap  [ rr:objectMap  [ rr:column  "\"ISO 3166\"" ] ;
                                  rr:predicate  <http://example.com/base/Country%20Info#ISO%203166>
