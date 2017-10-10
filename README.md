@@ -129,7 +129,7 @@ mvn install
 # Actions
 
 ## CLI
-SparqlMap allows the following command line interactions, selected by the `--action=<action>´ parameter
+SparqlMap allows the following command line interactions, selected by the `--action=<action>` parameter
 
 ### dump
 
