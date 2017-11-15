@@ -19,7 +19,7 @@ We use a [patched version](https://github.com/tomatophantastico/metamodel) of [A
 
 To include it into your SparqlMap-build please install it locally (using [maven](http://maven.apache.org))
 ```
-git clone --branch feature/quoteColumns https://github.com/tomatophantastico/metamodel && cd metamodel && mvn install
+git clone --depth=1 --branch feature/quoteColumns https://github.com/tomatophantastico/metamodel && cd metamodel && mvn install
 ```
 
 SparqlMap utilizes gradle, so you can just run
@@ -120,7 +120,7 @@ SparqlMap requires the following dependencies, which are not present in the main
 
 2. Metamodel with a patch
 ```shell
-git clone https://github.com/tomatophantastico/metamodel.git
+git --depth=1 clone https://github.com/tomatophantastico/metamodel.git
 cd metamodel
 mvn install
 ```
