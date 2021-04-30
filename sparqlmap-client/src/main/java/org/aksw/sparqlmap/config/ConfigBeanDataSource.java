@@ -26,7 +26,7 @@ public class ConfigBeanDataSource {
   private String dbName;
   @Parameter(names={"-u","--ds.username"},description="For data sources that require authentication")
   private String username;
-  @Parameter(names={"-p","--ds.password"}, password = true, description="For data sources that require authentication")
+  @Parameter(names={"-p","--ds.password"}, description="For data sources that require authentication")
   private String password;
   @Parameter(names={"--ds.maxPoolSize"})
   private Integer maxPoolSize = 10;
