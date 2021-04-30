@@ -29,19 +29,15 @@ SparqlMap utilizes gradle, so you can just run
 which will create a distribution in `build/install/sparqlmap`.
 
 
-
-
-
 ## Overview over the mapping process
 
 ![SparqlMap overview](https://raw.github.com/tomatophantastico/sparqlmap/doc/doc/sparqlMap.png)
 
 
-
 ## Quick Start
 
 Most of the time, dump creation will take place on the command line.
-In the binary distributions use the sparqlmap command. 
+In the binary distributions use the sparqlmap command.
 Calling sparqlmap without or with a wrong combination of options will present all options available.
 
 Let's have a look at some samples:
@@ -54,14 +50,14 @@ Let's have a look at some samples:
 Or if you do not have a R2RML mapping, you can create a dump based on a Direct Mapping
 
 ```shell
-./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" --ds.username=sparqlmap --ds.password=sparqlmap 
+./bin/sparqlmap --action=dump --ds.type=JDBC --ds.url="jdbc:mysql://192.168.59.103:3306/sparqlmaptest" --ds.username=sparqlmap --ds.password=sparqlmap
 ```
 
 
 ## R2RML Mappings
 
 ### Re-use an Existing Mapping
-Is quite simple, just provide the ```--r2rmlFile```parameter: 
+Is quite simple, just provide the ```--r2rmlFile```parameter:
 ```
 --r2rmlFile=<fileLocation>
 ```
@@ -76,7 +72,7 @@ Creating a R2RML representation of a default mapping is as easy as this, just ch
 
 ## Direct Mapping options
 With the following options, the generation of the direct mapping can be controlled.
-These options are meant to ease manual editing of the generated R2RML file, or when the 
+These options are meant to ease manual editing of the generated R2RML file, or when the
 
 * a given baseuriprefix is suffixed by either mapping, vocab or instance to produce the corresponding uri prefixes.
 * the mappinguriprefix will only show up in the resulting r2rml-file for name the R2RML Resources, such as TriplesMaps
@@ -99,7 +95,7 @@ These options are meant to ease manual editing of the generated R2RML file, or w
 ## Rewrite SPARQL queries into SQL
 
 For rewriting SPARQL queries into SQL SparqlMap can expose a SPARQL endpoint by an embedded tomcat.
-The enpoint is started by 
+The enpoint is started by
 
 This will expose an SPARQL endpoint with a little snorql interface.
 
@@ -129,7 +125,7 @@ mvn install
 # Actions
 
 ## CLI
-SparqlMap allows the following command line interactions, selected by the `--action=<action>´ parameter
+SparqlMap allows the following command line interactions, selected by the `--action=<action>` parameter
 
 ### dump
 
@@ -150,9 +146,10 @@ SparqlMap can be used as a SPARQL enndpoint, for example for exposing a ACCESS d
 
 ```shell
 bin/sparqlmap --action=web --ds.type=ACCESS --ds.url=mydata.accdb
-``` 
+```
 
 The endpoint will be accessible on:
+
 ```
 localhost:8080/sparql
 ```
@@ -164,13 +161,15 @@ Currently, a number of limitations apply:
 
 # Mapping Options
 Existing mapping files can be provided via the r2rmlFile-parameter:
+
 ```
 --r2rmlFile=<filename>
 ```
 If this parameter is omitted, a direct mapping will be created.
 
 The direct mapping generation can be modified by following attributes.
-If you just define the  ```<baseUriPrefix>``` you should be fine in most cases.
+If you just define the  `<baseUriPrefix>` you should be fine in most cases.
+
 ```
 --dm.baseUriPrefix=http://localhost/baseiri/
 --dm.mappingUriPrefix=<baseUriPrefix>/mapping/
@@ -190,26 +189,29 @@ Also, please bear in mind that complex matching and replacement patterns may ser
 Lets consider a simple example, which can also be found in the test suite.
 Given some hancrafted data about events in a CSV sheet, we want expose the data as highest possible quality and therefore put all the knowledge we got into the mapping.
 When examining the data, we notice three different kind of date notations here:
-´´´
+
+```
 id,date
 1,10.10.2016
 2,12/23/2016
 3,2016 (exact date unknown)
-´´´
+```
 
-* Entry 1 uses a notation with dots as separators, as we are unsure about the notation we want to use the property ´vocab:datewithdot' property.
-* Entry 2 we recognize as a date and we want to transform it into an ´xsd:date´
-* Entry 3 contains literals and requires manual editing. Therefore we want to use the separate property ´vocab:dateString´
+* Entry 1 uses a notation with dots as separators, as we are unsure about the notation we want to use the property `vocab:datewithdot` property.
+* Entry 2 we recognize as a date and we want to transform it into an `xsd:date`
+* Entry 3 contains literals and requires manual editing. Therefore we want to use the separate property `vocab:dateString`
 
 
 ### Conditional TermMaps (Entry 3)
+
 Conditions are expressed as regexes and are matched against the String-representation of an RDF-Term, e.g., denending on the type of TermMap used:
-* Template based Term Maps materialize the template, any 
+* Template based Term Maps materialize the template, any
 * Column-based attempts to convert the content into a string (i.e. a timestamp becomes a xsd:date string, binary gets hex-encoded) and match the pattern
 In any case, term type, language and literal lype are ignored.
 
-So in order to map the textually desribed dates with the property ´vocab:dateString´ we use the ´smap:requiredPattern´ Property in the term map.
-´´´
+So in order to map the textually described dates with the property `vocab:dateString` we use the `smap:requiredPattern` Property in the term map.
+
+```
 r2rml:predicateObjectMap
     [ r2rml:objectMap
               [ r2rml:column "\"date\"";
@@ -218,19 +220,19 @@ r2rml:predicateObjectMap
               vocab:dateString;
 
     ] ;
-´´´
+```
 The object term will only be generated, if the pattern matches the whole string. Technically, this is implementd using Javas String.matches(String requiredPattern).
-Other R2RML processors will ignore ´smap:requiredPattern´.
+Other R2RML processors will ignore `smap:requiredPattern`.
 
 
 ### Maintain compatibility with other R2RML processors (Entry 1)
-As other R2RML processors will ignore the ´smap:requiredPattern´ Property, multiple and perphaps invalid values would be generated, if a column is mapped with multiple ´r2rml:predicateObjectMaps´.
+As other R2RML processors will ignore the `smap:requiredPattern` Property, multiple and perphaps invalid values would be generated, if a column is mapped with multiple `r2rml:predicateObjectMaps`.
 In order to be able to express a safe, r2rml compliant fallback in mappings, we subclassed/subpropertied R2RML concepts, such that us can express the generic/fallback mapping using the standard r2rml vocab and the specific cases using the sparqmap vocab.
 
 In our concrete Example, we want to map Entry 1 with a different property.
-We simply add an other ´predicateObjectMap´ with an other ´smap:requiredPattern´.
+We simply add an other `predicateObjectMap` with an other `smap:requiredPattern`.
 
-´´´
+```
  r2rml:predicateObjectMap
     [ r2rml:objectMap
               [ r2rml:column
@@ -243,32 +245,32 @@ We simply add an other ´predicateObjectMap´ with an other ´smap:requiredPatte
  smap:predicateObjectMap
     [ smap:objectMap
               [ smap:column
-                        "\"date\""; 
+                        "\"date\"";
                 smap:requiredPattern """^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{2,4})$"""
               ] ;
       smap:predicate
               vocab:datewithdot;
 
     ] ;
-´´´
+```
 
-Mind here the use of a different prefix, namely ´smap:predicateObjectMap´ instead of ´r2rml:predicateObjectMap´.
-This is purely for better compatibility with other R2RML rewriters, as the with the ´smap´ the more specific mapping can be expressed which will be ignored by other R2RML rewriters.
+Mind here the use of a different prefix, namely `smap:predicateObjectMap` instead of `r2rml:predicateObjectMap`.
+This is purely for better compatibility with other R2RML rewriters, as the with the `smap` the more specific mapping can be expressed which will be ignored by other R2RML rewriters.
 
 
 
 ### TermMap transformation (Entry 2)
 
-Entry 2 marks the case, where a small transformation is required to fit into a standard data type. 
-This can be achieved with a pattern provided via the ´smap:transformPattern´. It allows the use of regex with capturing groups, defined in the requiredPattern,  for small transformations.
+Entry 2 marks the case, where a small transformation is required to fit into a standard data type.
+This can be achieved with a pattern provided via the `smap:transformPattern`. It allows the use of regex with capturing groups, defined in the requiredPattern,  for small transformations.
 
 Technically, this is achieved with Javas String.replaceAll(String requiredPattern, String replacement).
 
 See this example:
-´´´
+```
 smap:predicateObjectMap
     [ smap:objectMap
-              [ smap:column "\"date\""; 
+              [ smap:column "\"date\"";
                 smap:requiredPattern """^([0-9]{1,2})\\/([0-9]{1,2})\\/([0-9]{2,4})$""";
                 smap:transformPattern """$1-$2-$3""";
                 r2rml:datatype xsd:date;
@@ -276,11 +278,7 @@ smap:predicateObjectMap
       smap:predicate
               vocab:date ;
     ] ;
-´´´
-
-
-
-
+```
 
 # Data Sources
 
@@ -317,8 +315,8 @@ Optional parameters and their defaults
 --ds.quoteChar=" Encloses values
 --ds.separatorChar=, default to , values in a row are split according to this value
 --ds.escapeChar=\ for escaping special characters
---ds.encoding=UTF-8 
---ds.columnNameLineNumber=1 Starting from 1, 
+--ds.encoding=UTF-8
+--ds.columnNameLineNumber=1 Starting from 1,
 --ds.failOnInconsistentRowLength=true defaults to true if the column count varies in the file, this pushes the parser further.
 --ds.multilineValues=false allows multiline values
 ```
