@@ -144,7 +144,7 @@ bin/sparqlmap --action=web --ds.type=ACCESS --ds.url=mydata.accdb
 The endpoint will be accessible on:
 
 ```
-localhost:8080/sparql
+localhost:8090/sparql
 ```
 Currently, a number of limitations apply:
 * Some the query processing is executed in-memory, which degrades performance
